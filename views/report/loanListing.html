@@ -1,0 +1,36 @@
+
+<div class="block-flat">
+						<div class="header">										
+							<div class="alert alert-info alert-white rounded">
+								<div class="icon"><i class="fa fa-info-circle"></i></div>
+								<h4>Loan Listing</h4>
+							 </div>
+						</div>
+<div class="row">
+	<div class="col-md-12">
+
+				<table class="table table-bordered table-condensed">
+				<thead>
+					<tr>
+						<th>Member Name</th>
+						<th>Loan Status</th>
+						<th>Balance</th>
+						<th>Amount Borrowed</th>
+
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="row in memberList">
+						<td>{{row.Firstname}} {{row.Middlename}} {{row.Lastname}}</td>
+						<td></td>
+						<td></td>
+						<td></td>
+
+
+					</tr>
+				</tbody>
+			</table>
+			  <uib-pagination ng-model="pageNo" ng-click="pageChanged()" items-per-page="pageSize" total-items="count"  max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages"></uib-pagination>
+	</div>
+</div>
+</div>

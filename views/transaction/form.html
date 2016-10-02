@@ -1,0 +1,94 @@
+<div class="row">
+	<div class="col-md-12">
+			    	<div class="block-flat">
+						<div class="header">										
+							<div class="alert alert-info alert-white rounded">
+								<div class="icon"><i class="fa fa-info-circle"></i></div>
+								<h4>Loan Transaction</h4>
+							 </div>
+						</div>
+						<div class="content">
+
+		
+		<div class="row">
+	<div class="col-md-9">
+		<form method="POST" class="form-horizontal" name="TransactionForm" ng-submit="Save()">
+				<div class="form-group">
+					<label class="control-label col-md-4">Member</label>
+					<div class="col-md-8">
+					<ui-select ng-model="member" theme="select2" ng-disabled="disabled" on-select="selectCustomer($item)">
+                             <ui-select-match placeholder="Select Member...">{{$select.selected.Firstname + ' ' +  $select.selected.Lastname}}</ui-select-match>
+                             <ui-select-choices refresh="searchCustomer($select.search)" refresh-delay="100" repeat="row in memberList| filter: $select.search">
+                                 <div ng-bind="row.Firstname + ' ' + row.Lastname"></div>
+                             </ui-select-choices>
+                     </ui-select>
+						
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-md-4">Amount Borrowed</label>
+					<div class="col-md-8">
+						<input type="text" ng-model="formData.Amount" name="Amount"  ng-change="calculate()" class="form-control" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-md-4">Interest</label>
+					<div class="col-md-8">
+						<table class="table table-bordered">
+							<thead>
+								<th>Interest</th>
+								<th>CBU</th>
+								<th>MBA</th>
+								<th>LRF</th>
+								<th>CF</th>
+								<th>MF</th>
+								<th>KAB</th>
+							</thead>
+							<tbody>
+								<th>15%</th>
+								<th>{{CBU}}</th>
+								<th>{{MBA}}</th>
+								<th>{{LRF}}</th>
+								<th>{{CF}}</th>
+								<th>{{MF}}</th>
+								<th>{{KAB}}</th>
+							</thead>
+							</tbody>
+						</table>
+					</div>
+				</div>
+					
+				<div class="form-group">
+					<label class="control-label col-md-4">Payable Upon</label>
+					<div class="col-md-8">
+						23 Weeks
+					</div>
+				</div>
+				<div class="form-group" ng-if="TransactionForm.Amount.$valid">
+					<label class="control-label col-md-4">Weekly Payment</label>
+					<div class="col-md-8">
+						{{payableWeekly}} + CBU({{CBU}}) + MBA({{MBA}}) = {{totalPayablePerWeek}}
+					</div>
+				</div>
+				<div class="form-group" ng-if="TransactionForm.Amount.$valid">
+					<label class="control-label col-md-4">Total Payable Upon Loan</label>
+					<div class="col-md-8">
+						{{payableWeekly}} + CBU({{CBU}}) + MBA({{MBA}}) +  LRF({{LRF}}) CF({{CR}}) 	MF({{MF}}) 	KAB({{KAB}}) = {{totalPayableUponLoan}}
+					</div>
+				</div>
+				<div class="form-group">
+				<div class="col-md-8 col-md-offset-4">
+					<button type="submit"  class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+				</div>
+				</div>
+		</form>
+	</div>
+
+</div>
+
+		
+		
+						</div>
+					</div>
+	</div>
+</div>
