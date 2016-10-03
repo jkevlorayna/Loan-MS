@@ -7,8 +7,18 @@
 						</div>
 						<div class="content">
 
-		
-		<div class="row">
+						
+						
+						
+						<div class="tab-container">
+						<ul class="nav nav-tabs">
+						  <li class="active"><a  href="javascript:void(0)" data-target="#personalInformation" data-toggle="tab">Personal Information</a></li>
+						  <li><a href="javascript:void(0)" data-target="#Beneficiary" data-toggle="tab">Beneficiary</a></li>
+						</ul>
+						<div class="tab-content">
+						  <div class="tab-pane active cont" id="personalInformation">
+								
+										<div class="row">
 	<div class="col-md-9">
 		<form method="POST" class="form-horizontal" name="YearForm" ng-submit="save()">
 				<div class="form-group">
@@ -90,6 +100,40 @@
 	</div>
 
 </div>
+								
+						  
+						  </div>
+						  <div class="tab-pane cont" id="Beneficiary">
+						  <button type="button"  ng-click="addBeneficiary()" class="btn btn-success"><i class="fa fa-plus"></i> Add Beneficiary</button>
+						  <br>
+							<table class="table table-bordered table-condensed">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Relationship</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="row in formData.Beneficiary">
+										<td>
+											<input type="text" class="form-control" ng-model="row.Name">
+										</td>
+										<td>
+											<input type="text" class="form-control" ng-model="row.Relationship">
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						  </div>
+
+						</div>
+					</div>
+						
+						
+						
+						
+		
+
 
 		
 		

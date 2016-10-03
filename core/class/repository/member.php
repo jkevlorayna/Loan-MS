@@ -3,7 +3,7 @@ class MemberRepository{
 		public function Get($id){
 			global $conn;
 			$query = $conn->query("SELECT * FROM tbl_member  WHERE Id = '$id'");
-			return $query->fetch(PDO::FETCH_ASSOC);	
+			return $query->fetch(PDO::FETCH_OBJ);	
 		}
 		public function Delete($id){
 			global $conn;
@@ -57,11 +57,9 @@ class MemberRepository{
 				");
 			return $query;	
 		}
-		public function Save(){
+		public function Save($POST ){
 			global $conn;
-			$request = \Slim\Slim::getInstance()->request();
-			$POST = json_decode($request->getBody());
-			
+
 			$Id = !isset($POST->Id) ? 0 : $POST->Id;
 			$Id == 0 ? $query = $this->Create() : $query = $this->UPDATE() ;
 		
@@ -85,8 +83,8 @@ class MemberRepository{
 			$query->execute();	
 			
 		}
-		public function SignUp(){
-			$this->Save();		
+		public function SignUp($POST){
+			$this->Save($POST);		
 		}
 		public function ChangePassword(){
 			global $conn;

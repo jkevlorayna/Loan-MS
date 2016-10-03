@@ -133,7 +133,8 @@ app.controller('AppSignUpController', function ($scope, $http, $q, $filter, svcM
 app.controller('AppMemberFormController', function ($scope, $http, $q, $filter, svcMember,growl,svcCourse,svcCourseYear,svcSection,$stateParams,svcCenter) {
 	$scope.Id = $stateParams.Id;
 	$scope.type = $stateParams.type;
-		
+	$scope.formData = { };
+	$scope.formData.Beneficiary = [];
 	$scope.loadCenter = function(){
 		svcCenter.list('',0,0).then(function(r){
 			$scope.centerList = r.Results;	
@@ -155,6 +156,10 @@ app.controller('AppMemberFormController', function ($scope, $http, $q, $filter, 
 			$scope.formData = r;
 			
         });
+	}
+	
+	$scope.addBeneficiary = function(){
+		$scope.formData.Beneficiary.push({Name:'',MemberId:$scope.Id,Relationship:''})
 	}
 	
 	$scope.formData = $scope.Id == 0 ? { MemberTypeId:$scope.type } : $scope.getById() ;
