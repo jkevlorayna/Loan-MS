@@ -1,0 +1,13 @@
+
+        <div class="modal-body">
+			<form ng-submit="Save()">
+				<div class="form-group">
+					<label for="email">Status:</label>
+					<select type="text" class="form-control" ng-model="formData.TransactionStatus" ng-options="row.Status as row.Status for row in statusList"></select>
+				</div>
+				<button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+			</form>
+        </div>
+        <div class="modal-footer text-center">
+            <button class="btn btn-default" type="button" ng-click="close()"><i class="fa fa-times"></i> Cancel</button>
+        </div>

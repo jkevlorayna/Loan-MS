@@ -12,7 +12,7 @@
 		<form method="POST"  ng-submit="save()">
 				<div class="form-group">
 					<label for="exampleInputPassword1">Status</label>
-					<input type="text" ng-model="formData.status"  class="form-control" required>
+					<input type="text" ng-model="formData.Status"  class="form-control" required>
 				</div>
 				<button type="submit"  class="btn btn-success btn-sm"><i class="fa fa-save"></i> Save</button>
 		</form>
@@ -36,7 +36,7 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="row in list">
-						<td>{{row.status}}</td>
+						<td>{{row.Status}}</td>
 						<td>
 							<button class="btn btn-success btn-sm" ng-click="getById(row.Id)"> <i class="fa fa-edit"></i> </button>
 							<button class="btn btn-danger btn-sm" ng-click="openDeleteModal('md',row.Id)"> <i class="fa fa-trash-o"></i> </button>

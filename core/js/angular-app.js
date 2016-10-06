@@ -122,9 +122,15 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 			templateUrl: "views/transaction/index.html",
 			controller: "",
 		})
+		.state('transaction.list',
+		{
+			url: '/list',
+			templateUrl: "views/transaction/list.html",
+			controller: "AppTransactionController",
+		})
 		.state('transaction.form',
 		{
-			url: '/form',
+			url: '/form/:Id',
 			templateUrl: "views/transaction/form.html",
 			controller: "AppTransactionFormController",
 		})

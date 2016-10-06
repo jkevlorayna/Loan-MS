@@ -17,8 +17,21 @@ if(!isset($_SESSION['isAuthenticated'])){ $isAuthenticated = false; }else{ $isAu
         <div class="content">
           <ul class="cl-vnavigation">
 			    <li><a href="#/"><i class="fa fa-home"></i> Home</a></li>
-			    <li><a href="#/transaction/form"><i class="fa fa-file"></i> Loan Transaction</a></li>
-			    <li><a href="#/member/list"><i class="fa fa-group"></i> Member</a></li>
+				<li>
+					<a href="#"><i class="fa fa-folder"></i><span>Loan Application</span></a> 
+					<ul class="sub-menu">						
+						<li><a href="#/transaction/form/0"><i class="fa fa-file"></i> Form</a></li>
+						<li><a href="#/transaction/list"><i class="fa fa-file"></i> List</a></li>
+
+					</ul>		
+				</li>
+				<li>
+					<a href="#"><i class="fa fa-group"></i><span>Member</span></a> 
+					<ul class="sub-menu">						
+						<li><a href="#/member/list"><i class="fa fa-group"></i> List</a></li>
+						<li><a href="#/member/status"><i class="fa fa-file"></i> Status List</a></li>
+					</ul>		
+				</li>
 			    <li><a href="#/center"><i class="fa fa-building-o"></i> Center</a></li>
 				<li><a href="#/user/list"><i class="fa fa-group"></i> User List</a></li>
 				<li><a href="#/user/type"><i class="fa fa-group"></i>  User Type</a></li>

@@ -129,7 +129,6 @@ app.controller('AppSignUpController', function ($scope, $http, $q, $filter, svcM
     }
 });
 
-
 app.controller('AppMemberFormController', function ($scope, $http, $q, $filter, svcMember,growl,svcCourse,svcCourseYear,svcSection,$stateParams,svcCenter) {
 	$scope.Id = $stateParams.Id;
 	$scope.type = $stateParams.type;
@@ -143,8 +142,10 @@ app.controller('AppMemberFormController', function ($scope, $http, $q, $filter, 
 	$scope.loadCenter();
 	
 	$scope.save = function () {
+		$scope.spinner.active = true;
 		svcMember.signUp($scope.formData).then(function (r) {
 			growl.success('Data Successfully Saved');
+			$scope.spinner.active = false;
         },function(){
 			growl.error('Ops Something Went Wrong');
 		});
@@ -154,7 +155,6 @@ app.controller('AppMemberFormController', function ($scope, $http, $q, $filter, 
 	$scope.getById = function(){
 		svcMember.getById($scope.Id).then(function (r) {
 			$scope.formData = r;
-			
         });
 	}
 	

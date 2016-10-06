@@ -1,5 +1,4 @@
 <?php
-header("Access-Control-Allow-Origin: *");
 $dsn = 'mysql:dbname=loan-db;host=localhost';
 $user = 'root';
 $password = '';

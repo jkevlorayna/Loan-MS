@@ -2,7 +2,9 @@
 class TransactionRepository{
 		function Get($id){
 			global $conn;
-			$query = $conn->query("SELECT * FROM tbl_transaction  WHERE Id = '$id'");
+			$query = $conn->query("SELECT *,tbl_transaction.Id AS Id FROM tbl_transaction
+			LEFT JOIN tbl_member ON tbl_transaction.MemberId = tbl_member.Id
+			WHERE tbl_transaction.Id = '$id'");
 			return $query->fetch(PDO::FETCH_ASSOC);	
 		}
 		function Delete($id){
@@ -15,7 +17,9 @@ class TransactionRepository{
 			$pageNo = ($pageNo - 1) * $pageSize; 
 			
 			$limitCondition = $pageNo == 0 && $pageSize == 0 ? '' : 'LIMIT '.$pageNo.','.$pageSize;
-			$query = $conn->query("SELECT * FROM  tbl_transaction $limitCondition");
+			$query = $conn->query("SELECT *,tbl_transaction.Id as Id FROM  tbl_transaction
+			LEFT JOIN tbl_member ON tbl_transaction.MemberId = tbl_member.Id
+			$limitCondition");
 			$count = $searchText != '' ?  $query->rowcount() : $conn->query("SELECT * FROM  tbl_transaction")->rowcount();
 			
 			$data = array();
@@ -30,12 +34,23 @@ class TransactionRepository{
 		}
 		public function Create(){
 			global $conn;
-			$query = $conn->prepare("INSERT INTO tbl_transaction (MemberId,Amount,Date,CBU,MBA,WeekPayable) VALUES(:MemberId,:Amount,:Date,:CBU,:MBA,:WeekPayable)");
+			$query = $conn->prepare("INSERT INTO tbl_transaction (MemberId,Amount,Date,CBU,MBA,WeeklyPayment,KAB,TransactionStatus,LoanStatus) 
+			VALUES(:MemberId,:Amount,:Date,:CBU,:MBA,:WeeklyPayment,:KAB,:TransactionStatus,LoanStatus)");
 			return $query;	
 		}
 		public function Update(){
 			global $conn;
-			$query = $conn->prepare("UPDATE tbl_transaction SET MemberId = :MemberId , Amount = :Amount WHERE Id = :Id");
+			$query = $conn->prepare("UPDATE tbl_transaction SET 
+			MemberId = :MemberId , 
+			Amount = :Amount ,
+			Date = :Date,
+			CBU = :CBU,
+			MBA = :MBA,
+			WeeklyPayment = :WeeklyPayment,
+			KAB = :KAB,
+			TransactionStatus = :TransactionStatus,
+			LoanStatus = :LoanStatus
+			WHERE Id = :Id");
 			return $query;	
 		}
 		
@@ -53,9 +68,12 @@ class TransactionRepository{
 			$query->bindParam(':MemberId', !isset($POST->MemberId) ? '' : $POST->MemberId);
 			$query->bindParam(':Amount', !isset($POST->Amount) ? '' : $POST->Amount);
 			$query->bindParam(':Date', date('Y-m-d'));
+			$query->bindParam(':KAB', !isset($POST->KAB) ? '' : $POST->KAB);
 			$query->bindParam(':CBU', !isset($POST->CBU) ? '' : $POST->CBU);
 			$query->bindParam(':MBA', !isset($POST->MBA) ? '' : $POST->MBA);
-			$query->bindParam(':WeekPayable', !isset($POST->WeekPayable) ? '' : $POST->WeekPayable);
+			$query->bindParam(':WeeklyPayment', !isset($POST->WeeklyPayment) ? '' : $POST->WeeklyPayment);
+			$query->bindParam(':TransactionStatus', !isset($POST->TransactionStatus) ? '' : $POST->TransactionStatus);
+			$query->bindParam(':LoanStatus', !isset($POST->LoanStatus) ? '' : $POST->LoanStatus);
 			$query->execute();	
 		}
 }

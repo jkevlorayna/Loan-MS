@@ -1,43 +1,121 @@
-﻿app.controller('AppTransactionFormController', function ($scope, $http, $q, $location, svcMember,growl,$uibModal,svcTransaction,svcSetting) {
-	$scope.loadKey = function(){
-		$q.all([svcSetting.getByKey('CBU'),svcSetting.getByKey('MBA'),svcSetting.getByKey('LRF'),svcSetting.getByKey('CF'),svcSetting.getByKey('MF'),svcSetting.getByKey('KAB')]).then(function(r){
-			$scope.CBU =  parseFloat(r[0].value);
-			$scope.MBA =  parseFloat(r[1].value);
-			$scope.LRF =  parseFloat(r[2].value);
-			$scope.CF =  parseFloat(r[3].value);
-			$scope.MF =  parseFloat(r[4].value);
-			$scope.KAB =  parseFloat(r[5].value);
-			$scope.formData = {CBU:$scope.CBU,MBA:$scope.MBA,WeekPayable:32}
+﻿app.controller('AppTransactionController', function ($scope, $http, $q, $location, svcMember,growl,$uibModal,svcTransaction,svcSetting) {
+
+		$scope.pageNo = 1;
+		$scope.pageSize = 10;
+
+		if($scope.searchText == undefined){ $scope.searchText = '';} 
+		
+    $scope.load = function () {
+		$scope.spinner.active = true;
+		svcTransaction.List($scope.searchText,$scope.pageNo,$scope.pageSize).then(function (r) {
+            $scope.list = r.Results;
+            $scope.count = r.Count;
+			$scope.spinner.active = false;
+        })
+    }
+    $scope.load();
+
+	$scope.ChangeStatusModal = function(size,Id){
+	
+		var modal = $uibModal.open({
+		templateUrl: 'views/transaction/changeStatus.html',
+		controller: 'AppTransactionChangeStatusModalController',
+		size: size,
+		resolve: {
+			dataId: function () {
+				return Id;
+			}
+		}
+		});
+		modal.result.then(function () { }, function () { 
+			$scope.load();
+		});
+
+	};
+
+});
+app.controller('AppTransactionChangeStatusModalController', function (svcTransaction,svcStatus,$rootScope,$scope, $http, $q,  $filter, svcMember,growl,$uibModal,dataId,$uibModalInstance) {
+	$scope.Id = dataId;
+	$scope.close = function(){
+		$uibModalInstance.dismiss();
+	}
+	$scope.getById = function(){
+			svcTransaction.GetById($scope.Id).then(function(r){
+				$scope.formData = r;
+			})	
+	}
+	$scope.getById();
+	
+	$scope.Save = function(){
+		svcTransaction.Save($scope.formData).then(function(r){
+			growl.success("Data Successfully Saved");
+			$uibModalInstance.dismiss();
+		})
+	}
+	
+	$scope.loadStatus = function(){
+		svcStatus.list('',0,0).then(function(r){
+			$scope.statusList = r.Results;
+		})
+	}
+	$scope.loadStatus();
+	
+	$scope.delete = function () {
+		svcMember.deleteData($scope.id).then(function (response) {
+			growl.error("Data Successfully Deleted");
+			$scope.close();
+        }, function (error) {
+
+        });
+    }
+});	
+app.controller('AppTransactionFormController', function ($rootScope,$scope, $http, $q, $location, svcMember,growl,$uibModal,svcTransaction,svcSetting,$stateParams ) {
+	$scope.Id = $stateParams.Id;
 	
 			$scope.calculate = function(){
 				$scope.amount = parseFloat($scope.formData.Amount);
-				$scope.payableWeekly = (($scope.amount + ($scope.amount * 0.15)) / 23);
-				$scope.totalPayablePerWeek = $scope.payableWeekly + $scope.CBU + $scope.MBA;
-				$scope.totalPayableUponLoan = $scope.payableWeekly + $scope.CBU + $scope.MBA + $scope.LRF + $scope.CF + $scope.MF + $scope.KAB;
+				$scope.formData.KAB = (($scope.amount + ($scope.amount * 0.15)) / 23);
+				$scope.totalPayablePerWeek = $scope.formData.KAB + $rootScope.CBU + $rootScope.MBA;
+				$scope.formData.WeeklyPayment = $scope.totalPayablePerWeek;
 			}
+	
+
+			
+			if($scope.Id == 0){
+				$scope.formData = {CBU:$scope.CBU,MBA:$scope.MBA,WeekPayable:32,TransactionStatus:'Pending'}
+			}else{
+				 
+			
+				$scope.getById = function(){
+					svcTransaction.GetById($scope.Id).then(function(r){
+						$scope.formData = r;
+						$scope.selected = r;
+						$scope.calculate();	
+					})
+				}
+				$scope.getById();
+			} 
+			
+
 		
-		})
-	}
-
-	$scope.loadKey();
-	
-
-	
-	
 	
 	$scope.selectCustomer = function(item){
 		$scope.formData.MemberId = item.Id;
 	}
 	$scope.loadMember = function(){
+			$scope.spinner.active = true;
 		svcMember.list('',0,0).then(function(r){
 			$scope.memberList = r.Results;
+			$scope.spinner.active = false;
 		})
 	}
 	$scope.loadMember();
 	
 	$scope.Save = function(){
+			$scope.spinner.active = true;
 		svcTransaction.Save($scope.formData).then(function(r){
 			growl.success("Data Successfully Saved");
+			$scope.spinner.active = false;
 		})
 	}
 });

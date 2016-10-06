@@ -1,5 +1,5 @@
 ﻿
-app.controller('AppMainController', function ($rootScope,$scope, $http, $q, $location, $filter, $window,$cookieStore,$uibModal,svcLogin,svcMemberType) {
+app.controller('AppMainController', function ($rootScope,$scope, $http, $q, $location, $filter, $window,$cookieStore,$uibModal,svcLogin,svcMemberType,svcSetting) {
      $scope.cookieCheck = $cookieStore.get('credentials');
 	$scope.spinner = { Active:false }
 	
@@ -50,6 +50,16 @@ app.controller('AppMainController', function ($rootScope,$scope, $http, $q, $loc
 				
 			});
 	};
+	
+
+	$q.all([svcSetting.getByKey('CBU'),svcSetting.getByKey('MBA'),svcSetting.getByKey('LRF'),svcSetting.getByKey('CF'),svcSetting.getByKey('MF'),svcSetting.getByKey('KAB')]).then(function(r){
+			$rootScope.CBU =  parseFloat(r[0].value);
+			$rootScope.MBA =  parseFloat(r[1].value);
+			$rootScope.LRF =  parseFloat(r[2].value);
+			$rootScope.CF =  parseFloat(r[3].value);
+			$rootScope.MF =  parseFloat(r[4].value);
+	});
+
 });
 
 

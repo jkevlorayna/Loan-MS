@@ -52,7 +52,8 @@ class MemberRepository{
 					   Status = :Status,
 					   Age = :Age,
 					   Business = :Business,
-					   CenterId = :CenterId
+					   CenterId = :CenterId,
+					   Status = :Status
 					   WHERE Id = :Id
 				");
 			return $query;	
@@ -75,6 +76,7 @@ class MemberRepository{
 			$query->bindParam(':Age', !isset($POST->Age) ? '' : $POST->Age );
 			$query->bindParam(':Business', !isset($POST->Business) ? '' : $POST->Business );
 			$query->bindParam(':CenterId', !isset($POST->CenterId) ? '' : $POST->CenterId );
+			$query->bindParam(':Status', !isset($POST->Status) ? '' : $POST->Status );
 			
 		
 			if($Id == 0){ $query->bindParam(':DateRegistered', date('Y-m-d')); }
