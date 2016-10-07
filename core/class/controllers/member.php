@@ -32,13 +32,13 @@ $slim_app->post('/signup',function(){
 	$MemberRepo = new MemberRepository();
 	$BeneficiaryRepo = new BeneficiaryRepository();
 	
-	$MemberRepo->SignUp($POST );
-	 
-	 foreach($POST->Beneficiary as $row){
-		 print_r($row);
-		 $BeneficiaryRepo->Save($row);
-	 }
-	 
+	$MemberRepo->SignUp($POST);
+	 if(isset($POST->Beneficiary)){
+		foreach($POST->Beneficiary as $row){
+			print_r($row);
+			$BeneficiaryRepo->Save($row);
+		}
+	}
 });
 $slim_app->post('/member/changepassword',function(){
 	$MemberRepo = new MemberRepository();

@@ -74,7 +74,7 @@ if(!isset($_SESSION['isAuthenticated'])){ $isAuthenticated = false; }else{ $isAu
             </ul>
           </li>
         </ul>	
-			<h3>PAG-INUPDANAY, <!--INCORPORATED--></h3>
+			<h3>PAG-INUPDANAY, INCORPORATED</h3>
       </div>
     </div>
   </div>
