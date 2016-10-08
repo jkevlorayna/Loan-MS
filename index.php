@@ -28,8 +28,16 @@ if(!isset($_SESSION['isAuthenticated'])){ $isAuthenticated = false; }else{ $isAu
 				<li>
 					<a href="#"><i class="fa fa-group"></i><span>Member</span></a> 
 					<ul class="sub-menu">						
-						<li><a href="#/member/list"><i class="fa fa-group"></i> List</a></li>
+						<li><a href="#/member/list"><i class="fa fa-file"></i> List</a></li>
+						<li><a href="#/member/form/0"><i class="fa fa-edit"></i> Form</a></li>
 						<li><a href="#/member/status"><i class="fa fa-file"></i> Status List</a></li>
+					</ul>		
+				</li>
+				<li>
+					<a href="#"><i class="fa fa-money"></i><span>Payment</span></a> 
+					<ul class="sub-menu">						
+						<li><a href="#/member/payment/form/0"><i class="fa fa-file"></i> Form</a></li>
+						<li><a href="#/member/payment/list"><i class="fa fa-file"></i>List</a></li>
 					</ul>		
 				</li>
 			    <li><a href="#/center"><i class="fa fa-building-o"></i> Center</a></li>
@@ -40,7 +48,7 @@ if(!isset($_SESSION['isAuthenticated'])){ $isAuthenticated = false; }else{ $isAu
 					<a href="#"><i class="fa fa-folder"></i><span>Reports</span></a> 
 					<ul class="sub-menu">						
 							<li><a href="#/report/dts">Daily Transaction Sheet</a></li>
-							<li><a href="#">Summary of Expenses</a></li>
+							<li><a href="#/report/soe">Summary of Expenses</a></li>
 							<li><a href="#/report/loanListing">Loan Listing</a></li>
 
 					</ul>		

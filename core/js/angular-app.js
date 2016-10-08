@@ -59,6 +59,20 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 				templateUrl: "views/member/type.html",
 				controller: "AppMemberTypeController",
 			})
+			// payment 
+						.state('member.payment',
+						{
+							url: '/payment/list',
+							templateUrl: "views/member/payment/list.html",
+							controller: "AppPaymentListController",
+						})
+						.state('member.paymentForm',
+						{
+							url: '/payment/form/:Id',
+							templateUrl: "views/member/payment/form.html",
+							controller: "AppPaymentFormController",
+						})
+			// end payment
 		// end member
 		
 		//user 
@@ -146,6 +160,12 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 		{
 			url: '/dts',
 			templateUrl: "views/report/dts.html",
+			controller: "",
+		})
+		.state('report.soe',
+		{
+			url: '/soe',
+			templateUrl: "views/report/soe.html",
 			controller: "",
 		})
 		.state('report.loanListing',

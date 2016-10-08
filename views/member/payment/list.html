@@ -3,9 +3,8 @@
 						<div class="header">		
 							<div class="alert alert-info alert-white rounded">
 								<div class="icon"><i class="fa fa-info-circle"></i></div>
-								<h4>Member List</h4>
+								<h4>Payment List</h4>
 							 </div>
-							 
 						</div>
 <div class="row">
 	<div class="col-md-12">
@@ -24,26 +23,26 @@
 				<thead>
 					<tr>
 						<th>Name</th>
-						<th>Gender</th>
-						<th>Age</th>
-						<th>Address</th>
-						<th>Mobile No</th>
-						<th>Email</th>
-						<th>Center</th>
+						<th>Date</th>
+						<th>KAB</th>
+						<th>CBU</th>
+						<th>CBA</th>
+						<th>CF</th>
+						<th>Total</th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr ng-repeat="row in list">
 						<td>{{row.Firstname}} {{row.Middlename}} {{row.Lastname}}</td>
-						<td>{{row.Gender}}</td>
-						<td class="text-center">{{row.Age}}</td>
-						<td>{{row.Address}}</td>
-						<td>{{row.MobileNo}}</td>
-						<td>{{row.Email}}</td>
-						<td>{{row.CenterName}}</td>
+						<td>{{row.Date | date:'MM/dd//yyyy'}}</td>
+						<td class="text-right">{{row.KAB}}</td>
+						<td class="text-right">{{row.CBU}}</td>
+						<td class="text-right">{{row.CBA}}</td>
+						<td class="text-right">{{row.CF}}</td>
+						<td class="text-right">{{row.Total}}</td>
 						<td>
-							<a class="btn btn-success btn-sm" href="#/member/form/{{row.Id}}">  <i class="fa fa-edit"></i> </a>
+							<a class="btn btn-success btn-sm" href="#/member/payment/form/{{row.Id}}">  <i class="fa fa-edit"></i> </a>
 							<button class="btn btn-danger btn-sm" ng-click="openDeleteModal('md',row.Id)">  <i class="fa fa-trash-o"></i> </button>
 						</td>
 					</tr>

@@ -12,13 +12,22 @@ class TransactionRepository{
 			$query = $conn->prepare("DELETE FROM  tbl_transaction  WHERE Id = '$id'");
 			$query->execute();	
 		}
-		function DataList($searchText,$pageNo,$pageSize){
+		function DataList($searchText,$pageNo,$pageSize,$DateFrom,$DateTo){
 			global $conn;
 			$pageNo = ($pageNo - 1) * $pageSize; 
+		
+			$where = "";
+			if($searchText != ''){
+				$where = "And (tbl_member.firstname  LIKE '%$searchText%' OR tbl_member.middlename  LIKE '%$searchText%' OR tbl_member.lastname  LIKE '%$searchText%')";
+			}
+			if($DateFrom != 'null' && $DateTo != 'null'){
+				$where = "And tbl_transaction.Date BETWEEN '$DateFrom' AND '$DateTo'";
+			}
 			
 			$limitCondition = $pageNo == 0 && $pageSize == 0 ? '' : 'LIMIT '.$pageNo.','.$pageSize;
 			$query = $conn->query("SELECT *,tbl_transaction.Id as Id FROM  tbl_transaction
 			LEFT JOIN tbl_member ON tbl_transaction.MemberId = tbl_member.Id
+			WHERE  1 = 1  $where 
 			$limitCondition");
 			$count = $searchText != '' ?  $query->rowcount() : $conn->query("SELECT * FROM  tbl_transaction")->rowcount();
 			

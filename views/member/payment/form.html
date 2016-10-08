@@ -4,7 +4,7 @@
 						<div class="header">										
 							<div class="alert alert-info alert-white rounded">
 								<div class="icon"><i class="fa fa-info-circle"></i></div>
-								<h4>Loan Transaction</h4>
+								<h4>Members Payment</h4>
 							 </div>
 						</div>
 						<div class="content">
@@ -37,28 +37,34 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label col-md-4">Amount Borrowed</label>
+					<label class="control-label col-md-4">KAB</label>
 					<div class="col-md-8">
-						<input type="text" ng-model="formData.Amount" name="Amount"  ng-change="calculate()" class="form-control" required>
+						<input type="text" ng-model="formData.KAB" name="KAB"  ng-change="calculate()" class="form-control" required>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label col-md-4">Interest</label>
+					<label class="control-label col-md-4">CBU</label>
 					<div class="col-md-8">
-						15%
+						<input type="text" ng-model="formData.CBU" name="CBU"  ng-change="calculate()" class="form-control" required>
 					</div>
 				</div>
-					
 				<div class="form-group">
-					<label class="control-label col-md-4">Payable Upon</label>
+					<label class="control-label col-md-4">CBA</label>
 					<div class="col-md-8">
-						23 Weeks
+						<input type="text" ng-model="formData.CBA" name="CBA"  ng-change="calculate()" class="form-control" required>
 					</div>
 				</div>
-				<div class="form-group" ng-if="TransactionForm.Amount.$valid">
-					<label class="control-label col-md-4">Weekly Payment</label>
+				<div class="form-group">
+					<label class="control-label col-md-4">CF (Optional)</label>
 					<div class="col-md-8">
-						{{formData.KAB}} + CBU({{CBU}}) + MBA({{MBA}}) = {{totalPayablePerWeek}}
+						<input type="text" ng-model="formData.CF" name="CBA"  ng-change="calculate()" class="form-control">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-md-4">Totay Payment</label>
+					<div class="col-md-8">
+						{{formData.Total | currency :''}}
 					</div>
 				</div>
 				<div class="form-group">

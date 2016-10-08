@@ -34,10 +34,10 @@ class CenterRepository{
 			return $query;	
 		}
 		
-		function Save(){
+		function Save($POST){
 			global $conn;
-			$request = \Slim\Slim::getInstance()->request();
-			$POST = json_decode($request->getBody());
+			// $request = \Slim\Slim::getInstance()->request();
+			// $POST = json_decode($request->getBody());
 			
 			$Id = !isset($POST->Id) ? 0 : $POST->Id;
 			$query  = $Id == 0 ? $this->Create() : $this->UPDATE() ;

@@ -12,13 +12,18 @@ class MemberRepository{
 		}
 		public function DataList($searchText,$pageNo,$pageSize){
 			global $conn;
+			$where = "";
+			if($searchText != ''){
+				$where = "And (firstname  LIKE '%$searchText%' OR middlename  LIKE '%$searchText%' OR lastname  LIKE '%$searchText%')";
+			}
+
 	
 			$pageNo = ($pageNo - 1) * $pageSize; 
 			$limitCondition = $pageNo == 0 && $pageSize == 0 ? '' : 'LIMIT '.$pageNo.','.$pageSize;
 			
 			$query = $conn->query("SELECT *,tbl_member.Id As Id,tbl_center.Name As CenterName FROM  tbl_member
 			LEFT JOIN tbl_center On tbl_member.CenterId = tbl_center.Id
-			WHERE FirstName LIKE '%$searchText%' $limitCondition ");
+			WHERE 1 = 1 $where $limitCondition ");
 			$count = $searchText != '' ? $query->rowcount() : $conn->query("SELECT * FROM  tbl_member")->rowcount();
 			
 			$data = array();

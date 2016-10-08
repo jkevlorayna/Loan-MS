@@ -3,11 +3,25 @@
 		$scope.pageNo = 1;
 		$scope.pageSize = 10;
 
-		if($scope.searchText == undefined){ $scope.searchText = '';} 
+	if($scope.searchText == undefined){ $scope.searchText = '';} 
 		
     $scope.load = function () {
+		if($scope.DateFrom == undefined){ 
+			$scope.NewDateFrom = null;
+		}else{
+			$scope.NewDateFrom =  moment($scope.DateFrom).format("YYYY-MM-DD");
+		} 	
+		
+		if($scope.DateTo == undefined){ 
+			$scope.NewDateTo = null;
+		}else{
+			$scope.NewDateTo =  moment($scope.DateTo).format("YYYY-MM-DD");
+		} 	
+		
+
+		
 		$scope.spinner.active = true;
-		svcTransaction.List($scope.searchText,$scope.pageNo,$scope.pageSize).then(function (r) {
+		svcTransaction.List($scope.searchText,$scope.pageNo,$scope.pageSize,$scope.NewDateFrom,$scope.NewDateTo).then(function (r) {
             $scope.list = r.Results;
             $scope.count = r.Count;
 			$scope.spinner.active = false;
@@ -52,14 +66,7 @@ app.controller('AppTransactionChangeStatusModalController', function (svcTransac
 			$uibModalInstance.dismiss();
 		})
 	}
-	
-	$scope.loadStatus = function(){
-		svcStatus.list('',0,0).then(function(r){
-			$scope.statusList = r.Results;
-		})
-	}
-	$scope.loadStatus();
-	
+		
 	$scope.delete = function () {
 		svcMember.deleteData($scope.id).then(function (response) {
 			growl.error("Data Successfully Deleted");
@@ -89,6 +96,7 @@ app.controller('AppTransactionFormController', function ($rootScope,$scope, $htt
 				$scope.getById = function(){
 					svcTransaction.GetById($scope.Id).then(function(r){
 						$scope.formData = r;
+						$scope.formData.Date = new Date(r.Date);
 						$scope.selected = r;
 						$scope.calculate();	
 					})
