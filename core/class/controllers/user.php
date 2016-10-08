@@ -1,18 +1,25 @@
 <?php 
 // user
 $slim_app->get('/user/:id',function($id){
-	$result = $GLOBALS['UserRepo']->Get($id);
+	$UserRepo = new StatusRepository();
+	$result = $UserRepo->Get($id);
 	echo json_encode($result);
 });
 $slim_app->get('/user',function(){
-	$result = $GLOBALS['UserRepo']->DataList($_GET['searchText'],$_GET['pageNo'],$_GET['pageSize']);
+	$UserRepo = new StatusRepository();
+	$result = $UserRepo->DataList($_GET['searchText'],$_GET['pageNo'],$_GET['pageSize']);
 	echo json_encode($result);
 });
 $slim_app->delete('/user/:id',function($id){
-	$GLOBALS['UserRepo']->Delete($id);
+	$UserRepo = new StatusRepository();
+	$UserRepo->Delete($id);
 });
 $slim_app->post('/user',function(){
-	$GLOBALS['UserRepo']->Save();
+	$request = \Slim\Slim::getInstance()->request();
+	$POST = json_decode($request->getBody());
+	$UserRepo = new StatusRepository();
+	
+	$UserRepo->Save();
 });
 
 // user type

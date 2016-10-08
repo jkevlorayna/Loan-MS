@@ -26,26 +26,40 @@ class UserRepository{
 			$data['Count'] = $count;
 			return $data;	
 		}
-		 public function Save(){
+		public function Create(){
 			global $conn;
-			$request = \Slim\Slim::getInstance()->request();
-			$POST = json_decode($request->getBody());
-		
-			$id  = (!isset($POST->user_id))? 0 : $POST->user_id;
-			$name = $POST->name;
-			$status = $POST->status;
-			$username = $POST->username;
-			$password = $POST->password;
-			$UserTypeId = $POST->UserTypeId;
-
-			
-			if($id == 0){
-				$query = $conn->prepare("INSERT INTO tbl_user (name,username,password,UserTypeId,status) VALUES(?,?,?,?,?)");
-				$query->execute(array($name,$username,$password,$UserTypeId,$status));	
+			$query = $conn->prepare("INSERT INTO tbl_user (name,username,password,UserTypeId,status) VALUES(:name,:username,:password,:UserTypeId,:status");
+			return $query;	
+		}
+		public function Update(){
+			global $conn;
+			$query = $conn->prepare("UPDATE tbl_user SET name = :name , status = :status , username = :username , password = :password , UserTypeId = :UserTypeId  WHERE Id = :Id");
+			return $query;	
+		}
+		public function Transform($POST){
+			$POST->Id = !isset($POST->Id) ? 0 : $POST->Id;
+			$POST->name = !isset($POST->name) ? '' : $POST->name; 
+			$POST->status = !isset($POST->status) ? '' : $POST->status; 
+			$POST->username = !isset($POST->username) ? '' : $POST->username; 
+			$POST->password = !isset($POST->password) ? '' : $POST->password; 
+			$POST->UserTypeId = !isset($POST->UserTypeId) ? '' : $POST->UserTypeId; 
+			return $POST;
+		}
+		 public function Save($POST){
+			global $conn;
+			if($POST->Id == 0){
+				$query = $this->Create();
 			}else{
-				$query = $conn->prepare("UPDATE tbl_user SET name = ?  , username = ? , password = ? , UserTypeId = ? , status = ?  WHERE user_id = ? ");
-				$query->execute(array($name,$username,$password,$UserTypeId,$status,$id));	
+				$query = $this->UPDATE();
+				$query->bindParam(':Id', $POST->Id);
 			}
+			
+			$query->bindParam(':name',$POST->name);
+			$query->bindParam(':status',$POST->status);
+			$query->bindParam(':username',$POST->username);
+			$query->bindParam(':password',$POST->password);
+			$query->bindParam(':UserTypeId',$POST->UserTypeId);
+			$query->execute();	
 		}
 }
 $GLOBALS['UserRepo'] = new UserRepository();

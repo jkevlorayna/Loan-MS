@@ -34,22 +34,22 @@ class CenterRepository{
 			return $query;	
 		}
 		public function Transform($POST){
+			$POST->Id = !isset($POST->Id) ? 0 : $POST->Id;
 			$POST->Name = !isset($POST->Name) ? '' : $POST->Name; 
 			$POST->Address = !isset($POST->Address) ? '' : $POST->Address; 
 			return $POST;
 		}
 		function Save($POST){
 			global $conn;
-
+			if($POST->Id == 0){
+				$query = $this->Create();
+			}else{
+				$query = $this->UPDATE();
+				$query->bindParam(':Id', $POST->Id);
+			}
 			
-			$Id = !isset($POST->Id) ? 0 : $POST->Id;
-			$query  = $Id == 0 ? $this->Create() : $this->UPDATE() ;
-				
-		
-			if($Id != 0){ $query->bindParam(':Id', $Id); }
 			$query->bindParam(':Name',$POST->Name);
 			$query->bindParam(':Address',$POST->Address);
-			
 			$query->execute();	
 		}
 }

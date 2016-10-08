@@ -32,7 +32,7 @@ $slim_app->post('/signup',function(){
 	$MemberRepo = new MemberRepository();
 	$BeneficiaryRepo = new BeneficiaryRepository();
 	
-	$MemberRepo->SignUp($POST);
+	$MemberRepo->SignUp($MemberRepo->Transform($POST));
 	 if(isset($POST->Beneficiary)){
 		foreach($POST->Beneficiary as $row){
 			print_r($row);

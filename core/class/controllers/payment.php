@@ -14,7 +14,10 @@
 		$PaymentRepo->Delete($id);
 	});
 	$slim_app->post('/payment',function(){
+		$request = \Slim\Slim::getInstance()->request();
+		$POST = json_decode($request->getBody());
+			
 		$PaymentRepo = new PaymentRepository();
-		$PaymentRepo->Save();
+		$PaymentRepo->Save($PaymentRepo->Transform($POST));
 	});
 ?>

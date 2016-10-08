@@ -62,27 +62,37 @@ class TransactionRepository{
 			WHERE Id = :Id");
 			return $query;	
 		}
-		
-		function Save(){
+		public function Transform($POST){
+			$POST->Id = !isset($POST->Id) ? 0 : $POST->Id;
+			$POST->MemberId = !isset($POST->MemberId) ? '' : $POST->MemberId; 
+			$POST->Amount = !isset($POST->Amount) ? '' : $POST->Amount; 
+			$POST->KAB = !isset($POST->KAB) ? '' : $POST->KAB; 
+			$POST->CBU = !isset($POST->CBU) ? '' : $POST->CBU; 
+			$POST->MBA = !isset($POST->MBA) ? '' : $POST->MBA; 
+			$POST->WeeklyPayment = !isset($POST->WeeklyPayment) ? '' : $POST->WeeklyPayment; 
+			$POST->TransactionStatus = !isset($POST->TransactionStatus) ? '' : $POST->TransactionStatus; 
+			$POST->LoanStatus = !isset($POST->LoanStatus) ? '' : $POST->LoanStatus; 
+
+			return $POST;
+		}
+		function Save($POST){
 			global $conn;
-			$request = \Slim\Slim::getInstance()->request();
-			$POST = json_decode($request->getBody());
-			
-			$Id = !isset($POST->Id) ? 0 : $POST->Id;
-			
-			$Id == 0 ? $query = $this->Create() : $query = $this->UPDATE() ;
-			if($Id != 0){ $query->bindParam(':Id', $Id); }
-			
-			
+			if($POST->Id == 0){
+				$query = $this->Create();
+			}else{
+				$query = $this->UPDATE();
+				$query->bindParam(':Id', $POST->Id);
+			}
+
 			$query->bindParam(':MemberId', !isset($POST->MemberId) ? '' : $POST->MemberId);
 			$query->bindParam(':Amount', !isset($POST->Amount) ? '' : $POST->Amount);
 			$query->bindParam(':Date', date('Y-m-d'));
-			$query->bindParam(':KAB', !isset($POST->KAB) ? '' : $POST->KAB);
-			$query->bindParam(':CBU', !isset($POST->CBU) ? '' : $POST->CBU);
-			$query->bindParam(':MBA', !isset($POST->MBA) ? '' : $POST->MBA);
-			$query->bindParam(':WeeklyPayment', !isset($POST->WeeklyPayment) ? '' : $POST->WeeklyPayment);
-			$query->bindParam(':TransactionStatus', !isset($POST->TransactionStatus) ? '' : $POST->TransactionStatus);
-			$query->bindParam(':LoanStatus', !isset($POST->LoanStatus) ? '' : $POST->LoanStatus);
+			$query->bindParam(':KAB', $POST->KAB);
+			$query->bindParam(':CBU', $POST->CBU);
+			$query->bindParam(':MBA', $POST->MBA);
+			$query->bindParam(':WeeklyPayment', $POST->WeeklyPayment);
+			$query->bindParam(':TransactionStatus', $POST->TransactionStatus);
+			$query->bindParam(':LoanStatus', $POST->LoanStatus);
 			$query->execute();	
 		}
 }

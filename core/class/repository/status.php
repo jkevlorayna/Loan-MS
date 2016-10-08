@@ -23,7 +23,7 @@ class StatusRepository{
 			$data['Count'] = $count;
 			return $data;	
 		}
-				public function Create(){
+		public function Create(){
 			global $conn;
 			$query = $conn->prepare("INSERT INTO tbl_status (Status) VALUES(:Status)");
 			return $query;	
@@ -33,17 +33,19 @@ class StatusRepository{
 			$query = $conn->prepare("UPDATE tbl_status SET Status = :Status WHERE Id = :Id");
 			return $query;	
 		}
-		
-		function Save(){
+		public function Transform($POST){
+			$POST->Id = !isset($POST->Id) ? 0 : $POST->Id;
+			$POST->Status = !isset($POST->Status) ? '' : $POST->Status; 
+			return $POST;
+		}
+		function Save($POST){
 			global $conn;
-			$request = \Slim\Slim::getInstance()->request();
-			$POST = json_decode($request->getBody());
-			
-			$Id = !isset($POST->Id) ? 0 : $POST->Id;
-			
-			$Id == 0 ? $query = $this->Create() : $query = $this->UPDATE() ;
-			if($Id != 0){ $query->bindParam(':Id', $Id); }
-			
+			if($POST->Id == 0){
+				$query = $this->Create();
+			}else{
+				$query = $this->UPDATE();
+				$query->bindParam(':Id', $POST->Id);
+			}
 			
 			$query->bindParam(':Status', !isset($POST->Status) ? '' : $POST->Status);
 			$query->execute();	

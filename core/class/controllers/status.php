@@ -14,7 +14,10 @@
 		$StatusRepo->Delete($id);
 	});
 	$slim_app->post('/status',function(){
+		$request = \Slim\Slim::getInstance()->request();
+		$POST = json_decode($request->getBody());
+			
 		$StatusRepo = new StatusRepository();
-		$StatusRepo->Save();
+		$StatusRepo->Save($StatusRepo->Transform($POST));
 	});
 ?>

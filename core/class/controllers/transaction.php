@@ -14,7 +14,10 @@
 		$TransactionRepo->Delete($id);
 	});
 	$slim_app->post('/transaction',function(){
+		$request = \Slim\Slim::getInstance()->request();
+		$POST = json_decode($request->getBody());
+			
 		$TransactionRepo = new TransactionRepository();
-		$TransactionRepo->Save();
+		$TransactionRepo->Save($TransactionRepo->Transform($POST));
 	});
 ?>

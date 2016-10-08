@@ -63,30 +63,48 @@ class MemberRepository{
 				");
 			return $query;	
 		}
+		public function Transform($POST){
+			$POST->Id = !isset($POST->Id) ? 0 : $POST->Id;
+			$POST->Firstname = !isset($POST->Firstname) ? '' : $POST->Firstname; 
+			$POST->Lastname = !isset($POST->Lastname) ? '' : $POST->Lastname; 
+			$POST->Middlename = !isset($POST->Middlename) ? '' : $POST->Middlename; 
+			$POST->Gender = !isset($POST->Gender) ? '' : $POST->Gender; 
+			$POST->Address = !isset($POST->Address) ? '' : $POST->Address; 
+			$POST->MobileNo = !isset($POST->MobileNo) ? '' : $POST->MobileNo; 
+			$POST->Email = !isset($POST->Email) ? '' : $POST->Email; 
+			$POST->Status = !isset($POST->Status) ? '' : $POST->Status; 
+			$POST->Age = !isset($POST->Age) ? '' : $POST->Age; 
+			$POST->Business = !isset($POST->Business) ? '' : $POST->Business; 
+			$POST->CenterId = !isset($POST->CenterId) ? '' : $POST->CenterId; 
+			$POST->Status = !isset($POST->Status) ? '' : $POST->Status; 
+
+			return $POST;
+		}
 		public function Save($POST ){
 			global $conn;
-
-			$Id = !isset($POST->Id) ? 0 : $POST->Id;
-			$Id == 0 ? $query = $this->Create() : $query = $this->UPDATE() ;
+			if($POST->Id == 0){
+				$query = $this->Create();
+			}else{
+				$query = $this->UPDATE();
+				$query->bindParam(':Id', $POST->Id);
+				$query->bindParam(':DateRegistered', date('Y-m-d'));
+			}
 		
-			if($Id != 0){ $query->bindParam(':Id', $Id); }
 			$query->bindParam(':Firstname', $POST->Firstname);
 			$query->bindParam(':Lastname', $POST->Lastname);
 			$query->bindParam(':Middlename', $POST->Middlename);
 			$query->bindParam(':Gender', $POST->Gender);
-			$query->bindParam(':Address', !isset($POST->Address) ? '' : $POST->Address );
-			$query->bindParam(':MobileNo', !isset($POST->MobileNo) ? '' : $POST->MobileNo );
-			$query->bindParam(':Email', !isset($POST->Email) ? '' : $POST->Email );
-			$query->bindParam(':Status', !isset($POST->Status) ? '' : $POST->Status );
-			$query->bindParam(':Age', !isset($POST->Age) ? '' : $POST->Age );
-			$query->bindParam(':Business', !isset($POST->Business) ? '' : $POST->Business );
-			$query->bindParam(':CenterId', !isset($POST->CenterId) ? '' : $POST->CenterId );
-			$query->bindParam(':Status', !isset($POST->Status) ? '' : $POST->Status );
+			$query->bindParam(':Address', $POST->Address );
+			$query->bindParam(':MobileNo',$POST->MobileNo );
+			$query->bindParam(':Email', $POST->Email );
+			$query->bindParam(':Status', $POST->Status );
+			$query->bindParam(':Age', $POST->Age );
+			$query->bindParam(':Business', $POST->Business );
+			$query->bindParam(':CenterId', $POST->CenterId );
+			$query->bindParam(':Status', $POST->Status );
 			
-		
-			if($Id == 0){ $query->bindParam(':DateRegistered', date('Y-m-d')); }
-			
-			
+
+
 			$query->execute();	
 			
 		}

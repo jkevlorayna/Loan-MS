@@ -37,24 +37,31 @@ class PaymentRepository{
 			$query = $conn->prepare("UPDATE tbl_payment SET MemberId = :MemberId  , Date = :Date , KAB = :KAB , CBU = :CBU , CBA = :CBA , CF = :CF , Total = :Total WHERE Id = :Id");
 			return $query;	
 		}
-		
-		function Save(){
+		public function Transform($POST){
+			$POST->Id = !isset($POST->Id) ? 0 : $POST->Id;
+			$POST->MemberId = !isset($POST->MemberId) ? '' : $POST->MemberId; 
+			$POST->KAB = !isset($POST->KAB) ? '' : $POST->KAB; 
+			$POST->CBU = !isset($POST->CBU) ? '' : $POST->CBU; 
+			$POST->CBA = !isset($POST->CBA) ? '' : $POST->CBA; 
+			$POST->CF = !isset($POST->CF) ? '' : $POST->CF; 
+			$POST->Total = !isset($POST->Total) ? '' : $POST->Total; 
+			return $POST;
+		}
+		function Save($POST){
 			global $conn;
-			$request = \Slim\Slim::getInstance()->request();
-			$POST = json_decode($request->getBody());
+			if($POST->Id == 0){
+				$query = $this->Create();
+			}else{
+				$query = $this->UPDATE();
+				$query->bindParam(':Id', $POST->Id);
+			}
 			
-			$Id = !isset($POST->Id) ? 0 : $POST->Id;
-			
-			$Id == 0 ? $query = $this->Create() : $query = $this->UPDATE() ;
-			if($Id != 0){ $query->bindParam(':Id', $Id); }
-			
-			
-			$query->bindParam(':MemberId', !isset($POST->MemberId) ? '' : $POST->MemberId);
-			$query->bindParam(':KAB', !isset($POST->KAB) ? '' : $POST->KAB);
-			$query->bindParam(':CBU', !isset($POST->CBU) ? '' : $POST->CBU);
-			$query->bindParam(':CBA', !isset($POST->CBA) ? '' : $POST->CBA);
-			$query->bindParam(':CF', !isset($POST->CF) ? '' : $POST->CF);
-			$query->bindParam(':Total', !isset($POST->Total) ? '' : $POST->Total);
+			$query->bindParam(':MemberId', $POST->MemberId);
+			$query->bindParam(':KAB', $POST->KAB);
+			$query->bindParam(':CBU', $POST->CBU);
+			$query->bindParam(':CBA', $POST->CBA);
+			$query->bindParam(':CF', $POST->CF);
+			$query->bindParam(':Total', $POST->Total);
 			$query->bindParam(':Date', date('Y-m-d'));
 			
 			

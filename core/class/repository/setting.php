@@ -28,25 +28,39 @@ class SettingRepository{
 			$data['Count'] = $count;
 			return $data;	
 		}
-		public function Save(){
+		public function Create(){
 			global $conn;
-			$request = \Slim\Slim::getInstance()->request();
-			$POST = json_decode($request->getBody());
-			
-			
-			$id = (!isset($POST->Id)) ? 0 : $POST->Id;
-			$title =  $POST->title;
-			$settingKey =  $POST->settingKey;
-			$value =  $POST->value;
-
-			if($id == 0) { 
-				$query = $conn->prepare("INSERT INTO tbl_setting (title,settingKey,value) VALUES(?,?,?)");
-				$query->execute(array($title,$settingKey,$value));
-			}else{ 
-				$query = $conn->prepare("UPDATE tbl_setting SET title = ? , settingKey = ? , value = ?   WHERE Id = ? ");
-				$query->execute(array($title,$settingKey,$value,$id));	
+			$query = $conn->prepare("INSERT INTO tbl_setting (title,settingKey,value) VALUES(:title,:settingKey,:value)");
+			return $query;	
+		}
+		public function Update(){
+			global $conn;
+			$query = $conn->prepare("UPDATE tbl_setting SET title = :title , settingKey = :settingKey , value = :value WHERE Id = :Id");
+			return $query;	
+		}
+		public function Transform($POST){
+			$POST->Id = !isset($POST->Id) ? 0 : $POST->Id;
+			$POST->title = !isset($POST->title) ? '' : $POST->title; 
+			$POST->settingKey = !isset($POST->settingKey) ? '' : $POST->settingKey; 
+			$POST->value = !isset($POST->value) ? '' : $POST->value; 
+			return $POST;
+		}
+		public function Save($POST){
+			global $conn;
+			if($POST->Id == 0){
+				$query = $this->Create();
+			}else{
+				$query = $this->UPDATE();
+				$query->bindParam(':Id', $POST->Id);
 			}
+			
+			$query->bindParam(':title',$POST->title);
+			$query->bindParam(':settingKey',$POST->settingKey);
+			$query->bindParam(':value',$POST->value);
+			$query->execute();	
+			
+			
 		}
 }
-$GLOBALS['SettingRepo'] = new SettingRepository();
+
 ?>
