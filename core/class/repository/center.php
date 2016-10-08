@@ -33,19 +33,22 @@ class CenterRepository{
 			$query = $conn->prepare("UPDATE tbl_center SET Name = :Name , Address = :Address WHERE Id = :Id");
 			return $query;	
 		}
-		
+		public function Transform($POST){
+			$POST->Name = !isset($POST->Name) ? '' : $POST->Name; 
+			$POST->Address = !isset($POST->Address) ? '' : $POST->Address; 
+			return $POST;
+		}
 		function Save($POST){
 			global $conn;
-			// $request = \Slim\Slim::getInstance()->request();
-			// $POST = json_decode($request->getBody());
+
 			
 			$Id = !isset($POST->Id) ? 0 : $POST->Id;
 			$query  = $Id == 0 ? $this->Create() : $this->UPDATE() ;
 				
 		
 			if($Id != 0){ $query->bindParam(':Id', $Id); }
-			$query->bindParam(':Name', !isset($POST->Name) ? '' : $POST->Name);
-			$query->bindParam(':Address', !isset($POST->Address) ? '' : $POST->Address);
+			$query->bindParam(':Name',$POST->Name);
+			$query->bindParam(':Address',$POST->Address);
 			
 			$query->execute();	
 		}

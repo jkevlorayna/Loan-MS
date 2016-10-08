@@ -14,8 +14,10 @@
 		$CenterRepo->Delete($id);
 	});
 	$slim_app->post('/center',function(){
-		$POST = json_decode( file_get_contents('php://input') );
+		$request = \slim\slim::getinstance()->request();
+		$POST = json_decode($request->getbody());
+			
 		$CenterRepo = new CenterRepository();
-		$CenterRepo->Save($POST);
+		$CenterRepo->Save($CenterRepo->Transform($POST));
 	});
 ?>
