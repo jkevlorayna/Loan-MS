@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 07, 2016 at 12:27 AM
+-- Generation Time: Oct 09, 2016 at 01:25 PM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.11
 
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `tbl_member` (
   `Business` varchar(200) NOT NULL,
   `CenterId` int(11) NOT NULL,
   `CoMaker` varchar(100) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_member`
@@ -116,7 +116,7 @@ INSERT INTO `tbl_member` (`Id`, `Firstname`, `Lastname`, `Middlename`, `Gender`,
 (27, 'Alfreds', 'Futterkiste', 'B', 'Male', 'da', 'dsad', '', '2016-09-17', 22, '', '', 3, ''),
 (28, 'Ana Trujillo', 'Emparedados y helados', 'B', 'Male', '', '', '', '2016-09-23', 0, '', '', 4, ''),
 (31, 'White Clover', 'Markets', 'B', 'Female', 'dasd', '', '', '2016-09-07', 22, '', '', 2, ''),
-(33, 'asdasd', 'das', 'dasd', 'Female', 'dasd', 'asdasd', '', '2016-09-04', 0, '', '', 0, '');
+(36, 'jkl', 'ads', 'dasd', 'Male', '', '', '', '2016-10-08', 0, '', '', 0, '');
 
 -- --------------------------------------------------------
 
@@ -140,6 +140,32 @@ INSERT INTO `tbl_member_type` (`Id`, `type`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_payment`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_payment` (
+`Id` int(11) NOT NULL,
+  `MemberId` int(11) NOT NULL,
+  `Date` date NOT NULL,
+  `KAB` decimal(12,2) NOT NULL,
+  `CBU` decimal(12,2) NOT NULL,
+  `CBA` decimal(12,2) NOT NULL,
+  `CF` decimal(12,2) NOT NULL,
+  `Total` decimal(12,2) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_payment`
+--
+
+INSERT INTO `tbl_payment` (`Id`, `MemberId`, `Date`, `KAB`, `CBU`, `CBA`, `CF`, `Total`) VALUES
+(1, 31, '2016-10-08', '222.00', '555.00', '45.00', '0.00', '822.00'),
+(2, 27, '2016-10-08', '200.00', '23.00', '25.00', '0.00', '248.00'),
+(3, 27, '2016-10-08', '250.00', '25.00', '25.00', '0.00', '300.00');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_roles`
 --
 
@@ -159,7 +185,7 @@ INSERT INTO `tbl_roles` (`Id`, `role`, `SqNo`) VALUES
 (3, 'Center', 3),
 (4, 'User List', 4),
 (5, 'User Type', 5),
-(6, 'Loadn Status', 6),
+(6, 'Loan Status', 6),
 (7, 'Reports', 7),
 (8, 'Setting', 8);
 
@@ -227,18 +253,19 @@ CREATE TABLE IF NOT EXISTS `tbl_transaction` (
   `LoanStatus` varchar(100) NOT NULL,
   `TransactionStatus` varchar(100) NOT NULL,
   `DateReleased` date NOT NULL,
-  `KAB` decimal(12,2) NOT NULL
+  `KAB` decimal(12,2) NOT NULL,
+  `DateApproved` date NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_transaction`
 --
 
-INSERT INTO `tbl_transaction` (`Id`, `MemberId`, `Amount`, `WeeklyPayment`, `Date`, `CBU`, `MBA`, `DueDate`, `LoanStatus`, `TransactionStatus`, `DateReleased`, `KAB`) VALUES
-(6, '31', '8000.00', '475.00', '2016-10-06', 50, 25, '0000-00-00', '', 'OverDue', '0000-00-00', '400.00'),
-(7, '31', '1500.00', '0.00', '2016-10-05', 50, 25, '0000-00-00', '', 'Pending', '0000-00-00', '75.00'),
-(8, '31', '450.00', '0.00', '2016-10-05', 50, 25, '0000-00-00', '', 'Pending', '0000-00-00', '22.50'),
-(9, '31', '450.00', '0.00', '2016-10-05', 50, 25, '0000-00-00', '', 'Pending', '0000-00-00', '22.50');
+INSERT INTO `tbl_transaction` (`Id`, `MemberId`, `Amount`, `WeeklyPayment`, `Date`, `CBU`, `MBA`, `DueDate`, `LoanStatus`, `TransactionStatus`, `DateReleased`, `KAB`, `DateApproved`) VALUES
+(6, '31', '8000.00', '475.00', '2016-10-08', 50, 25, '0000-00-00', '', 'Approved', '0000-00-00', '400.00', '0000-00-00'),
+(7, '31', '1500.00', '0.00', '2016-10-05', 50, 25, '0000-00-00', '', 'Pending', '0000-00-00', '75.00', '0000-00-00'),
+(8, '31', '450.00', '97.50', '2016-10-08', 50, 25, '0000-00-00', '', 'Pending', '0000-00-00', '22.50', '0000-00-00'),
+(9, '27', '450.00', '97.50', '2016-10-08', 50, 25, '0000-00-00', '', 'Approved', '0000-00-00', '22.50', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -253,7 +280,7 @@ CREATE TABLE IF NOT EXISTS `tbl_user` (
   `password` varchar(100) NOT NULL,
   `UserTypeId` int(11) NOT NULL,
   `status` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_user`
@@ -263,7 +290,8 @@ INSERT INTO `tbl_user` (`user_id`, `name`, `username`, `password`, `UserTypeId`,
 (3, 'john kevin lorayna', 'kevin', 'kevin', 1, 'InActive'),
 (4, 'Administrator', 'admin', 'admin', 0, 'Active'),
 (5, 'stephanie villanueva', 'teph', 'q', 2, 'Active'),
-(8, 'das', 'sad', 'ds', 2, 'InActive');
+(8, 'das', 'sad', 'ds', 2, 'InActive'),
+(9, 'das', 'das', 'dasd', 2, 'Active');
 
 -- --------------------------------------------------------
 
@@ -275,7 +303,7 @@ CREATE TABLE IF NOT EXISTS `tbl_user_roles` (
 `Id` int(11) NOT NULL,
   `RoleId` int(11) NOT NULL,
   `UserId` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_user_roles`
@@ -283,7 +311,10 @@ CREATE TABLE IF NOT EXISTS `tbl_user_roles` (
 
 INSERT INTO `tbl_user_roles` (`Id`, `RoleId`, `UserId`) VALUES
 (49, 3, 5),
-(50, 4, 5);
+(50, 4, 5),
+(51, 1, 3),
+(52, 2, 3),
+(53, 3, 3);
 
 -- --------------------------------------------------------
 
@@ -363,6 +394,12 @@ ALTER TABLE `tbl_member_type`
  ADD PRIMARY KEY (`Id`);
 
 --
+-- Indexes for table `tbl_payment`
+--
+ALTER TABLE `tbl_payment`
+ ADD PRIMARY KEY (`Id`);
+
+--
 -- Indexes for table `tbl_roles`
 --
 ALTER TABLE `tbl_roles`
@@ -433,11 +470,16 @@ MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT for table `tbl_member`
 --
 ALTER TABLE `tbl_member`
-MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=34;
+MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=37;
 --
 -- AUTO_INCREMENT for table `tbl_member_type`
 --
 ALTER TABLE `tbl_member_type`
+MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `tbl_payment`
+--
+ALTER TABLE `tbl_payment`
 MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `tbl_roles`
@@ -463,12 +505,12 @@ MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 -- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `tbl_user_roles`
 --
 ALTER TABLE `tbl_user_roles`
-MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=51;
+MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=54;
 --
 -- AUTO_INCREMENT for table `tbl_user_type`
 --
