@@ -23,6 +23,17 @@ app.factory('svcTransaction', function ($rootScope, $http, $q) {
                 deferred.reject(data);
             });
             return deferred.promise;
+        },GetByMemberId: function (id) {
+            var deferred = $q.defer();
+            $http({
+                method: 'GET',
+                url: BasePath+'/class/transaction/member/'+id
+            }).success(function (data, status) {
+                deferred.resolve(data);
+            }).error(function (data, status) {
+                deferred.reject(data);
+            });
+            return deferred.promise;
         },
 		DeleteData: function (id) {
             var deferred = $q.defer();

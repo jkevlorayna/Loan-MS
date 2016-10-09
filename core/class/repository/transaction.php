@@ -7,6 +7,11 @@ class TransactionRepository{
 			WHERE tbl_transaction.Id = '$id'");
 			return $query->fetch(PDO::FETCH_ASSOC);	
 		}
+		function GetByMemberId($id){
+			global $conn;
+			$query = $conn->query("SELECT * FROM tbl_transaction WHERE MemberId = '$id'");
+			return $query->fetchAll(PDO::FETCH_ASSOC);	
+		}
 		function Delete($id){
 			global $conn;
 			$query = $conn->prepare("DELETE FROM  tbl_transaction  WHERE Id = '$id'");

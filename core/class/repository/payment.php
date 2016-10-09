@@ -27,7 +27,7 @@ class PaymentRepository{
 			$limitCondition = $pageNo == 0 && $pageSize == 0 ? '' : 'LIMIT '.$pageNo.','.$pageSize;
 			$query = $conn->query("SELECT *,tbl_payment.Id as Id FROM  tbl_payment
 			LEFT JOIN tbl_member ON tbl_member.Id = tbl_payment.MemberId
-			WHERE 1 = 1 $where $limitCondition");
+			WHERE 1 = 1 $where ORDER BY tbl_payment.Id Desc $limitCondition");
 			$count = $searchText != '' ?  $query->rowcount() : $conn->query("SELECT * FROM  tbl_payment")->rowcount();
 			
 			$data = array();
