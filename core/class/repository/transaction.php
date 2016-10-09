@@ -18,7 +18,7 @@ class TransactionRepository{
 		
 			$where = "";
 			if($searchText != ''){
-				$where = "And (tbl_member.firstname  LIKE '%$searchText%' OR tbl_member.middlename  LIKE '%$searchText%' OR tbl_member.lastname  LIKE '%$searchText%')";
+				$where = "And (CONCAT(tbl_member.FirstName,' ',tbl_member.Middlename,' ',tbl_member.Lastname)  LIKE '%$searchText%')";
 			}
 			if($DateFrom != 'null' && $DateTo != 'null'){
 				$where = "And tbl_transaction.Date BETWEEN '$DateFrom' AND '$DateTo'";

@@ -6,19 +6,8 @@
 	if($scope.searchText == undefined){ $scope.searchText = '';} 
 		
     $scope.load = function () {
-		if($scope.DateFrom == undefined){ 
-			$scope.NewDateFrom = null;
-		}else{
-			$scope.NewDateFrom =  moment($scope.DateFrom).format("YYYY-MM-DD");
-		} 	
-		
-		if($scope.DateTo == undefined){ 
-			$scope.NewDateTo = null;
-		}else{
-			$scope.NewDateTo =  moment($scope.DateTo).format("YYYY-MM-DD");
-		} 	
-		
-
+		$scope.NewDateFrom = $scope.DateFrom == undefined ? null : moment($scope.DateFrom).format("YYYY-MM-DD");
+		$scope.NewDateTo = $scope.DateTo == undefined ? null : moment($scope.DateTo).format("YYYY-MM-DD");
 		
 		$scope.spinner.active = true;
 		svcTransaction.List($scope.searchText,$scope.pageNo,$scope.pageSize,$scope.NewDateFrom,$scope.NewDateTo).then(function (r) {

@@ -20,7 +20,7 @@ if(!isset($_SESSION['isAuthenticated'])){ $isAuthenticated = false; }else{ $isAu
 				<li>
 					<a href="#"><i class="fa fa-folder"></i><span>Loan Application</span></a> 
 					<ul class="sub-menu">						
-						<li><a href="#/transaction/form/0"><i class="fa fa-file"></i> Form</a></li>
+						<li><a href="#/transaction/form/0"><i class="fa fa-edit"></i> Form</a></li>
 						<li><a href="#/transaction/list"><i class="fa fa-file"></i> List</a></li>
 
 					</ul>		
@@ -30,13 +30,12 @@ if(!isset($_SESSION['isAuthenticated'])){ $isAuthenticated = false; }else{ $isAu
 					<ul class="sub-menu">						
 						<li><a href="#/member/list"><i class="fa fa-file"></i> List</a></li>
 						<li><a href="#/member/form/0"><i class="fa fa-edit"></i> Form</a></li>
-						<li><a href="#/member/status"><i class="fa fa-file"></i> Status List</a></li>
 					</ul>		
 				</li>
 				<li>
 					<a href="#"><i class="fa fa-money"></i><span>Payment</span></a> 
 					<ul class="sub-menu">						
-						<li><a href="#/member/payment/form/0"><i class="fa fa-file"></i> Form</a></li>
+						<li><a href="#/member/payment/form/0"><i class="fa fa-edit"></i> Form</a></li>
 						<li><a href="#/member/payment/list"><i class="fa fa-file"></i>List</a></li>
 					</ul>		
 				</li>

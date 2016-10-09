@@ -12,14 +12,22 @@ class PaymentRepository{
 			$query = $conn->prepare("DELETE FROM  tbl_payment  WHERE Id = '$id'");
 			$query->execute();	
 		}
-		function DataList($searchText,$pageNo,$pageSize){
+		function DataList($searchText,$pageNo,$pageSize,$DateFrom,$DateTo){
 			global $conn;
 			$pageNo = ($pageNo - 1) * $pageSize; 
+			
+			$where = "";
+			if($searchText != ''){
+				$where = "And (CONCAT(tbl_member.FirstName,' ',tbl_member.Middlename,' ',tbl_member.Lastname)  LIKE '%$searchText%')";
+			}
+			if($DateFrom != 'null' && $DateTo != 'null'){
+				$where = "And tbl_transaction.Date BETWEEN '$DateFrom' AND '$DateTo'";
+			}
 			
 			$limitCondition = $pageNo == 0 && $pageSize == 0 ? '' : 'LIMIT '.$pageNo.','.$pageSize;
 			$query = $conn->query("SELECT *,tbl_payment.Id as Id FROM  tbl_payment
 			LEFT JOIN tbl_member ON tbl_member.Id = tbl_payment.MemberId
-			WHERE MemberId LIKE '%$searchText%' $limitCondition");
+			WHERE 1 = 1 $where $limitCondition");
 			$count = $searchText != '' ?  $query->rowcount() : $conn->query("SELECT * FROM  tbl_payment")->rowcount();
 			
 			$data = array();

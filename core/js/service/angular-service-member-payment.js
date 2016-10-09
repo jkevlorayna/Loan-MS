@@ -1,10 +1,10 @@
 app.factory('svcPayment', function ($rootScope, $http, $q) {
     $this = {
-        List: function (searchText,pageNo,pageSize) {
+        List: function (searchText,pageNo,pageSize,DateFrom,DateTo) {
             var deferred = $q.defer();
             $http({
                 method: 'GET',
-                url: BasePath+'/class/payment?searchText='+searchText+'&pageNo='+pageNo+'&pageSize='+pageSize
+                url: BasePath+'/class/payment?searchText='+searchText+'&pageNo='+pageNo+'&pageSize='+pageSize+'&DateFrom='+DateFrom+'&DateTo='+DateTo
             }).success(function (data, status) {
                 deferred.resolve(data);
             }).error(function (data, status) {
