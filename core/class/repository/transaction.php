@@ -77,6 +77,7 @@ class TransactionRepository{
 			$POST->WeeklyPayment = !isset($POST->WeeklyPayment) ? '' : $POST->WeeklyPayment; 
 			$POST->TransactionStatus = !isset($POST->TransactionStatus) ? '' : $POST->TransactionStatus; 
 			$POST->LoanStatus = !isset($POST->LoanStatus) ? '' : $POST->LoanStatus; 
+			$POST->Date = date('Y-m-d'); 
 
 			return $POST;
 		}
@@ -91,7 +92,7 @@ class TransactionRepository{
 
 			$query->bindParam(':MemberId', $POST->MemberId);
 			$query->bindParam(':Amount', $POST->Amount);
-			$query->bindParam(':Date', date('Y-m-d'));
+			$query->bindParam(':Date', $POST->Date);
 			$query->bindParam(':KAB', $POST->KAB);
 			$query->bindParam(':CBU', $POST->CBU);
 			$query->bindParam(':MBA', $POST->MBA);

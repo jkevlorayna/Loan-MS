@@ -76,6 +76,7 @@ class MemberRepository{
 			$POST->Business = !isset($POST->Business) ? '' : $POST->Business; 
 			$POST->CenterId = !isset($POST->CenterId) ? '' : $POST->CenterId; 
 			$POST->Status = !isset($POST->Status) ? '' : $POST->Status; 
+			$POST->Date = date('Y-m-d'); 
 
 			return $POST;
 		}
@@ -83,7 +84,7 @@ class MemberRepository{
 			global $conn;
 			if($POST->Id == 0){
 				$query = $this->Create();
-				$query->bindParam(':DateRegistered', date('Y-m-d'));
+				$query->bindParam(':DateRegistered', $POST->Date);
 			}else{
 				$query = $this->UPDATE();
 				$query->bindParam(':Id', $POST->Id);

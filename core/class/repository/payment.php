@@ -53,6 +53,7 @@ class PaymentRepository{
 			$POST->CBA = !isset($POST->CBA) ? '' : $POST->CBA; 
 			$POST->CF = !isset($POST->CF) ? '' : $POST->CF; 
 			$POST->Total = !isset($POST->Total) ? '' : $POST->Total; 
+			$POST->Date = date('Y-m-d'); 
 			return $POST;
 		}
 		function Save($POST){
@@ -70,7 +71,7 @@ class PaymentRepository{
 			$query->bindParam(':CBA', $POST->CBA);
 			$query->bindParam(':CF', $POST->CF);
 			$query->bindParam(':Total', $POST->Total);
-			$query->bindParam(':Date', date('Y-m-d'));
+			$query->bindParam(':Date', $POST->Date);
 			
 			
 			$query->execute();	
