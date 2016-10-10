@@ -72,7 +72,6 @@ class MemberRepository{
 			$POST->Address = !isset($POST->Address) ? '' : $POST->Address; 
 			$POST->MobileNo = !isset($POST->MobileNo) ? '' : $POST->MobileNo; 
 			$POST->Email = !isset($POST->Email) ? '' : $POST->Email; 
-			$POST->Status = !isset($POST->Status) ? '' : $POST->Status; 
 			$POST->Age = !isset($POST->Age) ? '' : $POST->Age; 
 			$POST->Business = !isset($POST->Business) ? '' : $POST->Business; 
 			$POST->CenterId = !isset($POST->CenterId) ? '' : $POST->CenterId; 
@@ -84,10 +83,10 @@ class MemberRepository{
 			global $conn;
 			if($POST->Id == 0){
 				$query = $this->Create();
+				$query->bindParam(':DateRegistered', date('Y-m-d'));
 			}else{
 				$query = $this->UPDATE();
 				$query->bindParam(':Id', $POST->Id);
-				$query->bindParam(':DateRegistered', date('Y-m-d'));
 			}
 		
 			$query->bindParam(':Firstname', $POST->Firstname);

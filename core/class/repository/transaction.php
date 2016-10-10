@@ -49,7 +49,7 @@ class TransactionRepository{
 		public function Create(){
 			global $conn;
 			$query = $conn->prepare("INSERT INTO tbl_transaction (MemberId,Amount,Date,CBU,MBA,WeeklyPayment,KAB,TransactionStatus,LoanStatus) 
-			VALUES(:MemberId,:Amount,:Date,:CBU,:MBA,:WeeklyPayment,:KAB,:TransactionStatus,LoanStatus)");
+			VALUES(:MemberId,:Amount,:Date,:CBU,:MBA,:WeeklyPayment,:KAB,:TransactionStatus,:LoanStatus)");
 			return $query;	
 		}
 		public function Update(){
@@ -89,8 +89,8 @@ class TransactionRepository{
 				$query->bindParam(':Id', $POST->Id);
 			}
 
-			$query->bindParam(':MemberId', !isset($POST->MemberId) ? '' : $POST->MemberId);
-			$query->bindParam(':Amount', !isset($POST->Amount) ? '' : $POST->Amount);
+			$query->bindParam(':MemberId', $POST->MemberId);
+			$query->bindParam(':Amount', $POST->Amount);
 			$query->bindParam(':Date', date('Y-m-d'));
 			$query->bindParam(':KAB', $POST->KAB);
 			$query->bindParam(':CBU', $POST->CBU);
