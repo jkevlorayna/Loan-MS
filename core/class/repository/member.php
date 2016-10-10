@@ -106,10 +106,11 @@ class MemberRepository{
 
 
 			$query->execute();	
-			
+			$POST->Id = $conn->lastInsertId(); 
+			return $POST;
 		}
 		public function SignUp($POST){
-			$this->Save($POST);		
+			return $this->Save($POST);		
 		}
 		public function ChangePassword(){
 			global $conn;

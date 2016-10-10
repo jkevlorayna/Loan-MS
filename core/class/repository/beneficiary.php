@@ -33,18 +33,28 @@ class BeneficiaryRepository{
 			$query = $conn->prepare("UPDATE tbl_beneficiary SET Name = :Name , MemberId = :MemberId , Relationship = :Relationship WHERE Id = :Id");
 			return $query;	
 		}
+		public function Transform($POST){
+			$POST->Id = !isset($POST->Id) ? 0 : $POST->Id;
+			$POST->Name = !isset($POST->Name) ? '' : $POST->Name; 
+			$POST->MemberId = !isset($POST->MemberId) ? '' : $POST->MemberId; 
+			$POST->Relationship = !isset($POST->Relationship) ? '' : $POST->Relationship; 
+
+
+			return $POST;
+		}
+		function Save($POST){		
+			global $conn;
+			if($POST->Id == 0){
+				$query = $this->Create();
+			}else{
+				$query = $this->UPDATE();
+				$query->bindParam(':Id', $POST->Id);
+			}
 		
-		function Save($POST){
-			global $conn;			
-			$Id = !isset($POST->Id) ? 0 : $POST->Id;
-			
-			$Id == 0 ? $query = $this->Create() : $query = $this->UPDATE() ;
-			if($Id != 0){ $query->bindParam(':Id', $Id); }
-			
-			
-			$query->bindParam(':Name', !isset($POST->Name) ? '' : $POST->Name);
-			$query->bindParam(':MemberId', !isset($POST->MemberId) ? '' : $POST->MemberId);
-			$query->bindParam(':Relationship', !isset($POST->Relationship) ? '' : $POST->Relationship);
+			$query->bindParam(':Name', $POST->Name);
+			$query->bindParam(':MemberId', $POST->MemberId);
+			$query->bindParam(':Relationship', $POST->Relationship);
+
 			$query->execute();	
 		}
 }

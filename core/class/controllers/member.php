@@ -32,11 +32,12 @@ $slim_app->post('/signup',function(){
 	$MemberRepo = new MemberRepository();
 	$BeneficiaryRepo = new BeneficiaryRepository();
 	
-	$MemberRepo->SignUp($MemberRepo->Transform($POST));
+	$Member = $MemberRepo->SignUp($MemberRepo->Transform($POST));
+	print_r($Member);
 	 if(isset($POST->Beneficiary)){
 		foreach($POST->Beneficiary as $row){
-			print_r($row);
-			$BeneficiaryRepo->Save($row);
+			$row->MemberId = $Member->Id;
+			$BeneficiaryRepo->Save($BeneficiaryRepo->Transform($row));
 		}
 	}
 });
