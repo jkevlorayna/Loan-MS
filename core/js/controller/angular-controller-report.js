@@ -1,12 +1,18 @@
-﻿app.controller('AppReportSOE', function ($scope, $http, $q, $location, svcMember,growl,$uibModal,svcTransaction,svcSetting) {
+﻿app.controller('AppReportSOE', function ($scope, $http, $q, $location, svcMember,growl,$uibModal,svcTransaction,svcSetting,svcCenter) {
 	$scope.DateFrom = new Date();
 	$scope.DateTo = new Date();
+	$scope.loadCenter = function(){
+		svcCenter.list('',0,0).then(function(r){
+			$scope.centerList = r.Results;
+		})
+	}
+	$scope.loadCenter();
 	
 	$scope.load = function(){
 		var DateFrom = $scope.DateFrom == undefined ? null : moment($scope.DateFrom).format("YYYY-MM-DD");
 		var DateTo = $scope.DateTo == undefined ? null : moment($scope.DateTo).format("YYYY-MM-DD");
 			
-		svcTransaction.List('',0,0,null,null).then(function(r){
+		svcTransaction.List('',0,0,DateFrom,DateTo,$scope.CenterId).then(function(r){
 			$scope.list = r.Results;
 			$scope.AmountBorrowedTotal = 0;
 			$scope.BalanceTotal = 0;

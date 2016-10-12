@@ -13,7 +13,7 @@
 		$TransactionRepo = new TransactionRepository();
 		$PaymentRepo = new PaymentRepository();
 		
-		$result = $TransactionRepo->DataList($_GET['searchText'],$_GET['pageNo'],$_GET['pageSize'],$_GET['DateFrom'],$_GET['DateTo']);
+		$result = $TransactionRepo->DataList($_GET['searchText'],$_GET['pageNo'],$_GET['pageSize'],$_GET['DateFrom'],$_GET['DateTo'],$_GET['CenterId']);
 		
 		foreach($result['Results'] as $row){
 			$row->Payment = $PaymentRepo->GetMemberBalance($_GET['DateFrom'],$_GET['DateTo'],$row->MemberId);

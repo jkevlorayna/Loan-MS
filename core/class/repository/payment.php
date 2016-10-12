@@ -21,7 +21,7 @@ class PaymentRepository{
 			}
 				
 			$where = "And MemberId = '$MemberId'";
-			$query = $conn->query("SELECT (SUM(KAB)+SUM(CBU)+SUM(CBA)) AS Balance FROM  tbl_payment WHERE 1 = 1 $where");
+			$query = $conn->query("SELECT (SUM(KAB)+SUM(CBU)+SUM(MBA)) AS Balance FROM  tbl_payment WHERE 1 = 1 $where");
 			return $query->fetch(PDO::FETCH_ASSOC);
 		}
 		function DataList($searchText,$pageNo,$pageSize,$DateFrom,$DateTo){
@@ -49,12 +49,12 @@ class PaymentRepository{
 		}
 		public function Create(){
 			global $conn;
-			$query = $conn->prepare("INSERT INTO tbl_payment (MemberId,Date,KAB,CBU,CBA,CF,Total) VALUES(:MemberId,:Date,:KAB,:CBU,:CBA,:CF,:Total)");
+			$query = $conn->prepare("INSERT INTO tbl_payment (MemberId,Date,KAB,CBU,MBA,CF,Total) VALUES(:MemberId,:Date,:KAB,:CBU,:MBA,:CF,:Total)");
 			return $query;	
 		}
 		public function Update(){
 			global $conn;
-			$query = $conn->prepare("UPDATE tbl_payment SET MemberId = :MemberId  , Date = :Date , KAB = :KAB , CBU = :CBU , CBA = :CBA , CF = :CF , Total = :Total WHERE Id = :Id");
+			$query = $conn->prepare("UPDATE tbl_payment SET MemberId = :MemberId  , Date = :Date , KAB = :KAB , CBU = :CBU , MBA = :MBA , CF = :CF , Total = :Total WHERE Id = :Id");
 			return $query;	
 		}
 		public function Transform($POST){
@@ -62,7 +62,7 @@ class PaymentRepository{
 			$POST->MemberId = !isset($POST->MemberId) ? '' : $POST->MemberId; 
 			$POST->KAB = !isset($POST->KAB) ? '' : $POST->KAB; 
 			$POST->CBU = !isset($POST->CBU) ? '' : $POST->CBU; 
-			$POST->CBA = !isset($POST->CBA) ? '' : $POST->CBA; 
+			$POST->MBA = !isset($POST->MBA) ? '' : $POST->MBA; 
 			$POST->CF = !isset($POST->CF) ? '' : $POST->CF; 
 			$POST->Total = !isset($POST->Total) ? '' : $POST->Total; 
 			$POST->Date = date('Y-m-d'); 
@@ -80,7 +80,7 @@ class PaymentRepository{
 			$query->bindParam(':MemberId', $POST->MemberId);
 			$query->bindParam(':KAB', $POST->KAB);
 			$query->bindParam(':CBU', $POST->CBU);
-			$query->bindParam(':CBA', $POST->CBA);
+			$query->bindParam(':MBA', $POST->MBA);
 			$query->bindParam(':CF', $POST->CF);
 			$query->bindParam(':Total', $POST->Total);
 			$query->bindParam(':Date', $POST->Date);

@@ -24,7 +24,7 @@ class TransactionRepository{
 			$query = $conn->prepare("DELETE FROM  tbl_transaction  WHERE Id = '$id'");
 			$query->execute();	
 		}
-		function DataList($searchText,$pageNo,$pageSize,$DateFrom,$DateTo){
+		function DataList($searchText,$pageNo,$pageSize,$DateFrom,$DateTo,$CenterId){
 			global $conn;
 			$pageNo = ($pageNo - 1) * $pageSize; 
 		
@@ -35,13 +35,17 @@ class TransactionRepository{
 			if($DateFrom != 'null' && $DateTo != 'null'){
 				$where = "And tbl_transaction.Date BETWEEN '$DateFrom' AND '$DateTo'";
 			}
+			if($CenterId != 0){
+				$where = "And tbl_member.CenterId  = '$CenterId'";
+			}
 			
 			$limitCondition = $pageNo == 0 && $pageSize == 0 ? '' : 'LIMIT '.$pageNo.','.$pageSize;
-			$query = $conn->query("SELECT *,tbl_transaction.Id as Id FROM  tbl_transaction
+			$query = $conn->query("SELECT *,tbl_center.Name as Center,tbl_transaction.Id as Id FROM  tbl_transaction
 			LEFT JOIN tbl_member ON tbl_transaction.MemberId = tbl_member.Id
+			LEFT JOIN tbl_center ON tbl_member.CenterId = tbl_center.Id
 			WHERE  1 = 1  $where 
 			$limitCondition");
-			$count = $searchText != '' ?  $query->rowcount() : $conn->query("SELECT * FROM  tbl_transaction WHERE  1 = 1  $where ")->rowcount();
+			$count = $searchText != '' ?  $query->rowcount() : $conn->query("SELECT * FROM  tbl_transaction")->rowcount();
 			
 			$data = array();
 			$data['Results'] = $query->fetchAll(PDO::FETCH_OBJ);

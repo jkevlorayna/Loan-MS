@@ -27,6 +27,12 @@
 							</span>
 						</div>
 					</div>
+					<div class="form-group">
+							<select class="form-control" ng-model="CenterId">
+								<option value="0">Select Center</option>
+								<option ng-repeat="row in centerList" value="{{row.Id}}">{{row.Name}}</option>
+							</select>
+					</div>
 						<div class="form-group">
 							<button class="btn btn-primary nomargin" type="submit">Submit</button>
 						</div>
@@ -41,6 +47,7 @@
 						<th>Amount</th>
 						<th>Business</th>
 						<th>Address</th>
+						<th>Center</th>
 
 						
 
@@ -54,6 +61,7 @@
 						<td>{{row.Amount}}</td>
 						<td>{{row.Business}}</td>
 						<td>{{row.Address}}</td>
+						<td>{{row.Center}}</td>
 					</tr>
 
 				</tbody>
