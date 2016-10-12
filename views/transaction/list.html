@@ -60,7 +60,10 @@
 						<td class="text-right">{{row.KAB}}</td>
 						<td class="text-right">{{row.CBU}}</td>
 						<td class="text-right">{{row.MBA}}</td>
-						<td>{{row.TransactionStatus}} <a href="javascript:void(0)" ng-click="ChangeStatusModal('md',row.Id)" class="pull-right"><i class="fa fa-edit"></i></a></td>
+						<td>
+						{{row.TransactionStatus}}
+						<a ng-if="row.TransactionStatus!='Release'" href="javascript:void(0)" ng-click="ChangeStatusModal('md',row.Id)" class="pull-right"><i class="fa fa-edit"></i></a>
+						</td>
 						<td>
 							<a class="btn btn-success btn-sm" href="#/transaction/form/{{row.Id}}">  <i class="fa fa-edit"></i> </a>
 							<button class="btn btn-danger btn-sm" ng-click="openDeleteModal('md',row.Id)">  <i class="fa fa-trash-o"></i> </button>

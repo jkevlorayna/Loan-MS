@@ -8,29 +8,66 @@
 						</div>
 <div class="row">
 	<div class="col-md-12">
-
+					<form ng-submit="load()" class="form-inline filter_form">
+					<div class="form-group">
+						<label>Date From</label>
+						<div class="input-group">
+							<input type="text" class="form-control" uib-datepicker-popup="MM/dd/yyyy" ng-model="DateFrom" is-open="popup1" datepicker-options="dateOptions"  close-text="Close" />
+							<span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="popup1=true"><i class="glyphicon glyphicon-calendar"></i></button>
+							</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label>Date To</label>
+						<div class="input-group">
+							<input type="text" class="form-control" uib-datepicker-popup="MM/dd/yyyy" ng-model="DateTo" is-open="popup2" datepicker-options="dateOptions"  close-text="Close" />
+							<span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="popup2=true"><i class="glyphicon glyphicon-calendar"></i></button>
+							</span>
+						</div>
+					</div>
+						<div class="form-group">
+							<button class="btn btn-primary nomargin" type="submit">Submit</button>
+						</div>
+					</form>
+					<hr>
 				<table class="table table-bordered table-condensed">
 				<thead>
 					<tr>
 						<th>Member Name</th>
+						<th>Date Released</th>
+						<th>Due Date</th>
 						<th>Loan Status</th>
 						<th>Balance</th>
 						<th>Amount Borrowed</th>
+						<th>Remarks</th>
+						
 
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="row in memberList">
+					<tr ng-repeat="row in list">
 						<td>{{row.Firstname}} {{row.Middlename}} {{row.Lastname}}</td>
+						<td>{{row.DateReleased | date:'MM/dd/yyyy'}}</td>
 						<td></td>
 						<td></td>
+						<td class="text-right">{{row.Amount - row.Payment.Balance | currency:''}}</td>
+						<td class="text-right">{{row.Amount | currency:''}}</td>
 						<td></td>
-
-
 					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td class="text-right">Total</td>
+						<td  class="text-right">{{AmountBorrowedTotal - BalanceTotal | currency:'' }}</td>
+						<td  class="text-right">{{AmountBorrowedTotal | currency:''}}</td>
+						<td></td>
+					<tr>
 				</tbody>
 			</table>
-			  <uib-pagination ng-model="pageNo" ng-click="pageChanged()" items-per-page="pageSize" total-items="count"  max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages"></uib-pagination>
+			 
 	</div>
 </div>
 </div>

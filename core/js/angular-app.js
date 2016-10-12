@@ -166,7 +166,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 		{
 			url: '/soe',
 			templateUrl: "views/report/soe.html",
-			controller: "",
+			controller: "AppReportSOE",
 		})
 		.state('report.loanListing',
 		{

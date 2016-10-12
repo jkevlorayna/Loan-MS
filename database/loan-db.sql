@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 09, 2016 at 01:25 PM
+-- Generation Time: Oct 12, 2016 at 10:59 PM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.11
 
@@ -31,15 +31,28 @@ CREATE TABLE IF NOT EXISTS `tbl_beneficiary` (
   `Name` varchar(100) NOT NULL,
   `MemberId` int(11) NOT NULL,
   `Relationship` varchar(100) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_beneficiary`
 --
 
 INSERT INTO `tbl_beneficiary` (`Id`, `Name`, `MemberId`, `Relationship`) VALUES
-(1, 'Beneficiary 1', 25, 'Husband'),
-(2, 'Beneficiary 2', 25, 'Children');
+(1, 'Beneficiary 1', 0, 'Husband'),
+(2, 'Beneficiary 2', 0, 'Children'),
+(3, 'test', 0, 'test'),
+(4, 'asd', 38, 'asdasd'),
+(5, 'adsad', 38, 'asd'),
+(6, 'test', 37, 'tesasdasd'),
+(7, '123', 37, '231'),
+(8, 'son', 0, 'son'),
+(9, 'mother', 0, 'mother'),
+(10, 'ad', 0, 'adad'),
+(11, 'asdad', 0, '232'),
+(12, 'ad', 0, 'adad'),
+(13, 'asdad', 0, '232'),
+(14, 'ad', 44, 'adad'),
+(15, 'asdad', 44, '232');
 
 -- --------------------------------------------------------
 
@@ -104,19 +117,28 @@ CREATE TABLE IF NOT EXISTS `tbl_member` (
   `Status` varchar(100) NOT NULL,
   `Business` varchar(200) NOT NULL,
   `CenterId` int(11) NOT NULL,
-  `CoMaker` varchar(100) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
+  `CoMaker` varchar(100) NOT NULL,
+  `BirthDate` date NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_member`
 --
 
-INSERT INTO `tbl_member` (`Id`, `Firstname`, `Lastname`, `Middlename`, `Gender`, `Address`, `MobileNo`, `Email`, `DateRegistered`, `Age`, `Status`, `Business`, `CenterId`, `CoMaker`) VALUES
-(25, 'Juan', 'Dela Cruz', 'D', 'Male', 'dasd', '', 'jkevlorayna@gmail.com', '2016-09-12', 22, 'Single', '', 2, ''),
-(27, 'Alfreds', 'Futterkiste', 'B', 'Male', 'da', 'dsad', '', '2016-09-17', 22, '', '', 3, ''),
-(28, 'Ana Trujillo', 'Emparedados y helados', 'B', 'Male', '', '', '', '2016-09-23', 0, '', '', 4, ''),
-(31, 'White Clover', 'Markets', 'B', 'Female', 'dasd', '', '', '2016-09-07', 22, '', '', 2, ''),
-(36, 'jkl', 'ads', 'dasd', 'Male', '', '', '', '2016-10-08', 0, '', '', 0, '');
+INSERT INTO `tbl_member` (`Id`, `Firstname`, `Lastname`, `Middlename`, `Gender`, `Address`, `MobileNo`, `Email`, `DateRegistered`, `Age`, `Status`, `Business`, `CenterId`, `CoMaker`, `BirthDate`) VALUES
+(25, 'Juan', 'Dela Cruz', 'D', 'Male', 'dasd', '', 'jkevlorayna@gmail.com', '2016-09-12', 22, 'Single', 'Sari - Sari Store', 2, '', '0000-00-00'),
+(27, 'Alfreds', 'Futterkiste', 'B', 'Male', 'da', 'dsad', '', '2016-09-17', 22, '', '', 3, '', '0000-00-00'),
+(28, 'Ana Trujillo', 'Emparedados y helados', 'B', 'Male', '', '', '', '2016-09-23', 0, '', '', 4, '', '0000-00-00'),
+(31, 'White Clover', 'Markets', 'B', 'Female', 'dasd', '', '', '2016-09-07', 22, '', '', 2, '', '0000-00-00'),
+(36, 'jkl', 'ads', 'dasd', 'Male', '', '', '', '2016-10-08', 50, '', '', 0, '', '0000-00-00'),
+(37, 'ds', 'dasd', 'asdsad', 'Male', '', '', '', '2016-10-10', 22, 'Single', '', 3, '', '0000-00-00'),
+(38, 'ad', 'asdsd', 'asd', 'Female', '', '', '', '2016-10-10', 22, 'Single', '', 4, '', '0000-00-00'),
+(39, 'jkl lorayna', 'dasd', 'das', 'Male', 'asdas', '0946651154', 'jkevlorayna@gmail.com', '2016-10-10', 22, 'Single', '', 3, '', '0000-00-00'),
+(40, 'jjj', 'asd', 'asd', 'Male', '', '', '', '2016-10-10', 55, 'Single', '', 4, '', '0000-00-00'),
+(41, 'jjj', 'asd', 'asd', 'Male', '', '', '', '2016-10-10', 55, 'Single', '', 4, '', '0000-00-00'),
+(42, 'jjj', 'asd', 'asd', 'Male', '', '', '', '2016-10-10', 55, 'Single', '', 4, '', '0000-00-00'),
+(43, 'jjj', 'asd', 'asd', 'Male', '', '', '', '2016-10-10', 55, 'Single', '', 4, '', '0000-00-00'),
+(44, 'jjj', 'asd', 'asd', 'Male', '', '', '', '2016-10-10', 55, 'Single', '', 4, '', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -151,17 +173,17 @@ CREATE TABLE IF NOT EXISTS `tbl_payment` (
   `CBU` decimal(12,2) NOT NULL,
   `CBA` decimal(12,2) NOT NULL,
   `CF` decimal(12,2) NOT NULL,
-  `Total` decimal(12,2) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+  `Total` decimal(12,2) NOT NULL,
+  `Cycle` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_payment`
 --
 
-INSERT INTO `tbl_payment` (`Id`, `MemberId`, `Date`, `KAB`, `CBU`, `CBA`, `CF`, `Total`) VALUES
-(1, 31, '2016-10-08', '222.00', '555.00', '45.00', '0.00', '822.00'),
-(2, 27, '2016-10-08', '200.00', '23.00', '25.00', '0.00', '248.00'),
-(3, 27, '2016-10-08', '250.00', '25.00', '25.00', '0.00', '300.00');
+INSERT INTO `tbl_payment` (`Id`, `MemberId`, `Date`, `KAB`, `CBU`, `CBA`, `CF`, `Total`, `Cycle`) VALUES
+(6, 25, '2016-10-11', '250.00', '50.00', '25.00', '0.00', '325.00', 0),
+(7, 25, '2016-10-11', '150.00', '50.00', '25.00', '0.00', '225.00', 0);
 
 -- --------------------------------------------------------
 
@@ -254,18 +276,16 @@ CREATE TABLE IF NOT EXISTS `tbl_transaction` (
   `TransactionStatus` varchar(100) NOT NULL,
   `DateReleased` date NOT NULL,
   `KAB` decimal(12,2) NOT NULL,
-  `DateApproved` date NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+  `DateApproved` date NOT NULL,
+  `Cycle` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_transaction`
 --
 
-INSERT INTO `tbl_transaction` (`Id`, `MemberId`, `Amount`, `WeeklyPayment`, `Date`, `CBU`, `MBA`, `DueDate`, `LoanStatus`, `TransactionStatus`, `DateReleased`, `KAB`, `DateApproved`) VALUES
-(6, '31', '8000.00', '475.00', '2016-10-08', 50, 25, '0000-00-00', '', 'Approved', '0000-00-00', '400.00', '0000-00-00'),
-(7, '31', '1500.00', '0.00', '2016-10-05', 50, 25, '0000-00-00', '', 'Pending', '0000-00-00', '75.00', '0000-00-00'),
-(8, '31', '450.00', '97.50', '2016-10-08', 50, 25, '0000-00-00', '', 'Pending', '0000-00-00', '22.50', '0000-00-00'),
-(9, '27', '450.00', '97.50', '2016-10-08', 50, 25, '0000-00-00', '', 'Approved', '0000-00-00', '22.50', '0000-00-00');
+INSERT INTO `tbl_transaction` (`Id`, `MemberId`, `Amount`, `WeeklyPayment`, `Date`, `CBU`, `MBA`, `DueDate`, `LoanStatus`, `TransactionStatus`, `DateReleased`, `KAB`, `DateApproved`, `Cycle`) VALUES
+(1, '25', '2000.00', '175.00', '2016-10-12', 50, 25, '0000-00-00', '', 'Pending', '0000-00-00', '100.00', '0000-00-00', 1);
 
 -- --------------------------------------------------------
 
@@ -455,7 +475,7 @@ ALTER TABLE `tbl_year`
 -- AUTO_INCREMENT for table `tbl_beneficiary`
 --
 ALTER TABLE `tbl_beneficiary`
-MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `tbl_category`
 --
@@ -470,7 +490,7 @@ MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT for table `tbl_member`
 --
 ALTER TABLE `tbl_member`
-MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=37;
+MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=45;
 --
 -- AUTO_INCREMENT for table `tbl_member_type`
 --
@@ -480,7 +500,7 @@ MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 -- AUTO_INCREMENT for table `tbl_payment`
 --
 ALTER TABLE `tbl_payment`
-MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `tbl_roles`
 --
@@ -500,7 +520,7 @@ MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 -- AUTO_INCREMENT for table `tbl_transaction`
 --
 ALTER TABLE `tbl_transaction`
-MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `tbl_user`
 --

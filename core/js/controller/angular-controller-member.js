@@ -150,6 +150,17 @@ app.controller('AppMemberFormController', function ($scope, $http, $q, $filter, 
     }
 	
 
+
+
+		$scope.calculateAge = function calculateAge() { // birthday is a date
+			if($scope.formData.BirthDate != undefined){
+				var ageDifMs = Date.now() - $scope.formData.BirthDate.getTime();
+				var ageDate = new Date(ageDifMs); // miliseconds from epoch
+				$scope.formData.Age =  Math.abs(ageDate.getUTCFullYear() - 1970);
+			}
+		}
+		
+		
 	$scope.getById = function(){
 		svcMember.getById($scope.Id).then(function (r) {
 			$scope.formData = r;
@@ -157,7 +168,7 @@ app.controller('AppMemberFormController', function ($scope, $http, $q, $filter, 
 	}
 	$scope.loadTransactionList = function(){
 		svcTransaction.GetByMemberId($scope.Id).then(function (r) {
-			$scope.transactionList = r;
+			$scope.transactionList = r.Results;
         });
 	}
 	$scope.loadTransactionList();

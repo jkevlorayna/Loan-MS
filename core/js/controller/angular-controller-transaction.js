@@ -78,7 +78,13 @@ app.controller('AppTransactionFormController', function ($rootScope,$scope, $htt
 
 			
 			if($scope.Id == 0){
-				$scope.formData = {CBU:$scope.CBU,MBA:$scope.MBA,WeekPayable:32,TransactionStatus:'Pending'}
+				$scope.formData = {
+					CBU:$scope.CBU,
+					MBA:$scope.MBA,
+					WeekPayable:32,
+					TransactionStatus:'Pending',
+					Date:new Date()
+					}
 			}else{
 				 
 			

@@ -4,9 +4,9 @@
 				<div class="form-group">
 					<label for="email">Status:</label>
 					<select type="text" class="form-control" ng-model="formData.TransactionStatus">
-						<option>Pending</option>
-						<option>Approved</option>
-						<option>Release</option>
+						<option ng-if="formData.TransactionStatus=='Pending'">Pending</option>
+						<option ng-if="formData.TransactionStatus!='Release'">Approved</option>
+						<option ng-if="formData.TransactionStatus=='Approved'">Release</option>
 					</select>
 				</div>
 				<button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>

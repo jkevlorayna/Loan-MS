@@ -12,6 +12,18 @@ class PaymentRepository{
 			$query = $conn->prepare("DELETE FROM  tbl_payment  WHERE Id = '$id'");
 			$query->execute();	
 		}
+		function GetMemberBalance($DateFrom,$DateTo,$MemberId){
+			global $conn;
+			$where = "";
+
+			if($DateFrom != 'null' && $DateTo != 'null'){
+				$where = "And tbl_transaction.Date BETWEEN '$DateFrom' AND '$DateTo'";
+			}
+				
+			$where = "And MemberId = '$MemberId'";
+			$query = $conn->query("SELECT (SUM(KAB)+SUM(CBU)+SUM(CBA)) AS Balance FROM  tbl_payment WHERE 1 = 1 $where");
+			return $query->fetch(PDO::FETCH_ASSOC);
+		}
 		function DataList($searchText,$pageNo,$pageSize,$DateFrom,$DateTo){
 			global $conn;
 			$pageNo = ($pageNo - 1) * $pageSize; 
@@ -21,7 +33,7 @@ class PaymentRepository{
 				$where = "And (CONCAT(tbl_member.FirstName,' ',tbl_member.Middlename,' ',tbl_member.Lastname)  LIKE '%$searchText%')";
 			}
 			if($DateFrom != 'null' && $DateTo != 'null'){
-				$where = "And tbl_transaction.Date BETWEEN '$DateFrom' AND '$DateTo'";
+				$where = "And Date BETWEEN '$DateFrom' AND '$DateTo'";
 			}
 			
 			$limitCondition = $pageNo == 0 && $pageSize == 0 ? '' : 'LIMIT '.$pageNo.','.$pageSize;

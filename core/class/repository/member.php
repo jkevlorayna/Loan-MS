@@ -37,8 +37,8 @@ class MemberRepository{
 			$query = $conn->prepare("
 				INSERT INTO 
 					   tbl_member 
-					  (Firstname,Lastname,Middlename,Gender,Address,MobileNo,Email,DateRegistered,Status,Age,Business,CenterId) 
-				VALUES(:Firstname,:Lastname,:Middlename,:Gender,:Address,:MobileNo,:Email,:DateRegistered,:Status,:Age,:Business,:CenterId)
+					  (Firstname,Lastname,Middlename,Gender,Address,MobileNo,Email,DateRegistered,Status,Age,Business,CenterId,BirthDate) 
+				VALUES(:Firstname,:Lastname,:Middlename,:Gender,:Address,:MobileNo,:Email,:DateRegistered,:Status,:Age,:Business,:CenterId,:BirthDate)
 				");
 			return $query;	
 		}
@@ -58,7 +58,8 @@ class MemberRepository{
 					   Age = :Age,
 					   Business = :Business,
 					   CenterId = :CenterId,
-					   Status = :Status
+					   Status = :Status,
+					   BirthDate = :BirthDate
 					   WHERE Id = :Id
 				");
 			return $query;	
@@ -76,6 +77,7 @@ class MemberRepository{
 			$POST->Business = !isset($POST->Business) ? '' : $POST->Business; 
 			$POST->CenterId = !isset($POST->CenterId) ? '' : $POST->CenterId; 
 			$POST->Status = !isset($POST->Status) ? '' : $POST->Status; 
+			$POST->BirthDate = !isset($POST->BirthDate) ? '0000-00-00' : $POST->BirthDate; 
 			$POST->Date = date('Y-m-d'); 
 
 			return $POST;
@@ -102,6 +104,7 @@ class MemberRepository{
 			$query->bindParam(':Business', $POST->Business );
 			$query->bindParam(':CenterId', $POST->CenterId );
 			$query->bindParam(':Status', $POST->Status );
+			$query->bindParam(':BirthDate', $POST->BirthDate );
 			
 
 

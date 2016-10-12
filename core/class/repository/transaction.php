@@ -9,8 +9,15 @@ class TransactionRepository{
 		}
 		function GetByMemberId($id){
 			global $conn;
-			$query = $conn->query("SELECT * FROM tbl_transaction WHERE MemberId = '$id'");
-			return $query->fetchAll(PDO::FETCH_ASSOC);	
+			$where = "";
+			$where = "AND MemberId = '$id'";
+
+			$query = $conn->query("SELECT * FROM tbl_transaction WHERE 1 = 1 $where");
+			$count = $query->rowcount();
+			$data = array();
+			$data['Results'] = $query->fetchAll(PDO::FETCH_OBJ);
+			$data['Count'] = $count;
+			return $data;	
 		}
 		function Delete($id){
 			global $conn;
@@ -34,10 +41,10 @@ class TransactionRepository{
 			LEFT JOIN tbl_member ON tbl_transaction.MemberId = tbl_member.Id
 			WHERE  1 = 1  $where 
 			$limitCondition");
-			$count = $searchText != '' ?  $query->rowcount() : $conn->query("SELECT * FROM  tbl_transaction")->rowcount();
+			$count = $searchText != '' ?  $query->rowcount() : $conn->query("SELECT * FROM  tbl_transaction WHERE  1 = 1  $where ")->rowcount();
 			
 			$data = array();
-			$data['Results'] = $query->fetchAll(PDO::FETCH_ASSOC);
+			$data['Results'] = $query->fetchAll(PDO::FETCH_OBJ);
 			$data['Count'] = $count;
 			return $data;	
 		}
@@ -48,8 +55,8 @@ class TransactionRepository{
 		}
 		public function Create(){
 			global $conn;
-			$query = $conn->prepare("INSERT INTO tbl_transaction (MemberId,Amount,Date,CBU,MBA,WeeklyPayment,KAB,TransactionStatus,LoanStatus) 
-			VALUES(:MemberId,:Amount,:Date,:CBU,:MBA,:WeeklyPayment,:KAB,:TransactionStatus,:LoanStatus)");
+			$query = $conn->prepare("INSERT INTO tbl_transaction (MemberId,Amount,Date,CBU,MBA,WeeklyPayment,KAB,TransactionStatus,LoanStatus,Cycle) 
+			VALUES(:MemberId,:Amount,:Date,:CBU,:MBA,:WeeklyPayment,:KAB,:TransactionStatus,:LoanStatus,:Cycle)");
 			return $query;	
 		}
 		public function Update(){
@@ -63,7 +70,10 @@ class TransactionRepository{
 			WeeklyPayment = :WeeklyPayment,
 			KAB = :KAB,
 			TransactionStatus = :TransactionStatus,
-			LoanStatus = :LoanStatus
+			LoanStatus = :LoanStatus,
+			DateApproved = :DateApproved,
+			DateReleased = :DateReleased,
+			Cycle = :Cycle
 			WHERE Id = :Id");
 			return $query;	
 		}
@@ -77,6 +87,9 @@ class TransactionRepository{
 			$POST->WeeklyPayment = !isset($POST->WeeklyPayment) ? '' : $POST->WeeklyPayment; 
 			$POST->TransactionStatus = !isset($POST->TransactionStatus) ? '' : $POST->TransactionStatus; 
 			$POST->LoanStatus = !isset($POST->LoanStatus) ? '' : $POST->LoanStatus; 
+			$POST->DateReleased = !isset($POST->DateReleased) ? '0000-00-00' : $POST->DateReleased; 
+			$POST->DateApproved = !isset($POST->DateApproved) ? '0000-00-00' : $POST->DateApproved; 
+			$POST->Cycle = !isset($POST->Cycle) ? 0 : $POST->Cycle;
 			$POST->Date = date('Y-m-d'); 
 
 			return $POST;
@@ -87,9 +100,20 @@ class TransactionRepository{
 				$query = $this->Create();
 			}else{
 				$query = $this->UPDATE();
+					if($POST->TransactionStatus == 'Approved'){
+					$POST->DateApproved = date("Y-m-d");
+					}
+					if($POST->TransactionStatus == 'Release'){
+						$POST->DateReleased = date("Y-m-d");
+					}
+				
 				$query->bindParam(':Id', $POST->Id);
+				$query->bindParam(':DateReleased', $POST->DateReleased);
+				$query->bindParam(':DateApproved', $POST->DateApproved);
 			}
 
+
+			
 			$query->bindParam(':MemberId', $POST->MemberId);
 			$query->bindParam(':Amount', $POST->Amount);
 			$query->bindParam(':Date', $POST->Date);
@@ -99,6 +123,8 @@ class TransactionRepository{
 			$query->bindParam(':WeeklyPayment', $POST->WeeklyPayment);
 			$query->bindParam(':TransactionStatus', $POST->TransactionStatus);
 			$query->bindParam(':LoanStatus', $POST->LoanStatus);
+			$query->bindParam(':Cycle', $POST->Cycle);
+
 			$query->execute();	
 		}
 }
