@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 12, 2016 at 10:59 PM
+-- Generation Time: Oct 13, 2016 at 10:05 PM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.11
 
@@ -171,19 +171,20 @@ CREATE TABLE IF NOT EXISTS `tbl_payment` (
   `Date` date NOT NULL,
   `KAB` decimal(12,2) NOT NULL,
   `CBU` decimal(12,2) NOT NULL,
-  `CBA` decimal(12,2) NOT NULL,
+  `MBA` decimal(12,2) NOT NULL,
   `CF` decimal(12,2) NOT NULL,
   `Total` decimal(12,2) NOT NULL,
   `Cycle` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_payment`
 --
 
-INSERT INTO `tbl_payment` (`Id`, `MemberId`, `Date`, `KAB`, `CBU`, `CBA`, `CF`, `Total`, `Cycle`) VALUES
+INSERT INTO `tbl_payment` (`Id`, `MemberId`, `Date`, `KAB`, `CBU`, `MBA`, `CF`, `Total`, `Cycle`) VALUES
 (6, 25, '2016-10-11', '250.00', '50.00', '25.00', '0.00', '325.00', 0),
-(7, 25, '2016-10-11', '150.00', '50.00', '25.00', '0.00', '225.00', 0);
+(7, 25, '2016-10-11', '150.00', '50.00', '25.00', '0.00', '225.00', 0),
+(8, 31, '2016-10-13', '250.00', '25.00', '25.00', '0.00', '275.00', 0);
 
 -- --------------------------------------------------------
 
@@ -500,7 +501,7 @@ MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 -- AUTO_INCREMENT for table `tbl_payment`
 --
 ALTER TABLE `tbl_payment`
-MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `tbl_roles`
 --
