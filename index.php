@@ -49,6 +49,8 @@ if(!isset($_SESSION['isAuthenticated'])){ $isAuthenticated = false; }else{ $isAu
 							<li><a href="#/report/dts">Daily Transaction Sheet</a></li>
 							<li><a href="#/report/soe">Summary of Expenses</a></li>
 							<li><a href="#/report/loanListing">Loan Listing</a></li>
+							<li><a href="#/report/member">Member Report</a></li>
+							<li><a href="#/report/balance">Balance Account</a></li>
 
 					</ul>		
 				</li>

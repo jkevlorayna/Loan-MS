@@ -24,6 +24,18 @@ app.factory('svcPayment', function ($rootScope, $http, $q) {
             });
             return deferred.promise;
         },
+		GetByMemberId: function (id) {
+            var deferred = $q.defer();
+            $http({
+                method: 'GET',
+                url: BasePath+'/class/payment/member/'+id
+            }).success(function (data, status) {
+                deferred.resolve(data);
+            }).error(function (data, status) {
+                deferred.reject(data);
+            });
+            return deferred.promise;
+        },
 		Delete: function (id) {
             var deferred = $q.defer();
             $http({

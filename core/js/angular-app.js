@@ -173,7 +173,19 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 			url: '/loanListing',
 			templateUrl: "views/report/loanListing.html",
 			controller: "AppReportLoanListing",
-		})		
+		})	
+		.state('report.member',
+		{
+			url: '/member',
+			templateUrl: "views/report/member.html",
+			controller: "AppMemberController",
+		})	
+		.state('report.balance',
+		{
+			url: '/balance',
+			templateUrl: "views/report/balance.html",
+			controller: "AppReportBalance",
+		})			
 		// end report
 }]);
 app.config(['growlProvider', function(growlProvider) {

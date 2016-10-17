@@ -35,26 +35,24 @@
 				<table class="table table-bordered table-condensed">
 				<thead>
 					<tr>
+						<th>Status</th>
 						<th>Member Name</th>
 						<th>Date Released</th>
 						<th>Due Date</th>
 						<th>Loan Status</th>
 						<th>Balance</th>
 						<th>Amount Borrowed</th>
-						<th>Remarks</th>
-						
-
 					</tr>
 				</thead>
 				<tbody>
 					<tr ng-repeat="row in list">
+						<td></td>
 						<td>{{row.Firstname}} {{row.Middlename}} {{row.Lastname}}</td>
 						<td>{{row.DateReleased | date:'MM/dd/yyyy'}}</td>
 						<td></td>
 						<td></td>
 						<td class="text-right">{{row.Amount - row.Payment.Balance | currency:''}}</td>
 						<td class="text-right">{{row.Amount | currency:''}}</td>
-						<td></td>
 					</tr>
 					<tr>
 						<td></td>
@@ -63,7 +61,6 @@
 						<td class="text-right">Total</td>
 						<td  class="text-right">{{AmountBorrowedTotal - BalanceTotal | currency:'' }}</td>
 						<td  class="text-right">{{AmountBorrowedTotal | currency:''}}</td>
-						<td></td>
 					<tr>
 				</tbody>
 			</table>

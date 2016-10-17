@@ -4,6 +4,11 @@
 		$result = $PaymentRepo->Get($id);
 		echo json_encode($result);
 	});
+	$slim_app->get('/payment/member/:id',function($id){
+		$PaymentRepo = new PaymentRepository();
+		$result = $PaymentRepo->GetByMemberId($id);
+		echo json_encode($result);
+	});
 	$slim_app->get('/payment',function(){
 		$PaymentRepo = new PaymentRepository();
 		$result = $PaymentRepo->DataList($_GET['searchText'],$_GET['pageNo'],$_GET['pageSize'],$_GET['DateFrom'],$_GET['DateTo']);

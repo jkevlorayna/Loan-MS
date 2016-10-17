@@ -39,19 +39,11 @@
 });
 app.controller('AppPaymentFormController', function ($rootScope,$scope, $http, $q, $location, svcMember,growl,$uibModal,svcPayment,svcSetting,$stateParams ) {
 	$scope.Id = $stateParams.Id;
-	
-			$scope.calculate = function(){
-				var KAB = $scope.formData.KAB == undefined ? 0 : parseFloat($scope.formData.KAB);
-				var CBU = $scope.formData.CBU == undefined ? 0 : parseFloat($scope.formData.CBU);
-				var CBA = $scope.formData.CBA == undefined ? 0 : parseFloat($scope.formData.CBA);
-				var CF =  $scope.formData.CF == undefined ? 0 : parseFloat($scope.formData.CF);
-				$scope.formData.Total = KAB + CBU + CBA + CF;
-			}
-	
-
-			
-			if($scope.Id == 0){
-				$scope.formData = { Date:new Date() }
+			$q.all([svcSetting.getByKey('MBA')]).then(function(){
+				
+							if($scope.Id == 0){
+				$scope.formData = { Date:new Date(), MBA : $scope.MBA }
+				console.log($scope.formData);
 			}else{
 				$scope.getById = function(){
 					svcPayment.GetById($scope.Id).then(function(r){
@@ -63,6 +55,19 @@ app.controller('AppPaymentFormController', function ($rootScope,$scope, $http, $
 				}
 				$scope.getById();
 			} 
+				
+			})
+			$scope.calculate = function(){
+				var KAB = $scope.formData.KAB == undefined ? 0 : parseFloat($scope.formData.KAB);
+				var CBU = $scope.formData.CBU == undefined ? 0 : parseFloat($scope.formData.CBU);
+				var CBA = $scope.formData.CBA == undefined ? 0 : parseFloat($scope.formData.CBA);
+				var CF =  $scope.formData.CF == undefined ? 0 : parseFloat($scope.formData.CF);
+				$scope.formData.Total = KAB + CBU + CBA + CF;
+			}
+	
+
+			
+
 			
 
 		

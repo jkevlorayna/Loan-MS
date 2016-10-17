@@ -129,7 +129,7 @@ app.controller('AppSignUpController', function ($scope, $http, $q, $filter, svcM
     }
 });
 
-app.controller('AppMemberFormController', function ($scope, $http, $q, $filter, svcMember,growl,svcCourse,svcCourseYear,svcSection,$stateParams,svcCenter,svcTransaction) {
+app.controller('AppMemberFormController', function ($scope, $http, $q, $filter, svcMember,growl,svcCourse,svcCourseYear,svcSection,$stateParams,svcCenter,svcTransaction,svcPayment) {
 	$scope.Id = $stateParams.Id;
 	$scope.type = $stateParams.type;
 	$scope.loadCenter = function(){
@@ -172,6 +172,19 @@ app.controller('AppMemberFormController', function ($scope, $http, $q, $filter, 
         });
 	}
 	$scope.loadTransactionList();
+	
+	
+	$scope.loadPayment = function(){
+		$scope.SavingTotal = 0;
+		svcPayment.GetByMemberId($scope.Id).then(function(r){
+			$scope.paymentList = r;
+			angular.forEach(r,function(row,index){
+				$scope.SavingTotal += parseFloat(row.CBU);
+			})
+			
+		})
+	}
+	$scope.loadPayment();
 	
 	$scope.addBeneficiary = function(){
 		$scope.formData.Beneficiary.push({Name:'',MemberId:$scope.Id,Relationship:''})

@@ -7,6 +7,13 @@ class PaymentRepository{
 			WHERE tbl_payment.Id = '$id'");
 			return $query->fetch(PDO::FETCH_ASSOC);	
 		}
+		function GetByMemberId($id){
+			global $conn;
+			$query = $conn->query("SELECT *,tbl_payment.Id as Id FROM tbl_payment  
+			LEFT JOIN tbl_member ON tbl_member.Id = tbl_payment.MemberId
+			WHERE tbl_payment.MemberId = '$id'");
+			return $query->fetchAll(PDO::FETCH_ASSOC);	
+		}
 		function Delete($id){
 			global $conn;
 			$query = $conn->prepare("DELETE FROM  tbl_payment  WHERE Id = '$id'");
@@ -49,12 +56,12 @@ class PaymentRepository{
 		}
 		public function Create(){
 			global $conn;
-			$query = $conn->prepare("INSERT INTO tbl_payment (MemberId,Date,KAB,CBU,MBA,CF,Total) VALUES(:MemberId,:Date,:KAB,:CBU,:MBA,:CF,:Total)");
+			$query = $conn->prepare("INSERT INTO tbl_payment (MemberId,Date,KAB,CBU,MBA,CF,Total,MF,LRF) VALUES(:MemberId,:Date,:KAB,:CBU,:MBA,:CF,:Total,:MF,:LRF)");
 			return $query;	
 		}
 		public function Update(){
 			global $conn;
-			$query = $conn->prepare("UPDATE tbl_payment SET MemberId = :MemberId  , Date = :Date , KAB = :KAB , CBU = :CBU , MBA = :MBA , CF = :CF , Total = :Total WHERE Id = :Id");
+			$query = $conn->prepare("UPDATE tbl_payment SET MemberId = :MemberId  , Date = :Date , KAB = :KAB , CBU = :CBU , MBA = :MBA , CF = :CF , Total = :Total , MF = :MF , LRF = :LRF WHERE Id = :Id");
 			return $query;	
 		}
 		public function Transform($POST){
@@ -64,6 +71,8 @@ class PaymentRepository{
 			$POST->CBU = !isset($POST->CBU) ? '' : $POST->CBU; 
 			$POST->MBA = !isset($POST->MBA) ? '' : $POST->MBA; 
 			$POST->CF = !isset($POST->CF) ? '' : $POST->CF; 
+			$POST->MF = !isset($POST->MF) ? '' : $POST->MF; 
+			$POST->LRF = !isset($POST->LRF) ? '' : $POST->LRF; 
 			$POST->Total = !isset($POST->Total) ? '' : $POST->Total; 
 			$POST->Date = date('Y-m-d'); 
 			return $POST;
@@ -83,6 +92,8 @@ class PaymentRepository{
 			$query->bindParam(':MBA', $POST->MBA);
 			$query->bindParam(':CF', $POST->CF);
 			$query->bindParam(':Total', $POST->Total);
+			$query->bindParam(':MF', $POST->MF);
+			$query->bindParam(':LRF', $POST->LRF);
 			$query->bindParam(':Date', $POST->Date);
 			
 			

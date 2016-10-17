@@ -1,0 +1,39 @@
+
+<div class="block-flat">
+						<div class="header">										
+							<div class="alert alert-info alert-white rounded">
+								<div class="icon"><i class="fa fa-info-circle"></i></div>
+								<h4>Summary of Expenses</h4>
+							 </div>
+						</div>
+<div class="row">
+	<div class="col-md-12">
+
+				<table class="table table-bordered table-condensed">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Gender</th>
+						<th>Age</th>
+						<th>Address</th>
+						<th>Mobile No</th>
+						<th>Email</th>
+						<th>Center</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="row in list">
+						<td>{{row.Firstname}} {{row.Middlename}} {{row.Lastname}}</td>
+						<td>{{row.Gender}}</td>
+						<td class="text-center">{{row.Age}}</td>
+						<td>{{row.Address}}</td>
+						<td>{{row.MobileNo}}</td>
+						<td>{{row.Email}}</td>
+						<td>{{row.CenterName}}</td>
+					</tr>
+				</tbody>
+			</table>
+			 
+	</div>
+</div>
+</div>
