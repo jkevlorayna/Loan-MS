@@ -60,9 +60,11 @@ app.controller('AppPaymentFormController', function ($rootScope,$scope, $http, $
 			$scope.calculate = function(){
 				var KAB = $scope.formData.KAB == undefined ? 0 : parseFloat($scope.formData.KAB);
 				var CBU = $scope.formData.CBU == undefined ? 0 : parseFloat($scope.formData.CBU);
-				var CBA = $scope.formData.CBA == undefined ? 0 : parseFloat($scope.formData.CBA);
+				var MBA = $scope.formData.MBA == undefined ? 0 : parseFloat($scope.formData.MBA);
 				var CF =  $scope.formData.CF == undefined ? 0 : parseFloat($scope.formData.CF);
-				$scope.formData.Total = KAB + CBU + CBA + CF;
+				var MF =  $scope.formData.MF == undefined ? 0 : parseFloat($scope.formData.MF);
+				var LRF =  $scope.formData.LRF == undefined ? 0 : parseFloat($scope.formData.LRF);
+				$scope.formData.Total = KAB + CBU + MBA + CF + MF + LRF;
 			}
 	
 
