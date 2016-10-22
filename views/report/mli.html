@@ -1,9 +1,9 @@
 
 <div class="block-flat">
-						<div class="header">										
+						<div class="header">		
 							<div class="alert alert-info alert-white rounded">
 								<div class="icon"><i class="fa fa-info-circle"></i></div>
-								<h4>Loan Listing</h4>
+								<h4>MLI</h4>
 							 </div>
 						</div>
 <div class="row">
@@ -27,45 +27,57 @@
 							</span>
 						</div>
 					</div>
+<!-- 						<div class="form-group">
+							<input type="text" class="form-control" ng-model="searchText">
+
+						</div> -->
 						<div class="form-group">
 							<button class="btn btn-primary nomargin" type="submit">Submit</button>
 						</div>
 					</form>
 					<hr>
+
+				<div class="table-responsive" ng-if="count > 0">	
 				<table class="table table-bordered table-condensed">
 				<thead>
 					<tr>
-						<th>Status</th>
-						<th>Member Name</th>
-						<th>Date Released</th>
-						<th>Due Date</th>
-						<th>Loan Status</th>
-						<th>Balance</th>
-						<th>Amount Borrowed</th>
+						<th>Name</th>
+						<th>KAB</th> 
+						<th>CBU</th>
+						<th>MBA</th>
+						<th>CF</th>
+						<th>MF</th>
+						<th>LRF</th>
+						<th>Total</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr ng-repeat="row in list">
-						<td></td>
 						<td>{{row.Firstname}} {{row.Middlename}} {{row.Lastname}}</td>
-						<td>{{row.DateReleased | date:'MM/dd/yyyy'}}</td>
-						<td></td>
-						<td></td>
-						<td class="text-right">{{row.Amount - row.Payment.Balance | currency:''}}</td>
-						<td class="text-right">{{row.Amount | currency:''}}</td>
+						<td class="text-right">{{row.KAB}}</td>
+						<td class="text-right">{{row.CBU}}</td>
+						<td class="text-right">{{row.MBA}}</td>
+						<td class="text-right">{{row.CF}}</td>
+						<td class="text-right">{{row.MF}}</td>
+						<td class="text-right">{{row.LRF}}</td>
+						<td class="text-right">{{row.Total}}</td>
 					</tr>
 					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
 						<td class="text-right">Total</td>
-						<td  class="text-right">{{AmountBorrowedTotal - BalanceTotal | currency:'' }}</td>
-						<td  class="text-right">{{AmountBorrowedTotal | currency:''}}</td>
-					<tr>
+						<td class="text-right">{{KABTotal | currency:''}}</td>
+						<td class="text-right">{{CBUTotal | currency:''}}</td>
+						<td class="text-right">{{MBATotal | currency:''}}</td>
+						<td class="text-right">{{CFTotal | currency:''}}</td>
+						<td class="text-right">{{MFTotal | currency:''}}</td>
+						<td class="text-right">{{LRFTotal | currency:''}}</td>
+						<td class="text-right">{{GrandTotal | currency:''}}</td>
+					</tr>
 				</tbody>
 			</table>
-			 
+			</div>
+			
+			<div class="alert alert-danger" ng-if="count <= 0">No Results Found</div>
+		
 	</div>
 </div>
 </div>

@@ -28,6 +28,12 @@ form .ng-invalid.ng-invalid-required {
   color: #001B85;
   font-weight: bold !important; }
 
+.middle-login h3 {
+  text-align: center;
+  margin: 0 auto 15px;
+  color: #001B85;
+  font-weight: bold !important; }
+
 .counter_bg {
   background: #23262b none repeat scroll 0 0 !important;
   border: none; }

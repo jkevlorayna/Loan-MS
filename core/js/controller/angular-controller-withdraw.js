@@ -1,4 +1,4 @@
-﻿app.controller('AppPaymentListController', function ($scope, $http, $q, $location, svcMember,growl,$uibModal,svcPayment,svcSetting) {
+﻿app.controller('AppWithdrawListController', function ($scope, $http, $q, $location, svcMember,growl,$uibModal,svcWithdraw,svcSetting) {
 
 		$scope.pageNo = 1;
 		$scope.pageSize = 10;
@@ -10,7 +10,7 @@
 			$scope.NewDateTo = $scope.DateTo == undefined ? null : moment($scope.DateTo).format("YYYY-MM-DD");
 
 			$scope.spinner.active = true;
-			svcPayment.List($scope.searchText,$scope.pageNo,$scope.pageSize,$scope.NewDateFrom,$scope.NewDateTo).then(function (r) {
+			svcWithdraw.List($scope.searchText,$scope.pageNo,$scope.pageSize,$scope.NewDateFrom,$scope.NewDateTo).then(function (r) {
 				$scope.list = r.Results;
 				$scope.count = r.Count;
 				$scope.spinner.active = false;
@@ -39,7 +39,7 @@
 	$scope.openDeleteModal = function (size,id) {
 			var modal = $uibModal.open({
 			templateUrl: 'views/deletemodal/deleteModal.html',
-			controller: 'AppPaymentModalController',
+			controller: 'AppWithdrawModalController',
 			size: size,
 			resolve: {
 				dataId: function () {
@@ -53,47 +53,36 @@
 	};
 
 });
-app.controller('AppPaymentModalController', function ($rootScope,$scope, $http, $q,  $filter, svcPayment,growl,$uibModal,dataId,$uibModalInstance) {
+app.controller('AppWithdrawModalController', function ($rootScope,$scope, $http, $q,  $filter, svcWithdraw,growl,$uibModal,dataId,$uibModalInstance) {
 	$scope.id = dataId;
 	$scope.close = function(){
 		$uibModalInstance.dismiss();
 	}
 	$scope.delete = function () {
-		svcPayment.Delete($scope.id).then(function (response) {
+		svcWithdraw.Delete($scope.id).then(function (response) {
 			growl.error("Data Successfully Deleted");
 			$scope.close();
         });
     }
 });	
-app.controller('AppPaymentFormController', function ($rootScope,$scope, $http, $q, $location, svcMember,growl,$uibModal,svcPayment,svcSetting,$stateParams ) {
+app.controller('AppWithdrawFormController', function ($rootScope,$scope, $http, $q, $location, svcMember,growl,$uibModal,svcWithdraw,svcSetting,$stateParams ) {
 	$scope.Id = $stateParams.Id;
-			$q.all([svcSetting.getByKey('MBA')]).then(function(){
+		
 				
-							if($scope.Id == 0){
-				$scope.formData = { Date:new Date(), MBA : $scope.MBA }
-				console.log($scope.formData);
+			if($scope.Id == 0){
+				$scope.formData = { Date:new Date() , Amount:1 }
+
 			}else{
 				$scope.getById = function(){
-					svcPayment.GetById($scope.Id).then(function(r){
+					svcWithdraw.GetById($scope.Id).then(function(r){
 						$scope.formData = r;
 						$scope.formData.Date = new Date(r.Date);
 						$scope.selected = r;
-						$scope.calculate();	
 					})
 				}
 				$scope.getById();
 			} 
 				
-			})
-			$scope.calculate = function(){
-				var KAB = $scope.formData.KAB == undefined ? 0 : parseFloat($scope.formData.KAB);
-				var CBU = $scope.formData.CBU == undefined ? 0 : parseFloat($scope.formData.CBU);
-				var MBA = $scope.formData.MBA == undefined ? 0 : parseFloat($scope.formData.MBA);
-				var CF =  $scope.formData.CF == undefined ? 0 : parseFloat($scope.formData.CF);
-				var MF =  $scope.formData.MF == undefined ? 0 : parseFloat($scope.formData.MF);
-				var LRF =  $scope.formData.LRF == undefined ? 0 : parseFloat($scope.formData.LRF);
-				$scope.formData.Total = KAB + CBU + MBA + CF + MF + LRF;
-			}
 	
 
 			
@@ -102,8 +91,12 @@ app.controller('AppPaymentFormController', function ($rootScope,$scope, $http, $
 
 		
 	
-	$scope.selectCustomer = function(item){
+	$scope.SelectMember = function(item){
+		console.log(item);
 		$scope.formData.MemberId = item.Id;
+		svcMember.TotalSaving($scope.formData.MemberId).then(function(r){
+			$scope.formData.RemainingSaving = r.TotalSavings;
+		})
 	}
 	$scope.loadMember = function(){
 			$scope.spinner.active = true;
@@ -116,9 +109,10 @@ app.controller('AppPaymentFormController', function ($rootScope,$scope, $http, $
 	
 	$scope.Save = function(){
 			$scope.spinner.active = true;
-		svcPayment.Save($scope.formData).then(function(r){
+		svcWithdraw.Save($scope.formData).then(function(r){
 			growl.success("Data Successfully Saved");
 			$scope.spinner.active = false;
+			$location.path('/withdraw/list')
 		})
 	}
 });

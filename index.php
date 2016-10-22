@@ -39,6 +39,13 @@ if(!isset($_SESSION['isAuthenticated'])){ $isAuthenticated = false; }else{ $isAu
 						<li><a href="#/member/payment/list"><i class="fa fa-file"></i>List</a></li>
 					</ul>		
 				</li>
+				<li>
+					<a href="#"><i class="fa fa-money"></i><span>WithDraw</span></a> 
+					<ul class="sub-menu">						
+						<li><a href="#/withdraw/form/0"><i class="fa fa-edit"></i> Form</a></li>
+						<li><a href="#/withdraw/list"><i class="fa fa-file"></i>List</a></li>
+					</ul>		
+				</li>
 			    <li><a href="#/center"><i class="fa fa-building-o"></i> Center</a></li>
 				<li><a href="#/user/list"><i class="fa fa-group"></i> User List</a></li>
 				<li><a href="#/user/type"><i class="fa fa-group"></i>  User Type</a></li>
@@ -51,6 +58,7 @@ if(!isset($_SESSION['isAuthenticated'])){ $isAuthenticated = false; }else{ $isAu
 							<li><a href="#/report/loanListing">Loan Listing</a></li>
 							<li><a href="#/report/member">Member Report</a></li>
 							<li><a href="#/report/balance">Balance Account</a></li>
+							<li><a href="#/report/mli">MLI</a></li>
 
 					</ul>		
 				</li>

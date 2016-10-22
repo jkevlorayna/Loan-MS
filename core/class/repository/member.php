@@ -5,6 +5,16 @@ class MemberRepository{
 			$query = $conn->query("SELECT * FROM tbl_member  WHERE Id = '$id'");
 			return $query->fetch(PDO::FETCH_OBJ);	
 		}
+		function TotalSavings($id){
+			global $conn;
+			$query = $conn->query("
+			Select TotalSavings - TableB.TotalWithDraw as TotalSavings from (SELECT MemberId,SUM(CBU) as TotalSavings FROM tbl_payment  
+			WHERE MemberId = '$id') TableA
+			Inner JOIN        
+			(SELECT SUM(Amount) as TotalWithDraw,MemberId FROM tbl_withdraw  
+			WHERE MemberId = '$id') TableB On TableB.MemberId = TableA.MemberId");
+			return $query->fetch(PDO::FETCH_ASSOC);	
+		}
 		public function Delete($id){
 			global $conn;
 			$query = $conn->prepare("DELETE FROM  tbl_member  WHERE Id = '$id'");

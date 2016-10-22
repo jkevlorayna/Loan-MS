@@ -10,6 +10,11 @@ class BeneficiaryRepository{
 			$query = $conn->prepare("DELETE FROM  tbl_beneficiary  WHERE Id = '$id'");
 			$query->execute();	
 		}
+		function DeleteByMemberId($id){
+			global $conn;
+			$query = $conn->prepare("DELETE FROM  tbl_beneficiary  WHERE MemberId = '$id'");
+			$query->execute();	
+		}
 		function DataList($searchText,$pageNo,$pageSize,$MemberId){
 			global $conn;
 			$pageNo = ($pageNo - 1) * $pageSize; 

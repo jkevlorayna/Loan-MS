@@ -122,7 +122,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 			templateUrl: "views/center.html",
 			controller: "AppCenterController",
 		})
-		// end order
+		
 		.state('setting',
 		{
 			url: '/setting',
@@ -185,8 +185,35 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 			url: '/balance',
 			templateUrl: "views/report/balance.html",
 			controller: "AppReportBalance",
+		})		
+		.state('report.mli',
+		{
+			url: '/mli',
+			templateUrl: "views/report/mli.html",
+			controller: "AppReportMLIController",
 		})			
 		// end report
+		
+		// withdraw 
+					.state('withdraw',
+					{
+						url: '/withdraw',
+						templateUrl: "views/withdraw/index.html",
+						controller: "",
+					})
+					.state('withdraw.list',
+					{
+						url: '/list',
+						templateUrl: "views/withdraw/list.html",
+						controller: "AppWithdrawListController",
+					})
+					.state('withdraw.form',
+					{
+						url: '/form/:Id',
+						templateUrl: "views/withdraw/form.html",
+						controller: "AppWithdrawFormController",
+					})
+		// end withdraw
 }]);
 app.config(['growlProvider', function(growlProvider) {
   growlProvider.globalTimeToLive(5000);

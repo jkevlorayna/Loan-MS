@@ -6,6 +6,11 @@ $slim_app->get('/member/:id',function($id){
 	$result->Beneficiary = 	$BeneficiaryRepo->DataList('',0,0,$result->Id)['Results'];
 	echo json_encode($result);
 });
+$slim_app->get('/member/totalsaving/:id',function($id){
+	$MemberRepo = new MemberRepository();
+	$result = $MemberRepo->TotalSavings($id);
+	echo json_encode($result);
+});
 $slim_app->get('/member',function(){
 	$MemberRepo = new MemberRepository();
 	$TransactionRepo = new TransactionRepository();
@@ -18,8 +23,15 @@ $slim_app->get('/member',function(){
 	 echo json_encode($result);
 });
 $slim_app->delete('/member/:id',function($id){
-	$MemberRepo = new MemberRepository();
+	 $MemberRepo = new MemberRepository();
+	 $TransactionRepo = new TransactionRepository();
+	 $PaymentRepo = new PaymentRepository();
+	 $BeneficiaryRepo = new BeneficiaryRepository();
+	 
 	 $MemberRepo->Delete($id);
+	 $TransactionRepo->DeleteByMemberId($id);
+	 $PaymentRepo->DeleteByMemberId($id);
+	 $BeneficiaryRepo->DeleteByMemberId($id);
 });
 $slim_app->post('/member',function(){
 	$MemberRepo = new MemberRepository();

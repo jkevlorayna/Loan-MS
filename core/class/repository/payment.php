@@ -19,6 +19,11 @@ class PaymentRepository{
 			$query = $conn->prepare("DELETE FROM  tbl_payment  WHERE Id = '$id'");
 			$query->execute();	
 		}
+		function DeleteByMemberId($id){
+			global $conn;
+			$query = $conn->prepare("DELETE FROM  tbl_payment  WHERE MemberId = '$id'");
+			$query->execute();	
+		}
 		function GetMemberBalance($DateFrom,$DateTo,$MemberId){
 			global $conn;
 			$where = "";
@@ -47,8 +52,8 @@ class PaymentRepository{
 			$query = $conn->query("SELECT *,tbl_payment.Id as Id FROM  tbl_payment
 			LEFT JOIN tbl_member ON tbl_member.Id = tbl_payment.MemberId
 			WHERE 1 = 1 $where ORDER BY tbl_payment.Id Desc $limitCondition");
-			$count = $searchText != '' ?  $query->rowcount() : $conn->query("SELECT * FROM  tbl_payment")->rowcount();
-			
+			$count = $searchText != '' || $searchText == null  ?  $query->rowcount() :  $conn->query("SELECT * FROM  tbl_payment")->rowcount();
+
 			$data = array();
 			$data['Results'] = $query->fetchAll(PDO::FETCH_ASSOC);
 			$data['Count'] = $count;

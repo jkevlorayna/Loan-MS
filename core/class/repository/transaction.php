@@ -24,6 +24,11 @@ class TransactionRepository{
 			$query = $conn->prepare("DELETE FROM  tbl_transaction  WHERE Id = '$id'");
 			$query->execute();	
 		}
+		function DeleteByMemberId($id){
+			global $conn;
+			$query = $conn->prepare("DELETE FROM  tbl_transaction  WHERE MemberId = '$id'");
+			$query->execute();	
+		}
 		function DataList($searchText,$pageNo,$pageSize,$DateFrom,$DateTo,$CenterId){
 			global $conn;
 			$pageNo = ($pageNo - 1) * $pageSize; 

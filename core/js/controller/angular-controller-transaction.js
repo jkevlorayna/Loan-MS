@@ -35,8 +35,37 @@
 		});
 
 	};
+	
+	
+	$scope.openDeleteModal = function (size,id) {
+			var modal = $uibModal.open({
+			templateUrl: 'views/deletemodal/deleteModal.html',
+			controller: 'AppTransactionModalController',
+			size: size,
+			resolve: {
+				dataId: function () {
+					return id;
+				}
+			}
+			});
+			modal.result.then(function () { }, function () { 
+				$scope.load();
+			});
+	};
 
 });
+app.controller('AppTransactionModalController', function ($rootScope,$scope, $http, $q,  $filter, svcMember,growl,$uibModal,dataId,$uibModalInstance) {
+	$scope.id = dataId;
+	$scope.close = function(){
+		$uibModalInstance.dismiss();
+	}
+	$scope.delete = function () {
+		svcMember.Delete($scope.id).then(function (response) {
+			growl.error("Data Successfully Deleted");
+			$scope.close();
+        });
+    }
+});	
 app.controller('AppTransactionChangeStatusModalController', function (svcTransaction,svcStatus,$rootScope,$scope, $http, $q,  $filter, svcMember,growl,$uibModal,dataId,$uibModalInstance) {
 	$scope.Id = dataId;
 	$scope.close = function(){

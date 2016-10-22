@@ -54,41 +54,7 @@ app.controller('AppMemberController', function ($scope, $http, $q, $filter, svcM
 			});
 	};
 
-	$scope.moveToModal = function (size,id) {
-			var modal = $uibModal.open({
-			templateUrl: 'views/member/moveModal.html',
-			controller: 'AppMemberMoveModalController',
-			size: size,
-			resolve: {
-				dataId: function () {
-					return id;
-				}
-			}
-			});
-			modal.result.then(function () { 
-				$scope.load();
-			}, function () { 
-				$scope.load();
-			});
-	};
-	
-		$scope.viewFullInfoModal = function (size,id) {
-			var modal = $uibModal.open({
-			templateUrl: 'views/member/fullInfo.html',
-			controller: 'AppMemberFullInfoModalController',
-			size: size,
-			resolve: {
-				dataId: function () {
-					return id;
-				}
-			}
-			});
-			modal.result.then(function () { 
-				$scope.load();
-			}, function () { 
-				$scope.load();
-			});
-	};
+
 	
 });
 app.controller('AppMemberModalController', function ($rootScope,$scope, $http, $q,  $filter, svcMember,growl,$uibModal,dataId,$uibModalInstance) {
