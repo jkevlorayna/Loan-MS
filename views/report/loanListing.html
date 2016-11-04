@@ -29,9 +29,16 @@
 					</div>
 						<div class="form-group">
 							<button class="btn btn-primary nomargin" type="submit">Submit</button>
+							<button class="btn btn-warning nomargin" type="button" ng-click="printDiv('print')"><i class="fa fa-print"></i> Print</button>
 						</div>
 					</form>
 					<hr>
+										<div id="print">
+
+				<div class="text-center visible-print-block reportHeader">
+					<h1>Loan Listing</h1>
+					<h3>From {{DateFrom | date:'MM/dd/yyyy'}} - To {{DateTo | date:'MM/dd/yyyy'}}</h1>
+				</div>
 				<table class="table table-bordered table-condensed">
 				<thead>
 					<tr>
@@ -65,7 +72,7 @@
 					<tr>
 				</tbody>
 			</table>
-			 
+			 </div>
 	</div>
 </div>
 </div>

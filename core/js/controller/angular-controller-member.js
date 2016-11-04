@@ -54,7 +54,13 @@ app.controller('AppMemberController', function ($scope, $http, $q, $filter, svcM
 			});
 	};
 
-
+	$scope.printDiv = function(divName) {
+		var printContents = document.getElementById(divName).innerHTML;
+		var popupWin = window.open('', '_blank', 'width=700,height=700');
+		popupWin.document.open();
+		popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="core/css/print-landscape.css" /></head><body onload="window.print()">' + printContents + '</body></html>');
+		popupWin.document.close();
+	} 
 	
 });
 app.controller('AppMemberModalController', function ($rootScope,$scope, $http, $q,  $filter, svcMember,growl,$uibModal,dataId,$uibModalInstance) {
@@ -104,7 +110,7 @@ app.controller('AppMemberFormController', function ($scope, $http, $q, $filter, 
 		})
 	}	
 	$scope.loadCenter();
-	
+	$scope.pageTitle = $scope.Id == 0 ? 'Create New Member' : 'Update Member Data';
 	$scope.save = function () {
 		$scope.spinner.active = true;
 		svcMember.signUp($scope.formData).then(function (r) {

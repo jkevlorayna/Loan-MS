@@ -3,12 +3,36 @@ app.controller('AppMainController', function ($rootScope,$scope, $http, $q, $loc
      $scope.cookieCheck = $cookieStore.get('credentials');
 	$scope.spinner = { Active:false }
 	
-	if($scope.cookieCheck == undefined){
-		$scope.session = { userData:{} , isAuthenticated: false,  loading: false };
-	}else{
-		$scope.session = { userData:$scope.cookieCheck , isAuthenticated: true,  loading: false };
+	$rootScope.loadCredentions = function(){
+			$scope.cookieCheck = $cookieStore.get('credentials');
+			if($scope.cookieCheck == undefined){
+				$scope.session = { userData:{} , isAuthenticated: false,  loading: false };
+				$scope.checkRole = function(role,action){
+				return false;
+			}	
+		}else{
+			$scope.session = { userData:$scope.cookieCheck , isAuthenticated: true,  loading: false };	
+			$scope.checkRole = function(role,action){
+				if($scope.session.userData.UserType == 'Administrator' || $scope.session.userData.UserType == 'Administrators'){
+						return true;
+				}else{
+					$scope.role = $filter('filter')($scope.session.userData.Roles,{role:role})[0];
+					if(action == 'AllowView'){
+						return $scope.role.AllowView == 1 ? true : false;
+					}else if(action == 'AllowAdd'){
+						return $scope.role.AllowAdd == 1 ? true : false;
+					}else if(action == 'AllowEdit'){
+						return $scope.role.AllowEdit == 1 ? true : false;
+					}else if(action == 'AllowDelete'){
+						return $scope.role.AllowDelete == 1 ? true : false;
+					}else{
+						return  false;
+					}
+				}
+			}
+		}
 	}
-
+	$rootScope.loadCredentions();
 	
 	$scope.loadMemberType = function () {
 		svcMemberType.list('',0,0).then(function (r) {

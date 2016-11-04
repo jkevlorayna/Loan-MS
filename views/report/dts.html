@@ -1,44 +1,92 @@
 
 <div class="block-flat">
 						<div class="header">		
-								<h3>Daily Transaction List</h3>
+							<div class="alert alert-info alert-white rounded">
+								<div class="icon"><i class="fa fa-info-circle"></i></div>
+								<h4>Daily Transaction List</h4>
+							 </div>
 						</div>
+
 <div class="row">
 	<div class="col-md-12">
+					<form ng-submit="load()" class="form-inline filter_form">
+					<div class="form-group">
+						<label>Date From</label>
+						<div class="input-group">
+							<input type="text" class="form-control" uib-datepicker-popup="MM/dd/yyyy" ng-model="DateFrom" is-open="popup1" datepicker-options="dateOptions"  close-text="Close" />
+							<span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="popup1=true"><i class="glyphicon glyphicon-calendar"></i></button>
+							</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label>Date To</label>
+						<div class="input-group">
+							<input type="text" class="form-control" uib-datepicker-popup="MM/dd/yyyy" ng-model="DateTo" is-open="popup2" datepicker-options="dateOptions"  close-text="Close" />
+							<span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="popup2=true"><i class="glyphicon glyphicon-calendar"></i></button>
+							</span>
+						</div>
+					</div>
+<!-- 						<div class="form-group">
+							<input type="text" class="form-control" ng-model="searchText">
 
+						</div> -->
+						<div class="form-group">
+							<button class="btn btn-primary nomargin" type="submit">Submit</button>
+							<button class="btn btn-warning nomargin" type="button" ng-click="printDiv('print')"><i class="fa fa-print"></i> Print</button>	
+						</div>
+					</form>
+					<hr>
+				<div id="print">
+				<div class="text-center visible-print-block reportHeader">
+					<h1>Daily Transaction List</h1>
+					<h3>From {{DateFrom | date:'MM/dd/yyyy'}} - To {{DateTo | date:'MM/dd/yyyy'}}</h1>
+				</div>
+				<div class="table-responsive" ng-if="count > 0">	
 				<table class="table table-bordered table-condensed">
 				<thead>
 					<tr>
-						<th rowspan="2" style="vertical-align:top;">Id</th>
 						<th rowspan="2" style="vertical-align:top;">Name</th>
-						<th colspan="7" class="text-center">Payments</th>
+						<th colspan="7">Payment</th> 
 					</tr>
 					<tr>
-						<th>KAB</th>
+						<th>KAB</th> 
 						<th>CBU</th>
 						<th>MBA</th>
+						<th>CF</th>
 						<th>MF</th>
 						<th>LRF</th>
-						<th>CF</th>
 						<th>Total</th>
 					</tr>
 				</thead>
 				<tbody>
+					<tr ng-repeat="row in list">
+						<td>{{row.Firstname}} {{row.Middlename}} {{row.Lastname}}</td>
+						<td class="text-right">{{row.KAB}}</td>
+						<td class="text-right">{{row.CBU}}</td>
+						<td class="text-right">{{row.MBA}}</td>
+						<td class="text-right">{{row.CF}}</td>
+						<td class="text-right">{{row.MF}}</td>
+						<td class="text-right">{{row.LRF}}</td>
+						<td class="text-right">{{row.Total}}</td>
+					</tr>
 					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-
+						<td class="text-right">Total</td>
+						<td class="text-right">{{KABTotal | currency:''}}</td>
+						<td class="text-right">{{CBUTotal | currency:''}}</td>
+						<td class="text-right">{{MBATotal | currency:''}}</td>
+						<td class="text-right">{{CFTotal | currency:''}}</td>
+						<td class="text-right">{{MFTotal | currency:''}}</td>
+						<td class="text-right">{{LRFTotal | currency:''}}</td>
+						<td class="text-right">{{GrandTotal | currency:''}}</td>
 					</tr>
 				</tbody>
 			</table>
-			  <uib-pagination ng-model="pageNo" ng-click="pageChanged()" items-per-page="pageSize" total-items="count"  max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages"></uib-pagination>
+			</div>
+			</div>
+			
+			<div class="alert alert-danger" ng-if="count <= 0">No Results Found</div>
 	</div>
 </div>
 </div>

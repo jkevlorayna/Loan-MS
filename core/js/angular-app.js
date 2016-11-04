@@ -160,7 +160,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 		{
 			url: '/dts',
 			templateUrl: "views/report/dts.html",
-			controller: "",
+			controller: "AppReportDTS",
 		})
 		.state('report.soe',
 		{

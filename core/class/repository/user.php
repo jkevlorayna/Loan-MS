@@ -29,31 +29,32 @@ class UserRepository{
 		public function Create(){
 			global $conn;
 			$query = $conn->prepare("INSERT INTO tbl_user (name,username,password,UserTypeId,status) VALUES(:name,:username,:password,:UserTypeId,:status)");
-			return $query;	
-		}
+			return $query;
+		}	
 		public function Update(){
 			global $conn;
-			$query = $conn->prepare("UPDATE tbl_user SET name = :name , status = :status , username = :username , password = :password , UserTypeId = :UserTypeId  WHERE Id = :Id");
-			return $query;	
-		}
+			$query = $conn->prepare("UPDATE tbl_user SET name = :name  , username = :username , password = :password , UserTypeId = :UserTypeId , status = :status  WHERE user_id = :user_id  ");
+			return $query;
+			
+		}	
 		public function Transform($POST){
-			$POST->Id = !isset($POST->Id) ? 0 : $POST->Id;
-			$POST->name = !isset($POST->name) ? '' : $POST->name; 
-			$POST->status = !isset($POST->status) ? '' : $POST->status; 
-			$POST->username = !isset($POST->username) ? '' : $POST->username; 
-			$POST->password = !isset($POST->password) ? '' : $POST->password; 
-			$POST->UserTypeId = !isset($POST->UserTypeId) ? '' : $POST->UserTypeId; 
+			$POST->user_id = !isset($POST->user_id) ? 0 : $POST->user_id;
+			$POST->status = !isset($POST->status) ? 0 : $POST->status;
+			$POST->username = !isset($POST->username) ? 0 : $POST->username;
+			$POST->password = !isset($POST->password) ? 0 : $POST->password;
+			$POST->UserTypeId = !isset($POST->UserTypeId) ? 0 : $POST->UserTypeId;
 			return $POST;
 		}
-		 public function Save($POST){
+		 function Save($POST){
 			global $conn;
-			if($POST->Id == 0){
+
+			if($POST->user_id == 0){
 				$query = $this->Create();
 			}else{
-				$query = $this->UPDATE();
-				$query->bindParam(':Id', $POST->Id);
+				$query = $this->Update();
+				$query->bindParam(':user_id',$POST->user_id);
+
 			}
-			
 			$query->bindParam(':name',$POST->name);
 			$query->bindParam(':status',$POST->status);
 			$query->bindParam(':username',$POST->username);
@@ -61,7 +62,11 @@ class UserRepository{
 			$query->bindParam(':UserTypeId',$POST->UserTypeId);
 			$query->execute();	
 		}
+		
+
 }
+
+
 
 class UserTypeRepository{
 		public function Get($id){
@@ -88,32 +93,22 @@ class UserTypeRepository{
 			$data['Count'] = $count;
 			return $data;	
 		}
-		public function Create(){
+		public function Save(){
 			global $conn;
-			$query = $conn->prepare("INSERT INTO tbl_user_type (user_type) VALUES(:user_type)");
-			return $query;	
-		}
-		public function Update(){
-			global $conn;
-			$query = $conn->prepare("UPDATE tbl_user_type SET user_type = :user_type  WHERE Id = :Id");
-			return $query;	
-		}
-		public function Transform($POST){
-			$POST->Id = !isset($POST->Id) ? 0 : $POST->Id;
-			$POST->user_type = !isset($POST->user_type) ? '' : $POST->user_type; 
-			return $POST;
-		}
-		public function Save($POST){
-			global $conn;
-			if($POST->Id == 0){
-				$query = $this->Create();
-			}else{
-				$query = $this->UPDATE();
-				$query->bindParam(':Id', $POST->Id);
-			}
+			$request = \Slim\Slim::getInstance()->request();
+			$POST = json_decode($request->getBody());
 			
-			$query->bindParam(':user_type',$POST->user_type);
-			$query->execute();	
+	
+			$id  = (!isset($POST->Id))? 0 : $POST->Id;
+			$user_type =  $POST->user_type;
+
+			if($id == 0) { 
+				$query = $conn->prepare("INSERT INTO tbl_user_type (user_type) VALUES(?)");
+				$query->execute(array($user_type));
+			}else{ 
+				$query = $conn->prepare("UPDATE tbl_user_type SET user_type = ?   WHERE Id = ? ");
+				$query->execute(array($user_type,$id));	
+			}
 		}
 }
 
@@ -126,11 +121,19 @@ class UserRoleRepository{
 			$count = $query->rowcount();
 
 			$data = array();
-			$data['Results'] = $query->fetchAll(PDO::FETCH_ASSOC);
+			$data['Results'] = $query->fetchAll(PDO::FETCH_OBJ);
 			$data['Count'] = $count;
 			return $data;	
 		}
-		
+		public function UserRoles($UserId){
+			global $conn;
+			$where = "";
+			$where .= "And UserId = $UserId";
+			$query = $conn->query("SELECT * FROM tbl_user_roles  
+			LEFT JOIN tbl_roles  ON tbl_user_roles.RoleId = tbl_roles.Id
+			WHERE 1 = 1  $where ");
+			return $query->fetchAll(PDO::FETCH_OBJ);	
+		}
 		public function Get($id){
 			global $conn;
 			$query = $conn->query("SELECT * FROM tbl_user_roles  WHERE Id = '$id'");
@@ -141,55 +144,51 @@ class UserRoleRepository{
 			$query = $conn->prepare("DELETE FROM  tbl_user_roles  WHERE Id = '$id'");
 			$query->execute();	
 		}
-		public function DeleteByUserId($id){
+		public function DataList($UserId,$RoleId){
 			global $conn;
-			$query = $conn->prepare("DELETE FROM tbl_user_roles WHERE UserId = ?");
-			$query->execute(array($id));
-		}
-
-		public function DataList(){
-			global $conn;
-			$UserId = $_GET['UserId'];
-			$query = $conn->query("SELECT tbl_user_roles.RoleId As Id,tbl_roles.role FROM  tbl_user_roles
-			LEFT JOIN tbl_roles ON tbl_user_roles.RoleId = tbl_roles.Id
-			WHERE UserId = '$UserId'
-			");
-			$count = $query->rowcount();
-
-			$query1 = $conn->query("SELECT * FROM  tbl_roles");
-			
-			$data = array();
-			$data['Roles'] = $query1->fetchAll(PDO::FETCH_ASSOC);
-			$data['UserRole'] = $query->fetchAll(PDO::FETCH_ASSOC);
-			$data['Count'] = $count;
-			return $data;	
+			$query = $conn->query("SELECT * FROM tbl_user_roles WHERE UserId = '$UserId' AND  RoleId = '$RoleId'");
+			return $query->fetch(PDO::FETCH_OBJ);
 		}
 		public function Create(){
 			global $conn;
-			$query = $conn->prepare("INSERT INTO tbl_user_roles (UserId,RoleId) VALUES(:UserId,:RoleId)");
-			return $query;	
-		}
+			$query = $conn->prepare("INSERT INTO tbl_user_roles (UserId,RoleId,AllowView,AllowAdd,AllowEdit,AllowDelete) VALUES(:UserId,:RoleId,:AllowView,:AllowAdd,:AllowEdit,:AllowDelete)");
+			return $query;
+		}	
 		public function Update(){
 			global $conn;
-			$query = $conn->prepare("UPDATE tbl_user_roles SET UserId = :UserId , RoleId = :RoleId  WHERE Id = :Id");
-			return $query;	
-		}
+			$query = $conn->prepare("UPDATE tbl_user_roles SET UserId = :UserId  , RoleId = :RoleId , AllowView = :AllowView , AllowAdd = :AllowAdd , AllowEdit = :AllowEdit , AllowDelete = :AllowDelete  WHERE Id = :Id ");
+			return $query;
+			
+		}	
 		public function Transform($POST){
 			$POST->Id = !isset($POST->Id) ? 0 : $POST->Id;
-			$POST->UserId = !isset($POST->UserId) ? '' : $POST->UserId; 
-			$POST->RoleId = !isset($POST->Id) ? '' : $POST->Id; 
+			$POST->UserId = !isset($POST->UserId) ? 0 : $POST->UserId;
+			$POST->RoleId = !isset($POST->RoleId) ? 0 : $POST->RoleId;
+			$POST->AllowView = !isset($POST->AllowView) ? 0 : $POST->AllowView;
+			$POST->AllowAdd = !isset($POST->AllowAdd) ? 0 : $POST->AllowAdd;
+			$POST->AllowEdit = !isset($POST->AllowEdit) ? 0 : $POST->AllowEdit;
+			$POST->AllowDelete = !isset($POST->AllowDelete) ? 0 : $POST->AllowDelete;
 			return $POST;
 		}
-		
-		public function Save($POST){
+		 function Save($POST){
 			global $conn;
-			
-			$query = $this->Create();
 
+			if($POST->Id == 0){
+				$query = $this->Create();
+			}else{
+				$query = $this->Update();
+				$query->bindParam(':Id', $POST->Id);
+
+			}
 			$query->bindParam(':UserId',$POST->UserId);
 			$query->bindParam(':RoleId',$POST->RoleId);
+			$query->bindParam(':AllowView',$POST->AllowView);
+			$query->bindParam(':AllowAdd',$POST->AllowAdd);
+			$query->bindParam(':AllowEdit',$POST->AllowEdit);
+			$query->bindParam(':AllowDelete',$POST->AllowDelete);
 			$query->execute();	
 		}
+	
 }		
-$GLOBALS['UserRoleRepo'] = new UserRoleRepository();	
+
 ?>
