@@ -134,7 +134,9 @@ class TransactionRepository{
 			$query->bindParam(':LoanStatus', $POST->LoanStatus);
 			$query->bindParam(':Cycle', $POST->Cycle);
 
-			$query->execute();	
+			$query->execute();
+			if($POST->Id == 0){ $POST->Id = $conn->lastInsertId(); }
+			return $POST;			
 		}
 }
 

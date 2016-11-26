@@ -45,7 +45,7 @@ $slim_app->post('/signup',function(){
 	$BeneficiaryRepo = new BeneficiaryRepository();
 	
 	$Member = $MemberRepo->SignUp($MemberRepo->Transform($POST));
-	print_r($Member);
+	echo json_encode($Member);
 	 if(isset($POST->Beneficiary)){
 		foreach($POST->Beneficiary as $row){
 			$row->MemberId = $Member->Id;
@@ -56,5 +56,30 @@ $slim_app->post('/signup',function(){
 $slim_app->post('/member/changepassword',function(){
 	$MemberRepo = new MemberRepository();
 	 $MemberRepo->ChangePassword();
+});
+$slim_app->post('/member/upload/:Id',function($Id){
+	$MemberRepo = new MemberRepository();
+	$result = $MemberRepo->Get($Id);
+
+		if ( !empty( $_FILES ) ) {
+			foreach($_FILES as $row){
+				$tempPath = $row[ 'tmp_name' ];
+				$rd2 = mt_rand(1000, 9999);
+				$filename = $rd2. "_" .$row[ 'name' ];
+				$uploadPath = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . '../uploads/' . DIRECTORY_SEPARATOR . $filename;
+				
+				
+				$result->ImageUrl = $filename;
+				$MemberRepo->SignUp($result);
+				$location = move_uploaded_file( $tempPath, $uploadPath );
+				$answer = array( 'answer' => 'File transfer completed' );
+				$json = json_encode( $answer );
+			
+				echo $json;
+			}
+		} else {
+		
+			echo 'No files';
+		}
 });
 ?>

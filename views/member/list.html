@@ -20,21 +20,22 @@
 						</div>
 					</form>
 					<hr>
-				<table class="table table-bordered table-condensed">
+				<table class="table table-bordered table-condensed" ts-wrapper>
 				<thead>
 					<tr>
-						<th>Name</th>
-						<th>Gender</th>
-						<th>Age</th>
-						<th>Address</th>
-						<th>Mobile No</th>
-						<th>Email</th>
-						<th>Center</th>
+						<th ts-criteria="Name" ts-default>Name</th>
+						<th ts-criteria="Gender">Gender</th>
+						<th ts-criteria="Age">Age</th>
+						<th ts-criteria="Address">Address</th>
+						<th ts-criteria="MobileNo">Mobile No</th>
+						<th ts-criteria="Email">Email</th>
+						<th ts-criteria="CenterName">Center</th>
+						<th></th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="row in list">
+					<tr ng-repeat="row in list" ts-repeat>
 						<td>{{row.Firstname}} {{row.Middlename}} {{row.Lastname}}</td>
 						<td>{{row.Gender}}</td>
 						<td class="text-center">{{row.Age}}</td>
@@ -42,6 +43,12 @@
 						<td>{{row.MobileNo}}</td>
 						<td>{{row.Email}}</td>
 						<td>{{row.CenterName}}</td>
+						<td class="text-center">
+							<a ng-href="core/class/uploads/{{row.ImageUrl}}" data-lightbox="roadtrip">
+								<img  check-image ng-src="core/class/uploads/{{row.ImageUrl}}" class="img-circle" style="max-height:60px;max-width:60px">
+							</a><br>
+							<a href="javascript:void(0)" ng-click="ChangePicture('md',row.Id)">Change Picture</a>
+						</td>
 						<td>
 							<a class="btn btn-success btn-sm" href="#/member/form/{{row.Id}}">  <i class="fa fa-edit"></i> </a>
 							<button class="btn btn-danger btn-sm" ng-click="openDeleteModal('md',row.Id)">  <i class="fa fa-trash-o"></i> </button>

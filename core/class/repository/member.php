@@ -47,8 +47,8 @@ class MemberRepository{
 			$query = $conn->prepare("
 				INSERT INTO 
 					   tbl_member 
-					  (Firstname,Lastname,Middlename,Gender,Address,MobileNo,Email,DateRegistered,Status,Age,Business,CenterId,BirthDate) 
-				VALUES(:Firstname,:Lastname,:Middlename,:Gender,:Address,:MobileNo,:Email,:DateRegistered,:Status,:Age,:Business,:CenterId,:BirthDate)
+					  (Firstname,Lastname,Middlename,Gender,Address,MobileNo,Email,DateRegistered,Status,Age,Business,CenterId,BirthDate,ImageUrl) 
+				VALUES(:Firstname,:Lastname,:Middlename,:Gender,:Address,:MobileNo,:Email,:DateRegistered,:Status,:Age,:Business,:CenterId,:BirthDate,:ImageUrl)
 				");
 			return $query;	
 		}
@@ -69,7 +69,8 @@ class MemberRepository{
 					   Business = :Business,
 					   CenterId = :CenterId,
 					   Status = :Status,
-					   BirthDate = :BirthDate
+					   BirthDate = :BirthDate,
+					   ImageUrl = :ImageUrl
 					   WHERE Id = :Id
 				");
 			return $query;	
@@ -88,6 +89,7 @@ class MemberRepository{
 			$POST->CenterId = !isset($POST->CenterId) ? '' : $POST->CenterId; 
 			$POST->Status = !isset($POST->Status) ? '' : $POST->Status; 
 			$POST->BirthDate = !isset($POST->BirthDate) ? '0000-00-00' : $POST->BirthDate; 
+			$POST->ImageUrl = !isset($POST->ImageUrl) ? '' : $POST->ImageUrl; 
 			$POST->Date = date('Y-m-d'); 
 
 			return $POST;
@@ -115,11 +117,12 @@ class MemberRepository{
 			$query->bindParam(':CenterId', $POST->CenterId );
 			$query->bindParam(':Status', $POST->Status );
 			$query->bindParam(':BirthDate', $POST->BirthDate );
+			$query->bindParam(':ImageUrl', $POST->ImageUrl );
 			
 
 
 			$query->execute();	
-			$POST->Id = $conn->lastInsertId(); 
+			if($POST->Id == 0){ $POST->Id = $conn->lastInsertId(); }	
 			return $POST;
 		}
 		public function SignUp($POST){

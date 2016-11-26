@@ -61,6 +61,8 @@ class UserRepository{
 			$query->bindParam(':password',$POST->password);
 			$query->bindParam(':UserTypeId',$POST->UserTypeId);
 			$query->execute();	
+			if($POST->Id == 0){ $POST->Id = $conn->lastInsertId(); }
+			return $POST;				
 		}
 		
 

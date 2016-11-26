@@ -39,6 +39,8 @@ class MemberTypeRepository{
 				$query = $conn->prepare("UPDATE tbl_member_type SET type = ?   WHERE Id = ? ");
 				$query->execute(array($type,$id));	
 			}
+			if($POST->Id == 0){ $POST->Id = $conn->lastInsertId(); }
+			return $POST;
 		}
 }
 $GLOBALS['MemberTypeRepo'] = new MemberTypeRepository();

@@ -102,7 +102,9 @@ class PaymentRepository{
 			$query->bindParam(':Date', $POST->Date);
 			
 			
-			$query->execute();	
+			$query->execute();
+			if($POST->Id == 0){ $POST->Id = $conn->lastInsertId(); }
+			return $POST;			
 		}
 }
 

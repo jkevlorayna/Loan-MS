@@ -85,6 +85,19 @@ app.factory('svcMember', function ($rootScope, $http, $q) {
                 deferred.reject(data);
             });
             return deferred.promise;
+        },Upload: function (postData,Id) {
+            var deferred = $q.defer();
+            $http({
+                method: 'POST',
+				headers: {'Content-Type': undefined},
+                url: BasePath+'/class/member/upload/'+Id,
+                data:postData,
+            }).success(function (data, status) {
+                deferred.resolve(data);
+            }).error(function (data, status) {
+                deferred.reject(data);
+            });
+            return deferred.promise;
         }
     };
     return $this;

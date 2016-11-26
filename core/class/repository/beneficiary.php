@@ -61,6 +61,8 @@ class BeneficiaryRepository{
 			$query->bindParam(':Relationship', $POST->Relationship);
 
 			$query->execute();	
+			if($POST->Id == 0){ $POST->Id = $conn->lastInsertId(); }
+			return $POST;			
 		}
 }
 

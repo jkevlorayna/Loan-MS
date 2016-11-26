@@ -64,6 +64,8 @@ class WithDrawRepository{
 			$query->bindParam(':MemberId',$POST->MemberId);
 			$query->bindParam(':Amount',$POST->Amount);
 			$query->execute();	
+			if($POST->Id == 0){ $POST->Id = $conn->lastInsertId(); }
+			return $POST;				
 		}
 }
 ?>

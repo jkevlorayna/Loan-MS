@@ -62,7 +62,62 @@ app.controller('AppMemberController', function ($scope, $http, $q, $filter, svcM
 		popupWin.document.close();
 	} 
 	
+	$scope.ChangePicture = function (size,id) {
+			var modal = $uibModal.open({
+			templateUrl: 'views/member/changePicture.html',
+			controller: 'AppChangePictureModalController',
+			size: size,
+			resolve: {
+				dataId: function () {
+					return id;
+				}
+			}
+			});
+			modal.result.then(function () { 
+				$scope.load();
+			}, function () { 
+				$scope.load();
+			});
+	};
+	
+	
 });
+
+app.controller('AppChangePictureModalController', function ($rootScope,$scope, $http, $q,  $filter, svcMember,growl,$uibModal,dataId,$uibModalInstance) {
+	$scope.id = dataId;
+	$scope.close = function(){
+		$uibModalInstance.dismiss();
+	}
+	
+	$scope.formData = {};
+	$scope.getById = function(){
+		svcMember.getById($scope.id).then(function(r){
+			$scope.formData = r;
+		})
+	}
+	$scope.getById();	
+	
+	$scope.fileData = new FormData();
+    $scope.getTheFiles = function (files) {
+        angular.forEach(files, function (value, key) {
+            $scope.fileData.append(key, value);
+        });
+    };
+		$scope.save = function () {
+		svcMember.signUp($scope.formData).then(function (r) { 
+				console.log(r);
+				svcMember.Upload($scope.fileData,r.Id).then(function(r){
+					$scope.close();
+				})
+        },function(){
+			growl.error('Ops Something Went Wrong');
+		});
+    }
+
+
+	
+});	
+
 app.controller('AppMemberModalController', function ($rootScope,$scope, $http, $q,  $filter, svcMember,growl,$uibModal,dataId,$uibModalInstance) {
 	$scope.id = dataId;
 	$scope.close = function(){
@@ -111,10 +166,21 @@ app.controller('AppMemberFormController', function ($scope, $http, $q, $filter, 
 	}	
 	$scope.loadCenter();
 	$scope.pageTitle = $scope.Id == 0 ? 'Create New Member' : 'Update Member Data';
+	
+	$scope.fileData = new FormData();
+    $scope.getTheFiles = function (files) {
+        angular.forEach(files, function (value, key) {
+            $scope.fileData.append(key, value);
+        });
+    };
+	
 	$scope.save = function () {
 		$scope.spinner.active = true;
 		svcMember.signUp($scope.formData).then(function (r) {
 			growl.success('Data Successfully Saved');
+				svcMember.Upload($scope.fileData,r.Id).then(function(r){
+					// $location.path('/member/list/'+$scope.type);
+				})
 			$scope.spinner.active = false;
         },function(){
 			growl.error('Ops Something Went Wrong');
@@ -136,6 +202,7 @@ app.controller('AppMemberFormController', function ($scope, $http, $q, $filter, 
 	$scope.getById = function(){
 		svcMember.getById($scope.Id).then(function (r) {
 			$scope.formData = r;
+			$scope.formData.BirthDate = new Date(r.BirthDate);
         });
 	}
 	$scope.loadTransactionList = function(){
