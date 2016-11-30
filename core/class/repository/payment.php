@@ -36,16 +36,19 @@ class PaymentRepository{
 			$query = $conn->query("SELECT (SUM(KAB)+SUM(CBU)+SUM(MBA)) AS Balance FROM  tbl_payment WHERE 1 = 1 $where");
 			return $query->fetch(PDO::FETCH_ASSOC);
 		}
-		function DataList($searchText,$pageNo,$pageSize,$DateFrom,$DateTo){
+		function DataList($searchText,$pageNo,$pageSize,$DateFrom,$DateTo,$CenterId){
 			global $conn;
 			$pageNo = ($pageNo - 1) * $pageSize; 
 			
 			$where = "";
 			if($searchText != ''){
-				$where = "And (CONCAT(tbl_member.FirstName,' ',tbl_member.Middlename,' ',tbl_member.Lastname)  LIKE '%$searchText%')";
+				$where .= "And (CONCAT(tbl_member.FirstName,' ',tbl_member.Middlename,' ',tbl_member.Lastname)  LIKE '%$searchText%')";
 			}
 			if($DateFrom != 'null' && $DateTo != 'null'){
-				$where = "And Date BETWEEN '$DateFrom' AND '$DateTo'";
+				$where .= "And Date BETWEEN '$DateFrom' AND '$DateTo'";
+			}
+			if($CenterId != ''){
+				$where .= "And tbl_member.CenterId = '$CenterId'";
 			}
 			
 			$limitCondition = $pageNo == 0 && $pageSize == 0 ? '' : 'LIMIT '.$pageNo.','.$pageSize;

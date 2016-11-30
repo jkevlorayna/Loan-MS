@@ -35,7 +35,7 @@ app.factory('svcTransaction', function ($rootScope, $http, $q) {
             });
             return deferred.promise;
         },
-		DeleteData: function (id) {
+		Delete: function (id) {
             var deferred = $q.defer();
             $http({
                 method: 'DELETE',

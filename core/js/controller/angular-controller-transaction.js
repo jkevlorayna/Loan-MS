@@ -54,13 +54,13 @@
 	};
 
 });
-app.controller('AppTransactionModalController', function ($rootScope,$scope, $http, $q,  $filter, svcMember,growl,$uibModal,dataId,$uibModalInstance) {
+app.controller('AppTransactionModalController', function ($rootScope,$scope, $http, $q,  $filter, svcTransaction,growl,$uibModal,dataId,$uibModalInstance) {
 	$scope.id = dataId;
 	$scope.close = function(){
 		$uibModalInstance.dismiss();
 	}
 	$scope.delete = function () {
-		svcMember.Delete($scope.id).then(function (response) {
+		svcTransaction.Delete($scope.id).then(function (response) {
 			growl.error("Data Successfully Deleted");
 			$scope.close();
         });

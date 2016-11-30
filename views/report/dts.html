@@ -28,10 +28,12 @@
 							</span>
 						</div>
 					</div>
-<!-- 						<div class="form-group">
-							<input type="text" class="form-control" ng-model="searchText">
-
-						</div> -->
+					<div class="form-group">
+							<select class="form-control" ng-model="CenterId">
+								<option value="">Select Center</option>
+								<option ng-repeat="row in centerList" value="{{row.Id}}">{{row.Name}}</option>
+							</select>
+					</div>
 						<div class="form-group">
 							<button class="btn btn-primary nomargin" type="submit">Submit</button>
 							<button class="btn btn-warning nomargin" type="button" ng-click="printDiv('print')"><i class="fa fa-print"></i> Print</button>	

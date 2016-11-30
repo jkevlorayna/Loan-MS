@@ -107,24 +107,32 @@ app.controller('AppReportBalance', function ($scope, $http, $q, $location, svcMe
 	
 
 });
-app.controller('AppReportDTS', function ($scope, $http, $q, $location, svcMember,growl,$uibModal,svcTransaction,svcSetting,svcPayment) {
+app.controller('AppReportDTS', function ($scope, $http, $q, $location, svcMember,growl,$uibModal,svcTransaction,svcSetting,svcPayment,svcCenter) {
 	$scope.DateFrom = new Date();
 	$scope.DateTo = new Date();
-	$scope.KABTotal = 0;
-	$scope.CBUTotal = 0;
-	$scope.MBATotal = 0;
-	$scope.CFTotal = 0;
-	$scope.MFTotal = 0;
-	$scope.LRFTotal = 0;
-	$scope.GrandTotal = 0;
+
+	if($scope.CenterId == undefined){$scope.CenterId = '';}
+	$scope.loadCenter = function(){
+		svcCenter.list('',0,0).then(function(r){
+			$scope.centerList = r.Results;
+		})
+	}
+	$scope.loadCenter();
 	
 		
     $scope.load = function () {
+			$scope.KABTotal = 0;
+			$scope.CBUTotal = 0;
+			$scope.MBATotal = 0;
+			$scope.CFTotal = 0;
+			$scope.MFTotal = 0;
+			$scope.LRFTotal = 0;
+			$scope.GrandTotal = 0;
+	
 			var DateFrom = $scope.DateFrom == undefined ? null : moment($scope.DateFrom).format("YYYY-MM-DD");
 			var Dateto = $scope.DateTo == undefined ? null : moment($scope.DateTo).format("YYYY-MM-DD");
 
-			$scope.spinner.active = true;
-			svcPayment.List(null,0,0,DateFrom,Dateto).then(function (r) {
+			svcPayment.List('',0,0,DateFrom,Dateto,$scope.CenterId).then(function (r) {
 				$scope.list = r.Results;
 				$scope.list.map(function(value){
 					$scope.KABTotal += parseFloat(value.KAB);
@@ -135,7 +143,6 @@ app.controller('AppReportDTS', function ($scope, $http, $q, $location, svcMember
 					$scope.GrandTotal += parseFloat(value.Total);
 				})
 				$scope.count = r.Count;
-				$scope.spinner.active = false;
 			})
     }
     $scope.load();

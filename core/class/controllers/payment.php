@@ -11,7 +11,7 @@
 	});
 	$slim_app->get('/payment',function(){
 		$PaymentRepo = new PaymentRepository();
-		$result = $PaymentRepo->DataList($_GET['searchText'],$_GET['pageNo'],$_GET['pageSize'],$_GET['DateFrom'],$_GET['DateTo']);
+		$result = $PaymentRepo->DataList($_GET['searchText'],$_GET['pageNo'],$_GET['pageSize'],$_GET['DateFrom'],$_GET['DateTo'],$_GET['CenterId']);
 		echo json_encode($result);
 	});
 	$slim_app->delete('/payment/:id',function($id){

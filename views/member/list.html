@@ -46,12 +46,13 @@
 						<td class="text-center">
 							<a ng-href="core/class/uploads/{{row.ImageUrl}}" data-lightbox="roadtrip">
 								<img  check-image ng-src="core/class/uploads/{{row.ImageUrl}}" class="img-circle" style="max-height:60px;max-width:60px">
-							</a><br>
-							<a href="javascript:void(0)" ng-click="ChangePicture('md',row.Id)">Change Picture</a>
+							</a>
+							
 						</td>
 						<td>
 							<a class="btn btn-success btn-sm" href="#/member/form/{{row.Id}}">  <i class="fa fa-edit"></i> </a>
-							<button class="btn btn-danger btn-sm" ng-click="openDeleteModal('md',row.Id)">  <i class="fa fa-trash-o"></i> </button>
+							<button class="btn btn-danger btn-sm" ng-click="openDeleteModal('md',row.Id)">  <i class="fa fa-trash-o"></i> </button><br>
+							<a href="javascript:void(0)" ng-click="ChangePicture('md',row.Id)">Change Picture</a>
 						</td>
 					</tr>
 				</tbody>
