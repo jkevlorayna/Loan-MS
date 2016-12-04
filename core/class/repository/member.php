@@ -8,12 +8,16 @@ class MemberRepository{
 		function TotalSavings($id){
 			global $conn;
 			$query = $conn->query("
-			Select TotalSavings - TableB.TotalWithDraw as TotalSavings from (SELECT MemberId,SUM(CBU) as TotalSavings FROM tbl_payment  
+			Select TotalSavings - TableB.TotalWithDraw as TotalSavings,TotalSavings as TotalSavingNoWindraw from (SELECT MemberId,SUM(CBU) as TotalSavings FROM tbl_payment  
 			WHERE MemberId = '$id') TableA
-			Inner JOIN        
+			LEFT JOIN        
 			(SELECT SUM(Amount) as TotalWithDraw,MemberId FROM tbl_withdraw  
 			WHERE MemberId = '$id') TableB On TableB.MemberId = TableA.MemberId");
-			return $query->fetch(PDO::FETCH_ASSOC);	
+			$row = $query->fetch(PDO::FETCH_OBJ);	
+			if($row->TotalSavings == ''){
+				 $row->TotalSavings = $row->TotalSavingNoWindraw;
+			}
+			return $row;
 		}
 		public function Delete($id){
 			global $conn;

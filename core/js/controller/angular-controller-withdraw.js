@@ -75,6 +75,7 @@ app.controller('AppWithdrawFormController', function ($rootScope,$scope, $http, 
 			}else{
 				$scope.getById = function(){
 					svcWithdraw.GetById($scope.Id).then(function(r){
+						
 						$scope.formData = r;
 						$scope.formData.Date = new Date(r.Date);
 						$scope.selected = r;
@@ -92,7 +93,6 @@ app.controller('AppWithdrawFormController', function ($rootScope,$scope, $http, 
 		
 	
 	$scope.SelectMember = function(item){
-		console.log(item);
 		$scope.formData.MemberId = item.Id;
 		svcMember.TotalSaving($scope.formData.MemberId).then(function(r){
 			$scope.formData.RemainingSaving = r.TotalSavings;
