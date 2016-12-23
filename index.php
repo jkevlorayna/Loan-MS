@@ -15,6 +15,7 @@ if(!isset($_SESSION['isAuthenticated'])){ $isAuthenticated = false; }else{ $isAu
     <div class="cl-navblock">
       <div class="menu-space">
         <div class="content">
+		<img src="core/images/logo.png" style="max-height:90px;margin:0 auto;text-align:center;">
           <ul class="cl-vnavigation">
 			    <li><a href="#/"><i class="fa fa-home"></i> Home</a></li>
 				<li>
