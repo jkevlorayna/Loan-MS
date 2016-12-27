@@ -10,7 +10,7 @@
 			$scope.NewDateTo = $scope.DateTo == undefined ? null : moment($scope.DateTo).format("YYYY-MM-DD");
 
 			$scope.spinner.active = true;
-			svcPayment.List($scope.searchText,$scope.pageNo,$scope.pageSize,$scope.NewDateFrom,$scope.NewDateTo).then(function (r) {
+			svcPayment.List($scope.searchText,$scope.pageNo,$scope.pageSize,$scope.NewDateFrom,$scope.NewDateTo,'').then(function (r) {
 				$scope.list = r.Results;
 				$scope.count = r.Count;
 				$scope.spinner.active = false;
@@ -106,19 +106,15 @@ app.controller('AppPaymentFormController', function ($rootScope,$scope, $http, $
 		$scope.formData.MemberId = item.Id;
 	}
 	$scope.loadMember = function(){
-			$scope.spinner.active = true;
-		svcMember.list('',0,0).then(function(r){
+		svcMember.listWithTransaction('',0,0,'Release').then(function(r){
 			$scope.memberList = r.Results;
-			$scope.spinner.active = false;
 		})
 	}
 	$scope.loadMember();
 	
 	$scope.Save = function(){
-			$scope.spinner.active = true;
 		svcPayment.Save($scope.formData).then(function(r){
 			growl.success("Data Successfully Saved");
-			$scope.spinner.active = false;
 		})
 	}
 });

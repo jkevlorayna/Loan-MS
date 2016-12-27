@@ -12,6 +12,18 @@ app.factory('svcMember', function ($rootScope, $http, $q) {
             });
             return deferred.promise;
         },
+		 listWithTransaction: function (searchText,pageNo,pageSize,TransactionStatus) {
+            var deferred = $q.defer();
+            $http({
+                method: 'GET',
+                url: BasePath+'/class/member/with-transaction/?searchText='+searchText+'&pageNo='+pageNo+'&pageSize='+pageSize+'&TransactionStatus='+TransactionStatus
+            }).success(function (data, status) {
+                deferred.resolve(data);
+            }).error(function (data, status) {
+                deferred.reject(data);
+            });
+            return deferred.promise;
+        },
 		  getById: function (id) {
             var deferred = $q.defer();
             $http({

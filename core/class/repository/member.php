@@ -24,6 +24,29 @@ class MemberRepository{
 			$query = $conn->prepare("DELETE FROM  tbl_member  WHERE Id = '$id'");
 			$query->execute();	
 		}
+		public function ListWithTransaction($searchText,$pageNo,$pageSize,$TransactionStatus){
+			global $conn;
+			$where = "";
+			if($searchText != ''){
+				$where .= "And (firstname  LIKE '%$searchText%' OR middlename  LIKE '%$searchText%' OR lastname  LIKE '%$searchText%')";
+			}
+				$where .= "And tbl_transaction.TransactionStatus = '$TransactionStatus'";
+	
+			$pageNo = ($pageNo - 1) * $pageSize; 
+			$limitCondition = $pageNo == 0 && $pageSize == 0 ? '' : 'LIMIT '.$pageNo.','.$pageSize;
+			
+			$query = $conn->query("SELECT *,tbl_member.Id As Id,tbl_center.Name As CenterName FROM  tbl_member
+			LEFT JOIN tbl_transaction On tbl_member.Id = tbl_transaction.MemberId
+			LEFT JOIN tbl_center On tbl_member.CenterId = tbl_center.Id
+			WHERE 1 = 1 $where $limitCondition ");
+			$count = $query->rowcount();
+			
+			$data = array();
+			$data['Results'] = $query->fetchAll(PDO::FETCH_OBJ);
+			$data['Count'] = $count;
+			
+			return $data;	
+		}
 		public function DataList($searchText,$pageNo,$pageSize){
 			global $conn;
 			$where = "";

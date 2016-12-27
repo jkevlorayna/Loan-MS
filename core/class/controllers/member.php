@@ -11,15 +11,22 @@ $slim_app->get('/member/totalsaving/:id',function($id){
 	$result = $MemberRepo->TotalSavings($id);
 	echo json_encode($result);
 });
+$slim_app->get('/member/with-transaction/',function(){
+	$MemberRepo = new MemberRepository();
+	$TransactionRepo = new TransactionRepository();
+	$result = $MemberRepo->ListWithTransaction($_GET['searchText'],$_GET['pageNo'],$_GET['pageSize'],$_GET['TransactionStatus']);
+	foreach($result['Results'] as $row){
+		$row->Loan = $TransactionRepo->TransactionByMemberId($row->Id);
+	}
+	 echo json_encode($result);
+});
 $slim_app->get('/member',function(){
 	$MemberRepo = new MemberRepository();
 	$TransactionRepo = new TransactionRepository();
 	$result = $MemberRepo->DataList($_GET['searchText'],$_GET['pageNo'],$_GET['pageSize']);
 	foreach($result['Results'] as $row){
-		 
 		$row->Loan = $TransactionRepo->TransactionByMemberId($row->Id);
 	}
-
 	 echo json_encode($result);
 });
 $slim_app->delete('/member/:id',function($id){
