@@ -1,0 +1,42 @@
+
+        <div class="modal-body">
+							<table class="table table-bordered table-condensed">
+				<thead>
+					<tr>
+						<th>Payment Date</th>
+						<th>KAB</th>
+						<th>CBU</th>
+						<th>MBA</th>
+						<th>CF</th>
+						<th>MF</th>
+						<th>LRF</th>
+						<th>Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="row in list">
+						<td>{{row.Date | date:'MM/dd//yyyy'}}</td>
+						<td class="text-right">{{row.KAB}}</td>
+						<td class="text-right">{{row.CBU}}</td>
+						<td class="text-right">{{row.MBA}}</td>
+						<td class="text-right">{{row.CF}}</td>
+						<td class="text-right">{{row.MF}}</td>
+						<td class="text-right">{{row.LRF}}</td>
+						<td class="text-right">{{row.Total}}</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td class="text-right">{{TotalTotal | currency:''}}</td>
+					</tr>
+				</tbody>
+			</table>
+        </div>
+        <div class="modal-footer text-center">
+            <button class="btn btn-default" type="button" ng-click="close()"><i class="fa fa-times"></i> Close</button>
+        </div>

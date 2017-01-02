@@ -7,6 +7,15 @@ class TransactionRepository{
 			WHERE tbl_transaction.Id = '$id'");
 			return $query->fetch(PDO::FETCH_ASSOC);	
 		}
+		function PaymentList($Cycle,$MemberId){
+			global $conn;
+			$where = "";
+			$where .= "And Cycle = '$Cycle'";
+			$where .= "And MemberId = '$MemberId'";
+			$query = $conn->query("SELECT * FROM tbl_payment
+			WHERE 1 = 1 $where");
+			return $query->fetchAll(PDO::FETCH_OBJ);	
+		}
 		function GetByMemberId($id){
 			global $conn;
 			$where = "";

@@ -64,12 +64,12 @@ class PaymentRepository{
 		}
 		public function Create(){
 			global $conn;
-			$query = $conn->prepare("INSERT INTO tbl_payment (MemberId,Date,KAB,CBU,MBA,CF,Total,MF,LRF) VALUES(:MemberId,:Date,:KAB,:CBU,:MBA,:CF,:Total,:MF,:LRF)");
+			$query = $conn->prepare("INSERT INTO tbl_payment (MemberId,Date,KAB,CBU,MBA,CF,Total,MF,LRF,Cycle) VALUES(:MemberId,:Date,:KAB,:CBU,:MBA,:CF,:Total,:MF,:LRF,:Cycle)");
 			return $query;	
 		}
 		public function Update(){
 			global $conn;
-			$query = $conn->prepare("UPDATE tbl_payment SET MemberId = :MemberId  , Date = :Date , KAB = :KAB , CBU = :CBU , MBA = :MBA , CF = :CF , Total = :Total , MF = :MF , LRF = :LRF WHERE Id = :Id");
+			$query = $conn->prepare("UPDATE tbl_payment SET MemberId = :MemberId  , Date = :Date , KAB = :KAB , CBU = :CBU , MBA = :MBA , CF = :CF , Total = :Total , MF = :MF , LRF = :LRF , Cycle = :Cycle WHERE Id = :Id");
 			return $query;	
 		}
 		public function Transform($POST){
@@ -81,6 +81,7 @@ class PaymentRepository{
 			$POST->CF = !isset($POST->CF) ? '' : $POST->CF; 
 			$POST->MF = !isset($POST->MF) ? '' : $POST->MF; 
 			$POST->LRF = !isset($POST->LRF) ? '' : $POST->LRF; 
+			$POST->Cycle = !isset($POST->Cycle) ? '' : $POST->Cycle; 
 			$POST->Total = !isset($POST->Total) ? '' : $POST->Total; 
 			$POST->Date = date('Y-m-d'); 
 			return $POST;
@@ -102,6 +103,7 @@ class PaymentRepository{
 			$query->bindParam(':Total', $POST->Total);
 			$query->bindParam(':MF', $POST->MF);
 			$query->bindParam(':LRF', $POST->LRF);
+			$query->bindParam(':Cycle', $POST->Cycle);
 			$query->bindParam(':Date', $POST->Date);
 			
 			

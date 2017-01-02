@@ -9,6 +9,11 @@
 		$result = $TransactionRepo->GetByMemberId($id);
 		echo json_encode($result);
 	});
+	$slim_app->get('/transaction/payment-list/:Cycle/:MemberId',function($Cycle,$MemberId){
+		$TransactionRepo = new TransactionRepository();
+		$result = $TransactionRepo->PaymentList($Cycle,$MemberId);
+		echo json_encode($result);
+	});
 	$slim_app->get('/transaction',function(){
 		$TransactionRepo = new TransactionRepository();
 		$PaymentRepo = new PaymentRepository();

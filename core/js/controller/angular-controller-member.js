@@ -156,7 +156,7 @@ app.controller('AppSignUpController', function ($scope, $http, $q, $filter, svcM
     }
 });
 
-app.controller('AppMemberFormController', function ($scope, $http, $q, $filter, svcMember,growl,svcCourse,svcCourseYear,svcSection,$stateParams,svcCenter,svcTransaction,svcPayment) {
+app.controller('AppMemberFormController', function ($scope, $http, $q,$uibModal,$filter, svcMember,growl,svcCourse,svcCourseYear,svcSection,$stateParams,svcCenter,svcTransaction,svcPayment) {
 	$scope.Id = $stateParams.Id;
 	$scope.type = $stateParams.type;
 	$scope.loadCenter = function(){
@@ -229,5 +229,41 @@ app.controller('AppMemberFormController', function ($scope, $http, $q, $filter, 
 		$scope.formData.Beneficiary.push({Name:'',MemberId:$scope.Id,Relationship:''})
 	}
 	
+		$scope.OpenPaymentDetails = function (size,Cycle,MemberId) {
+			var modal = $uibModal.open({
+			templateUrl: 'views/member/transactionDetails.html',
+			controller: 'AppTransactionPaymentController',
+			size: size,
+			resolve: {
+				Cycle: function () {
+					return Cycle;
+				},
+				MemberId:function(){
+					return MemberId;
+				}
+			}
+			});
+			modal.result.then(function () { }, function () { 
+				$scope.getById() 
+			});
+	};
+
+	
 	$scope.formData = $scope.Id == 0 ? { Beneficiary:[] } : $scope.getById() ;
+});
+
+
+app.controller('AppTransactionPaymentController', function ($scope, $http, $q, $filter,growl,$uibModal,$stateParams,Cycle,MemberId,svcTransaction,$uibModalInstance) {
+	$scope.TotalTotal = 0;
+	svcTransaction.PaymentDetails(Cycle,MemberId).then(function(r){
+		$scope.list = r;
+		angular.forEach($scope.list,function(row){
+			$scope.TotalTotal += parseFloat(row.Total);
+		})
+	})
+	
+	$scope.close = function(){
+			$uibModalInstance.dismiss();
+	}
+	
 });

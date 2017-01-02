@@ -12,6 +12,18 @@ app.factory('svcTransaction', function ($rootScope, $http, $q) {
             });
             return deferred.promise;
         },
+		PaymentDetails: function (Cycle,MemberId) {
+            var deferred = $q.defer();
+            $http({
+                method: 'GET',
+                url: BasePath+'/class/transaction/payment-list/'+Cycle+'/'+MemberId
+            }).success(function (data, status) {
+                deferred.resolve(data);
+            }).error(function (data, status) {
+                deferred.reject(data);
+            });
+            return deferred.promise;
+        },
 		GetById: function (id) {
             var deferred = $q.defer();
             $http({

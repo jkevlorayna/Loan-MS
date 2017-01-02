@@ -104,6 +104,7 @@ app.controller('AppPaymentFormController', function ($rootScope,$scope, $http, $
 	
 	$scope.selectCustomer = function(item){
 		$scope.formData.MemberId = item.Id;
+		$scope.formData.Cycle = item.Cycle;
 	}
 	$scope.loadMember = function(){
 		svcMember.listWithTransaction('',0,0,'Release').then(function(r){
