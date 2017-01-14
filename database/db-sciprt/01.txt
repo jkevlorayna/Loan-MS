@@ -1,2 +1,0 @@
-ALTER TABLE `tbl_payment`  ADD `MF` DECIMAL(12,2) NOT NULL ;
-ALTER TABLE `tbl_payment` ADD `LRF` DECIMAL(12,2) NOT NULL ;
