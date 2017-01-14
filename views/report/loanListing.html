@@ -46,7 +46,7 @@
 						<th>Member Name</th>
 						<th>Date Released</th>
 						<th>Due Date</th>
-						<th>Loan Status</th>
+						<!-- <th>Loan Status</th> -->
 						<th>Balance</th>
 						<th>Amount Borrowed</th>
 					</tr>
@@ -57,7 +57,7 @@
 						<td>{{row.Firstname}} {{row.Middlename}} {{row.Lastname}}</td>
 						<td>{{row.DateReleased | date:'MM/dd/yyyy'}}</td>
 						<td></td>
-						<td></td>
+						<!-- <td></td> -->
 						<td class="text-right">{{row.Amount - row.Payment.Balance | currency:''}}</td>
 						<td class="text-right">{{row.Amount | currency:''}}</td>
 					</tr>
@@ -65,7 +65,7 @@
 						<td></td>
 						<td></td>
 						<td></td>
-						<td></td>
+						<!-- <td></td> -->
 						<td class="text-right">Total</td>
 						<td  class="text-right">{{AmountBorrowedTotal - BalanceTotal | currency:'' }}</td>
 						<td  class="text-right">{{AmountBorrowedTotal | currency:''}}</td>
