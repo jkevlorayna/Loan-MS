@@ -4,7 +4,7 @@
 						</div>
 <div class="row">
 	<div class="col-md-3">
-		<form method="POST" ng-submit="save()">
+		<form method="POST" ng-submit="save()" ng-show="checkRole('User Type','AllowAdd')">
 				<div class="form-group">
 					<label for="exampleInputPassword1">User Type</label>
 					<input type="text" ng-model="formData.user_type"  class="form-control" required>
@@ -25,8 +25,8 @@
 					<tr ng-repeat="row in list">
 						<td>{{row.user_type}}</td>
 						<td>
-							<button class="btn btn-success btn-sm" ng-click="getById(row.Id)"> <i class="fa fa-edit"></i> </button>
-							<button class="btn btn-danger btn-sm" ng-click="openDeleteModal('md',row.Id)"> <i class="fa fa-trash-o"></i>  </button>
+							<button ng-show="checkRole('User Type','AllowEdit')" class="btn btn-success btn-sm" ng-click="getById(row.Id)"> <i class="fa fa-edit"></i> </button>
+							<button  ng-show="checkRole('User Type','AllowDelete')"class="btn btn-danger btn-sm" ng-click="openDeleteModal('md',row.Id)"> <i class="fa fa-trash-o"></i>  </button>
 						</td>
 					</tr>
 				</tbody>

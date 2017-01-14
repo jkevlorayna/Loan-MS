@@ -50,9 +50,9 @@
 							
 						</td>
 						<td>
-							<a class="btn btn-success btn-sm" href="#/member/form/{{row.Id}}">  <i class="fa fa-edit"></i> </a>
-							<button class="btn btn-danger btn-sm" ng-click="openDeleteModal('md',row.Id)">  <i class="fa fa-trash-o"></i> </button><br>
-							<a href="javascript:void(0)" ng-click="ChangePicture('md',row.Id)">Change Picture</a>
+							<a ng-show="checkRole('Member','AllowEdit')" class="btn btn-success btn-sm" href="#/member/form/{{row.Id}}">  <i class="fa fa-edit"></i> </a>
+							<button ng-show="checkRole('Member','AllowDelete')" class="btn btn-danger btn-sm" ng-click="openDeleteModal('md',row.Id)">  <i class="fa fa-trash-o"></i> </button><br>
+							<a ng-show="checkRole('Member','AllowEdit')" href="javascript:void(0)" ng-click="ChangePicture('md',row.Id)">Change Picture</a>
 						</td>
 					</tr>
 				</tbody>

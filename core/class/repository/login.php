@@ -72,12 +72,11 @@ class LoginRepository{
 			$query->bindParam(':username', $POST->username);
 			$query->bindParam(':password', $POST->password);
 			$query->execute();
-
 			$count = $query->rowcount();
-				
+
 			if($count > 0){
 					session_start();
-					
+
 					$row = $query->fetch(PDO::FETCH_OBJ);
 					$userData = new stdClass;
 					$userData->Id = $row->user_id;

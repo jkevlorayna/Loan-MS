@@ -8,7 +8,7 @@
 						</div>
 
 <div class="row">
-	<div class="col-md-3">
+	<div class="col-md-3" ng-show="checkRole('Loan Status','AllowAdd')">
 		<form method="POST"  ng-submit="save()">
 				<div class="form-group">
 					<label for="exampleInputPassword1">Status</label>
@@ -38,8 +38,8 @@
 					<tr ng-repeat="row in list">
 						<td>{{row.Status}}</td>
 						<td>
-							<button class="btn btn-success btn-sm" ng-click="getById(row.Id)"> <i class="fa fa-edit"></i> </button>
-							<button class="btn btn-danger btn-sm" ng-click="openDeleteModal('md',row.Id)"> <i class="fa fa-trash-o"></i> </button>
+							<button ng-show="checkRole('Loan Status','AllowEdit')" class="btn btn-success btn-sm" ng-click="getById(row.Id)"> <i class="fa fa-edit"></i> </button>
+							<button ng-show="checkRole('Loan Status','AllowDelete')" class="btn btn-danger btn-sm" ng-click="openDeleteModal('md',row.Id)"> <i class="fa fa-trash-o"></i> </button>
 						</td>
 					</tr>
 				</tbody>

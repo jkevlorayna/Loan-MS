@@ -1,5 +1,5 @@
 
-<div class="block-flat">
+<div class="block-flat" >
 						<div class="header">										
 							<div class="alert alert-info alert-white rounded">
 								<div class="icon"><i class="fa fa-info-circle"></i></div>
@@ -8,7 +8,7 @@
 						</div>
 <div class="row">
 	<div class="col-md-3">
-		<form method="POST"  ng-submit="save()">
+		<form method="POST"  ng-submit="save()" ng-show="checkRole('Setting','AllowAdd')">
 				<div class="form-group">
 					<label for="exampleInputPassword1">Title</label>
 					<input type="text" ng-model="formData.title"  class="form-control" required>
@@ -42,8 +42,8 @@
 						<td>{{row.settingKey}}</td>
 						<td>{{row.value}}</td>
 						<td>
-							<button class="btn btn-success btn-sm" ng-click="getById(row.Id)"> <i class="fa fa-edit"></i> </button>
-							<button class="btn btn-danger btn-sm" ng-click="openDeleteModal('md',row.Id)"> <i class="fa fa-trash-o"></i> </button>
+							<button ng-show="checkRole('Setting','AllowEdit')" class="btn btn-success btn-sm" ng-click="getById(row.Id)"> <i class="fa fa-edit"></i> </button>
+							<button ng-show="checkRole('Setting','AllowDelete')" class="btn btn-danger btn-sm" ng-click="openDeleteModal('md',row.Id)"> <i class="fa fa-trash-o"></i> </button>
 						</td>
 					</tr>
 				</tbody>

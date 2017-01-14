@@ -7,7 +7,7 @@
 							 </div>
 						</div>
 <div class="row">
-	<div class="col-md-3">
+	<div class="col-md-3" ng-show="checkRole('Center','AllowAdd')">
 		<form method="POST"  ng-submit="save()">
 				<div class="form-group">
 					<label for="exampleInputPassword1">Name</label>
@@ -43,8 +43,8 @@
 						<td>{{row.Name}}</td>
 						<td>{{row.Address}}</td>
 						<td>
-							<button class="btn btn-success btn-sm" ng-click="getById(row.Id)"> <i class="fa fa-edit"></i> </button>
-							<button class="btn btn-danger btn-sm" ng-click="openDeleteModal('md',row.Id)"> <i class="fa fa-trash-o"></i> </button>
+							<button ng-show="checkRole('Center','AllowEdit')" class="btn btn-success btn-sm" ng-click="getById(row.Id)"> <i class="fa fa-edit"></i> </button>
+							<button ng-show="checkRole('Center','AllowDelete')" class="btn btn-danger btn-sm" ng-click="openDeleteModal('md',row.Id)"> <i class="fa fa-trash-o"></i> </button>
 						</td>
 					</tr>
 				</tbody>

@@ -65,8 +65,8 @@
 						<a ng-if="row.TransactionStatus!='Release'" href="javascript:void(0)" ng-click="ChangeStatusModal('md',row.Id)" class="pull-right"><i class="fa fa-edit"></i></a>
 						</td>
 						<td>
-							<a class="btn btn-success btn-sm" href="#/transaction/form/{{row.Id}}">  <i class="fa fa-edit"></i> </a>
-							<button class="btn btn-danger btn-sm" ng-click="openDeleteModal('md',row.Id)">  <i class="fa fa-trash-o"></i> </button>
+							<a ng-show="checkRole('Loan Application','AllowEdit')" class="btn btn-success btn-sm" href="#/transaction/form/{{row.Id}}">  <i class="fa fa-edit"></i> </a>
+							<button  ng-show="checkRole('Loan Application','AllowDelete')" class="btn btn-danger btn-sm" ng-click="openDeleteModal('md',row.Id)">  <i class="fa fa-trash-o"></i> </button>
 						</td>
 					</tr>
 				</tbody>

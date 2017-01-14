@@ -18,40 +18,39 @@ if(!isset($_SESSION['isAuthenticated'])){ $isAuthenticated = false; }else{ $isAu
 		<img src="core/images/logo.png" class="sidebarLogo">
           <ul class="cl-vnavigation">
 			    <li><a href="#/"><i class="fa fa-home"></i> Home</a></li>
-				<li>
+				<li ng-if="checkRole('Loan Application','AllowAdd') || checkRole('Loan Application','AllowView')">
 					<a href="#"><i class="fa fa-folder"></i><span>Loan Application</span></a> 
 					<ul class="sub-menu">						
-						<li><a href="#/transaction/form/0"><i class="fa fa-edit"></i> Form</a></li>
-						<li><a href="#/transaction/list"><i class="fa fa-file"></i> List</a></li>
-
+						<li ng-if="checkRole('Loan Application','AllowAdd')"><a href="#/transaction/form/0"><i class="fa fa-edit"></i> Form</a></li>
+						<li ng-if="checkRole('Loan Application','AllowView')"><a href="#/transaction/list"><i class="fa fa-file"></i> List</a></li>
 					</ul>		
 				</li>
-				<li>
+				<li ng-if="checkRole('Member','AllowAdd') || checkRole('Member','AllowView')">
 					<a href="#"><i class="fa fa-group"></i><span>Member</span></a> 
 					<ul class="sub-menu">						
-						<li><a href="#/member/list"><i class="fa fa-file"></i> List</a></li>
-						<li><a href="#/member/form/0"><i class="fa fa-edit"></i> Form</a></li>
+						<li ng-if="checkRole('Member','AllowView')"><a href="#/member/list"><i class="fa fa-file"></i> List</a></li>
+						<li ng-if="checkRole('Member','AllowAdd')"><a href="#/member/form/0"><i class="fa fa-edit"></i> Form</a></li>
 					</ul>		
 				</li>
-				<li>
+				<li ng-if="checkRole('Payment','AllowAdd') || checkRole('Payment','AllowView')">
 					<a href="#"><i class="fa fa-money"></i><span>Payment</span></a> 
 					<ul class="sub-menu">						
-						<li><a href="#/member/payment/form/0"><i class="fa fa-edit"></i> Form</a></li>
-						<li><a href="#/member/payment/list"><i class="fa fa-file"></i>List</a></li>
+						<li ng-if="checkRole('Payment','AllowAdd')"><a href="#/member/payment/form/0"><i class="fa fa-edit"></i> Form</a></li>
+						<li ng-if="checkRole('Payment','AllowView')"><a href="#/member/payment/list"><i class="fa fa-file"></i>List</a></li>
 					</ul>		
 				</li>
-				<li>
+				<li ng-if="checkRole('WithDraw','AllowAdd') || checkRole('WithDraw','AllowView')">
 					<a href="#"><i class="fa fa-money"></i><span>WithDraw</span></a> 
 					<ul class="sub-menu">						
-						<li><a href="#/withdraw/form/0"><i class="fa fa-edit"></i> Form</a></li>
-						<li><a href="#/withdraw/list"><i class="fa fa-file"></i>List</a></li>
+						<li ng-if="checkRole('WithDraw','AllowAdd')"><a href="#/withdraw/form/0"><i class="fa fa-edit"></i> Form</a></li>
+						<li ng-if="checkRole('WithDraw','AllowView')"><a href="#/withdraw/list"><i class="fa fa-file"></i>List</a></li>
 					</ul>		
 				</li>
-			    <li><a href="#/center"><i class="fa fa-building-o"></i> Center</a></li>
-				<li><a href="#/user/list"><i class="fa fa-group"></i> User List</a></li>
-				<li><a href="#/user/type"><i class="fa fa-group"></i>  User Type</a></li>
-				<li><a href="#/status"><i class="fa fa-file"></i>  Loan Status</a></li>
-				<li>
+			    <li ng-if="checkRole('Center','AllowView')"><a href="#/center"><i class="fa fa-building-o"></i> Center</a></li>
+				<li ng-if="checkRole('User List','AllowView')"><a href="#/user/list"><i class="fa fa-group"></i> User List</a></li>
+				<li ng-if="checkRole('User Type','AllowView')"><a href="#/user/type"><i class="fa fa-group"></i>  User Type</a></li>
+				<li ng-if="checkRole('Loan Status','AllowView')"><a href="#/status"><i class="fa fa-file"></i>  Loan Status</a></li>
+				<li ng-if="checkRole('Reports','AllowView')">
 					<a href="#"><i class="fa fa-folder"></i><span>Reports</span></a> 
 					<ul class="sub-menu">						
 							<li><a href="#/report/dts">Daily Transaction Sheet</a></li>
@@ -63,7 +62,7 @@ if(!isset($_SESSION['isAuthenticated'])){ $isAuthenticated = false; }else{ $isAu
 
 					</ul>		
 				</li>
-				<li><a href="#/setting"><i class="fa fa-gears"></i>  Setting</a></li>
+				<li ng-if="checkRole('Setting','AllowView')"><a href="#/setting"><i class="fa fa-gears"></i>  Setting</a></li>
           </ul>
 		  
 		  
