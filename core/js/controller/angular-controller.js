@@ -76,12 +76,17 @@ app.controller('AppMainController', function ($rootScope,$scope, $http, $q, $loc
 	};
 	
 
-	$q.all([svcSetting.getByKey('CBU'),svcSetting.getByKey('MBA'),svcSetting.getByKey('LRF'),svcSetting.getByKey('CF'),svcSetting.getByKey('MF'),svcSetting.getByKey('KAB')]).then(function(r){
+	$q.all([svcSetting.getByKey('CBU'),svcSetting.getByKey('MBA'),svcSetting.getByKey('LRF'),svcSetting.getByKey('CF'),svcSetting.getByKey('MF'),svcSetting.getByKey('KAB'),,svcSetting.getByKey('Week')]).then(function(r){
 			$rootScope.CBU =  parseFloat(r[0].value);
 			$rootScope.MBA =  parseFloat(r[1].value);
 			$rootScope.LRF =  parseFloat(r[2].value);
 			$rootScope.CF =  parseFloat(r[3].value);
 			$rootScope.MF =  parseFloat(r[4].value);
+			$rootScope.WeekDueDate =  parseFloat(r[4].value);
+			
+			$scope.GetDueDate = function(date){
+				return  moment(date).add('days', 161).format("MM/DD/YYYY");
+			}
 	});
 
 });
@@ -93,7 +98,7 @@ app.controller('AppChangePasswordModalController', function ( $scope, $http, $q,
 	$scope.user = user;
 });
 
-app.controller('AppLoginController', function ( $scope, $http, $q, $location, svcLogin,$cookieStore,$window ,growl ) {
+app.controller('AppLoginController', function ( $scope, $http, $q, $location, svcLogin,$cookieStore,$window ,growl,$timeout) {
 	
 		$scope.formData = {};
 		$scope.login = function(){
@@ -108,6 +113,11 @@ app.controller('AppLoginController', function ( $scope, $http, $q, $location, sv
 						if($scope.session.userData.name != null){
 							growl.success("Access Granted");
 							$location.path('/');
+							$timeout(function(){
+								window.location.reload();
+							},500)
+							
+							
 							$scope.spinner.active = false;
 						}
 					}else{

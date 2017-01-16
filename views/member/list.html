@@ -23,13 +23,15 @@
 				<table class="table table-bordered table-condensed" ts-wrapper>
 				<thead>
 					<tr>
-						<th ts-criteria="Name" ts-default>Name</th>
+						<th  ts-criteria="Name" ts-default>Name</th>
 						<th ts-criteria="Gender">Gender</th>
-						<th ts-criteria="Age">Age</th>
 						<th ts-criteria="Address">Address</th>
 						<th ts-criteria="MobileNo">Mobile No</th>
-						<th ts-criteria="Email">Email</th>
+						<th ts-criteria="Status">Civil Status</th>
+						<th ts-criteria="Age">Age</th>
+						<th ts-criteria="Business">Business</th>
 						<th ts-criteria="CenterName">Center</th>
+						
 						<th></th>
 						<th></th>
 					</tr>
@@ -38,10 +40,11 @@
 					<tr ng-repeat="row in list" ts-repeat>
 						<td>{{row.Firstname}} {{row.Middlename}} {{row.Lastname}}</td>
 						<td>{{row.Gender}}</td>
-						<td class="text-center">{{row.Age}}</td>
 						<td>{{row.Address}}</td>
 						<td>{{row.MobileNo}}</td>
-						<td>{{row.Email}}</td>
+						<td>{{row.Status}}</td>
+						<td class="text-center">{{row.Age}}</td>
+						<td>{{row.Business}}</td>
 						<td>{{row.CenterName}}</td>
 						<td class="text-center">
 							<a ng-href="core/class/uploads/{{row.ImageUrl}}" data-lightbox="roadtrip">

@@ -18,6 +18,12 @@
     }
     $scope.load();
 
+	$scope.pageChanged = function(){
+		$scope.load();
+	}
+	
+	
+	
 	$scope.ChangeStatusModal = function(size,Id){
 	
 		var modal = $uibModal.open({

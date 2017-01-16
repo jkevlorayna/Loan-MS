@@ -20,10 +20,11 @@
 					<tr>
 						<th>Name</th>
 						<th>Gender</th>
-						<th>Age</th>
 						<th>Address</th>
 						<th>Mobile No</th>
-						<th>Email</th>
+						<th>Civil Status</th>
+						<th>Age</th>
+						<th>Business</th>
 						<th>Center</th>
 					</tr>
 				</thead>
@@ -31,10 +32,11 @@
 					<tr ng-repeat="row in list">
 						<td>{{row.Firstname}} {{row.Middlename}} {{row.Lastname}}</td>
 						<td>{{row.Gender}}</td>
-						<td class="text-center">{{row.Age}}</td>
 						<td>{{row.Address}}</td>
 						<td>{{row.MobileNo}}</td>
-						<td>{{row.Email}}</td>
+						<td>{{row.Status}}</td>
+						<td class="text-center">{{row.Age}}</td>
+						<td>{{row.Business}}</td>
 						<td>{{row.CenterName}}</td>
 					</tr>
 				</tbody>

@@ -56,9 +56,9 @@
 						<td></td>
 						<td>{{row.Firstname}} {{row.Middlename}} {{row.Lastname}}</td>
 						<td>{{row.DateReleased | date:'MM/dd/yyyy'}}</td>
-						<td></td>
+						<td>{{GetDueDate(row.DateReleased)}}</td>
 						<!-- <td></td> -->
-						<td class="text-right">{{row.Amount - row.Payment.Balance | currency:''}}</td>
+						<td class="text-right">{{row.RemainingBalance | currency:''}}</td>
 						<td class="text-right">{{row.Amount | currency:''}}</td>
 					</tr>
 					<tr>
@@ -67,7 +67,7 @@
 						<td></td>
 						<!-- <td></td> -->
 						<td class="text-right">Total</td>
-						<td  class="text-right">{{AmountBorrowedTotal - BalanceTotal | currency:'' }}</td>
+						<td  class="text-right">{{RemainingBalanceTotal | currency:'' }}</td>
 						<td  class="text-right">{{AmountBorrowedTotal | currency:''}}</td>
 					<tr>
 				</tbody>

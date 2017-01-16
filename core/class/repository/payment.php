@@ -34,7 +34,7 @@ class PaymentRepository{
 				
 			$where = "And MemberId = '$MemberId'";
 			$query = $conn->query("SELECT (SUM(KAB)+SUM(CBU)+SUM(MBA)) AS Balance FROM  tbl_payment WHERE 1 = 1 $where");
-			return $query->fetch(PDO::FETCH_ASSOC);
+			return $query->fetch(PDO::FETCH_OBJ);
 		}
 		function DataList($searchText,$pageNo,$pageSize,$DateFrom,$DateTo,$CenterId){
 			global $conn;

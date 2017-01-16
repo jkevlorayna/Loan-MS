@@ -64,8 +64,8 @@
 						<td>{{row.Firstname}} {{row.Middlename}} {{row.Lastname}}</td>
 						<td>{{row.DateReleased | date:'MM/dd/yyyy'}}</td>
 						<td></td>
-						<td class="text-right">{{row.Amount}}</td>
-						<td class="text-right">{{row.Payment.Balance | currency:''}}</td>
+						<td class="text-right">{{row.Amount | currency:''}}</td>
+						<td class="text-right">{{row.RemainingBalance | currency:''}}</td>
 						<td class="text-center">{{row.Cycle}}</td>
 					</tr>
 

@@ -21,7 +21,8 @@
 		$result = $TransactionRepo->DataList($_GET['searchText'],$_GET['pageNo'],$_GET['pageSize'],$_GET['DateFrom'],$_GET['DateTo'],$_GET['CenterId']);
 		
 		foreach($result['Results'] as $row){
-			$row->Payment = $PaymentRepo->GetMemberBalance($_GET['DateFrom'],$_GET['DateTo'],$row->MemberId);
+			$row->Amount =  (float) $row->Amount;
+			$row->RemainingBalance = (float) $row->Amount - (float) $PaymentRepo->GetMemberBalance($_GET['DateFrom'],$_GET['DateTo'],$row->MemberId)->Balance;
 		}
 		
 		echo json_encode($result);

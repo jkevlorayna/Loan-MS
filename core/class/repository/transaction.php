@@ -44,15 +44,16 @@ class TransactionRepository{
 		
 			$where = "";
 			if($searchText != ''){
-				$where = "And (CONCAT(tbl_member.FirstName,' ',tbl_member.Middlename,' ',tbl_member.Lastname)  LIKE '%$searchText%')";
+				$where .= "And (CONCAT(tbl_member.FirstName,' ',tbl_member.Middlename,' ',tbl_member.Lastname)  LIKE '%$searchText%')";
 			}
 			if($DateFrom != 'null' && $DateTo != 'null'){
-				$where = "And tbl_transaction.Date BETWEEN '$DateFrom' AND '$DateTo'";
+				$where .= "And tbl_transaction.Date BETWEEN '$DateFrom' AND '$DateTo'";
 			}
 			if($CenterId != 0){
-				$where = "And tbl_member.CenterId  = '$CenterId'";
+				$where .= "And tbl_member.CenterId  = '$CenterId'";
 			}
-			
+				$where .= "And TransactionStatus  = 'Release'";
+				
 			$limitCondition = $pageNo == 0 && $pageSize == 0 ? '' : 'LIMIT '.$pageNo.','.$pageSize;
 			$query = $conn->query("SELECT *,tbl_center.Name as Center,tbl_transaction.Id as Id FROM  tbl_transaction
 			LEFT JOIN tbl_member ON tbl_transaction.MemberId = tbl_member.Id
