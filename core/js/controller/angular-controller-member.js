@@ -83,6 +83,29 @@ app.controller('AppMemberController', function ($scope, $http, $q, $filter, svcM
 	
 });
 
+app.controller('AppMemberReportController', function ($scope, $http, $q, $filter, svcMember,svcMemberType,growl,$uibModal,$stateParams ) {
+
+    $scope.load = function () {
+		svcMember.list('',0,0, $stateParams.type).then(function (r) {
+            $scope.list = r.Results;
+            $scope.count = r.Count;
+        })
+	}
+   
+    $scope.load();
+		$scope.printDiv = function(divName) {
+		var printContents = document.getElementById(divName).innerHTML;
+		var popupWin = window.open('', '_blank', 'width=700,height=700');
+		popupWin.document.open();
+		popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="core/css/print-landscape.css" /></head><body onload="window.print()">' + printContents + '</body></html>');
+		popupWin.document.close();
+	} 
+
+	
+});
+
+
+
 app.controller('AppChangePictureModalController', function ($rootScope,$scope, $http, $q,  $filter, svcMember,growl,$uibModal,dataId,$uibModalInstance) {
 	$scope.id = dataId;
 	$scope.close = function(){

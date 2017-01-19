@@ -178,7 +178,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 		{
 			url: '/member',
 			templateUrl: "views/report/member.html",
-			controller: "AppMemberController",
+			controller: "AppMemberReportController",
 		})	
 		.state('report.balance',
 		{
