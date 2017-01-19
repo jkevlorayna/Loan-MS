@@ -116,7 +116,11 @@ form .ng-invalid.ng-invalid-required {
   width: 100%; }
 
 .cl-sidebar {
-  background: #777; }
+  background: #777 !important;
+  width: 220px  !important; }
+
+.cl-vnavigation li a {
+  padding: 14px 14px 14px 8px; }
 
 #head-nav h3 {
   color: #001B85;
