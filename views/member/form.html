@@ -177,7 +177,7 @@
 									<tbody>
 										<tr ng-repeat="row in transactionList">
 											<td>{{row.Date | date:'MM/dd/yyyy'}}</td>
-											<td class="text-right">{{row.Amount}}</td>
+											<td class="text-right">{{row.Amount | currency:""}}</td>
 											<td class="text-right">{{row.WeeklyPayment}}</td>
 											<td class="text-right">{{row.KAB}}</td>
 											<td class="text-right">{{row.CBU}}</td>
@@ -186,7 +186,7 @@
 											<td>{{row.DateApproved | date:'MM/dd/yyyy'}}</td>
 											<td>{{row.DateReleased | date:'MM/dd/yyyy'}}</td>
 											<td class="text-center">{{row.Cycle}}</td>
-											<td class="text-center"><a href="javascript:void(0)" ng-click="OpenPaymentDetails('lg',row.Cycle,Id)">View Details</a></td>
+											<td class="text-center"><a href="javascript:void(0)" ng-click="OpenPaymentDetails('lg',row.Cycle,Id,row.Id)">View Details</a></td>
 										</tr>
 									</tbody>
 								</table>

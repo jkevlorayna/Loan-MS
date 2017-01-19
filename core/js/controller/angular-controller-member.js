@@ -229,7 +229,7 @@ app.controller('AppMemberFormController', function ($scope, $http, $q,$uibModal,
 		$scope.formData.Beneficiary.push({Name:'',MemberId:$scope.Id,Relationship:''})
 	}
 	
-		$scope.OpenPaymentDetails = function (size,Cycle,MemberId) {
+		$scope.OpenPaymentDetails = function (size,Cycle,MemberId,TransactionId) {
 			var modal = $uibModal.open({
 			templateUrl: 'views/member/transactionDetails.html',
 			controller: 'AppTransactionPaymentController',
@@ -240,6 +240,9 @@ app.controller('AppMemberFormController', function ($scope, $http, $q,$uibModal,
 				},
 				MemberId:function(){
 					return MemberId;
+				},
+				TransactionId:function(){
+					return TransactionId;
 				}
 			}
 			});
@@ -253,8 +256,17 @@ app.controller('AppMemberFormController', function ($scope, $http, $q,$uibModal,
 });
 
 
-app.controller('AppTransactionPaymentController', function ($scope, $http, $q, $filter,growl,$uibModal,$stateParams,Cycle,MemberId,svcTransaction,$uibModalInstance) {
+app.controller('AppTransactionPaymentController', function (svcMember,$scope, $http, $q, $filter,growl,$uibModal,$stateParams,Cycle,MemberId,svcTransaction,$uibModalInstance,TransactionId) {
 	$scope.TotalTotal = 0;
+	svcTransaction.GetById(TransactionId).then(function(r){
+		$scope.Transaction = r;
+	})
+	
+	svcMember.getById(MemberId).then(function(r){
+		$scope.formData = r;
+	})
+	$scope.Cycle = Cycle;
+
 	svcTransaction.PaymentDetails(Cycle,MemberId).then(function(r){
 		$scope.list = r;
 		angular.forEach($scope.list,function(row){
@@ -265,5 +277,13 @@ app.controller('AppTransactionPaymentController', function ($scope, $http, $q, $
 	$scope.close = function(){
 			$uibModalInstance.dismiss();
 	}
+	
+	$scope.printDiv = function(divName) {
+		var printContents = document.getElementById(divName).innerHTML;
+		var popupWin = window.open('', '_blank', 'width=700,height=700');
+		popupWin.document.open();
+		popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="core/css/print.css" /></head><body onload="window.print()">' + printContents + '</body></html>');
+		popupWin.document.close();
+	} 
 	
 });

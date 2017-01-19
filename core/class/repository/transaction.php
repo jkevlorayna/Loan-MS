@@ -38,7 +38,7 @@ class TransactionRepository{
 			$query = $conn->prepare("DELETE FROM  tbl_transaction  WHERE MemberId = '$id'");
 			$query->execute();	
 		}
-		function DataList($searchText,$pageNo,$pageSize,$DateFrom,$DateTo,$CenterId){
+		function DataList($searchText,$pageNo,$pageSize,$DateFrom,$DateTo,$CenterId,$Status){
 			global $conn;
 			$pageNo = ($pageNo - 1) * $pageSize; 
 		
@@ -52,8 +52,10 @@ class TransactionRepository{
 			if($CenterId != 0){
 				$where .= "And tbl_member.CenterId  = '$CenterId'";
 			}
-				$where .= "And TransactionStatus  = 'Release'";
-				
+			if($Status != ''){
+				$where .= "And TransactionStatus  = '$Status'";
+			}
+			
 			$limitCondition = $pageNo == 0 && $pageSize == 0 ? '' : 'LIMIT '.$pageNo.','.$pageSize;
 			$query = $conn->query("SELECT *,tbl_center.Name as Center,tbl_transaction.Id as Id FROM  tbl_transaction
 			LEFT JOIN tbl_member ON tbl_transaction.MemberId = tbl_member.Id

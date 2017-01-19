@@ -1,7 +1,7 @@
 ﻿@import url("../fonts/font-awesome-4/css/font-awesome.min.css");
+
 @media print {
-  .logo {
-    max-height: 90px; }
+
   body {
     margin: 0; }
   article,
@@ -469,6 +469,13 @@
 .reportHeader h3,
 .reportHeader h4,
 .reportHeader h5{
+	margin-top:8px !important;
 	margin-bottom:0 !important;
-	line-height:15px !important;
+	line-height:13px !important;
 }
+
+  .logo {
+    max-height: 90px;
+	margin-bottom:20px !important;
+	
+	}

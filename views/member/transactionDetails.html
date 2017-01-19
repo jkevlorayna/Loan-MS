@@ -1,6 +1,23 @@
 
         <div class="modal-body">
-							<table class="table table-bordered table-condensed">
+		<div id="printDiv">
+			
+
+				<div class="text-center visible-print-block reportHeader">
+					<img src="core/images/logo.png" class="logo">
+					<h1>Pag – Inupdanay, Inc. </h1>
+					<h3>Employee subd., silay city </h3>
+					<h2>Statement of Account</h2>
+				</div>
+				<div class="visible-print-block">
+					<label>Name : {{formData.Firstname}} {{formData.Middlename}} {{formData.Lastname}}</label><br>
+					<label>Center : {{formData.Center}}</label><br>
+					<label>Cycle : {{Cycle}}</label><br>
+					<label>Amount Borrow: {{Transaction.Amount | currency:""}}</label><br>
+					
+					
+				</div>	
+			<table class="table table-bordered table-condensed">
 				<thead>
 					<tr>
 						<th>Payment Date</th>
@@ -37,6 +54,8 @@
 				</tbody>
 			</table>
         </div>
+        </div>
         <div class="modal-footer text-center">
+			<button class="btn btn-warning" type="button" ng-click="printDiv('printDiv')"><i class="fa fa-print"></i> Print</button>	
             <button class="btn btn-default" type="button" ng-click="close()"><i class="fa fa-times"></i> Close</button>
         </div>

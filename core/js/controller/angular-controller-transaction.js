@@ -9,11 +9,9 @@
 		$scope.NewDateFrom = $scope.DateFrom == undefined ? null : moment($scope.DateFrom).format("YYYY-MM-DD");
 		$scope.NewDateTo = $scope.DateTo == undefined ? null : moment($scope.DateTo).format("YYYY-MM-DD");
 		
-		$scope.spinner.active = true;
-		svcTransaction.List($scope.searchText,$scope.pageNo,$scope.pageSize,$scope.NewDateFrom,$scope.NewDateTo,0).then(function (r) {
+		svcTransaction.List($scope.searchText,$scope.pageNo,$scope.pageSize,$scope.NewDateFrom,$scope.NewDateTo,0,'').then(function (r) {
             $scope.list = r.Results;
             $scope.count = r.Count;
-			$scope.spinner.active = false;
         })
     }
     $scope.load();

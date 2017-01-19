@@ -18,7 +18,7 @@
 		$TransactionRepo = new TransactionRepository();
 		$PaymentRepo = new PaymentRepository();
 		
-		$result = $TransactionRepo->DataList($_GET['searchText'],$_GET['pageNo'],$_GET['pageSize'],$_GET['DateFrom'],$_GET['DateTo'],$_GET['CenterId']);
+		$result = $TransactionRepo->DataList($_GET['searchText'],$_GET['pageNo'],$_GET['pageSize'],$_GET['DateFrom'],$_GET['DateTo'],$_GET['CenterId'],$_GET['Status']);
 		
 		foreach($result['Results'] as $row){
 			$row->Amount =  (float) $row->Amount;

@@ -2,7 +2,9 @@
 class MemberRepository{
 		public function Get($id){
 			global $conn;
-			$query = $conn->query("SELECT * FROM tbl_member  WHERE Id = '$id'");
+			$query = $conn->query("SELECT *,tbl_center.Name as Center,tbl_member.Address as Address,tbl_member.Id As Id FROM tbl_member 
+			LEFT JOIN tbl_center on tbl_center.Id = tbl_member.CenterId
+			WHERE tbl_member.Id = '$id'");
 			return $query->fetch(PDO::FETCH_OBJ);	
 		}
 		function TotalSavings($id){
