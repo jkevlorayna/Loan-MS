@@ -186,7 +186,10 @@
 											<td>{{row.DateApproved | date:'MM/dd/yyyy'}}</td>
 											<td>{{row.DateReleased | date:'MM/dd/yyyy'}}</td>
 											<td class="text-center">{{row.Cycle}}</td>
-											<td class="text-center"><a href="javascript:void(0)" ng-click="OpenPaymentDetails('lg',row.Cycle,Id,row.Id)">View Details</a></td>
+											<td class="text-center">
+											<a href="javascript:void(0)" ng-click="OpenPaymentDetails('lg',row.Cycle,Id,row.Id)">View Details <i class="fa fa-arrow-right"></i> </a> <br>
+											<a href="javascript:void(0)" ng-click="OpenPromisoryNote('lg',Id,row.Id)">View Promisory Note <i class="fa fa-arrow-right"></i></a>
+											</td>
 										</tr>
 									</tbody>
 								</table>

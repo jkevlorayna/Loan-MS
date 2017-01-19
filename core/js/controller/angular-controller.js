@@ -84,7 +84,7 @@ app.controller('AppMainController', function ($rootScope,$scope, $http, $q, $loc
 			$rootScope.MF =  parseFloat(r[4].value);
 			$rootScope.WeekDueDate =  parseFloat(r[4].value);
 			
-			$scope.GetDueDate = function(date){
+			$rootScope.GetDueDate = function(date){
 				return  moment(date).add('days', 161).format("MM/DD/YYYY");
 			}
 	});

@@ -69,7 +69,7 @@
 						<td>{{row.Firstname}} {{row.Middlename}} {{row.Lastname}}</td>
 						<td>{{row.DateReleased | date:'MM/dd/yyyy'}}</td>
 						<td>{{GetDueDate(row.DateReleased)}}</td>
-						<td>{{row.Amount}}</td>
+						<td class="text-right">{{row.Amount | currency:''}}</td>
 						<td>{{row.Business}}</td>
 						<td>{{row.Address}}</td>
 						<td>{{row.Center}}</td>

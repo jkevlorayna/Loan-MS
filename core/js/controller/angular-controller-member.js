@@ -275,6 +275,26 @@ app.controller('AppMemberFormController', function ($scope, $http, $q,$uibModal,
 	};
 
 	
+	
+				$scope.OpenPromisoryNote = function (size,MemberId,TransactionId) {
+			var modal = $uibModal.open({
+			templateUrl: 'views/member/promisoryNote.html',
+			controller: 'AppPromisoryNoteController',
+			size: size,
+			resolve: {
+				MemberId:function(){
+					return MemberId;
+				},
+				TransactionId:function(){
+					return TransactionId;
+				}
+			}
+			});
+			modal.result.then(function () { }, function () { 
+				$scope.getById() 
+			});
+				}
+	
 	$scope.formData = $scope.Id == 0 ? { Beneficiary:[] } : $scope.getById() ;
 });
 
@@ -296,6 +316,33 @@ app.controller('AppTransactionPaymentController', function (svcMember,$scope, $h
 			$scope.TotalTotal += parseFloat(row.Total);
 		})
 	})
+	
+	$scope.close = function(){
+			$uibModalInstance.dismiss();
+	}
+	
+	$scope.printDiv = function(divName) {
+		var printContents = document.getElementById(divName).innerHTML;
+		var popupWin = window.open('', '_blank', 'width=700,height=700');
+		popupWin.document.open();
+		popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="core/css/print.css" /></head><body onload="window.print()">' + printContents + '</body></html>');
+		popupWin.document.close();
+	} 
+	
+});
+
+
+app.controller('AppPromisoryNoteController', function (svcMember,$scope, $http, $q, $filter,growl,$uibModal,$stateParams,MemberId,svcTransaction,$uibModalInstance,TransactionId) {
+	svcTransaction.GetById(TransactionId).then(function(r){
+		$scope.Transaction = r;
+		$scope.Total = parseFloat($scope.Transaction.KAB) + parseFloat($scope.Transaction.CBU) + parseFloat($scope.Transaction.MBA);
+	})
+	svcMember.getById(MemberId).then(function(r){
+		$scope.formData = r;
+	})
+
+
+
 	
 	$scope.close = function(){
 			$uibModalInstance.dismiss();

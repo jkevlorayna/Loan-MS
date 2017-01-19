@@ -376,4 +376,17 @@ th {
   text-align: center;
   display: block; }
 
+.promisory .reportHeader h2 {
+  font-size: 20px; }
+.promisory .reportHeader h1,
+.promisory .reportHeader h2,
+.promisory .reportHeader h3,
+.promisory .reportHeader h4,
+.promisory .reportHeader h5 {
+  margin-top: 8px !important;
+  margin-bottom: 0 !important; }
+.promisory .logo {
+  max-height: 90px;
+  margin-bottom: 20px !important; }
+
 /*# sourceMappingURL=style.css.map */

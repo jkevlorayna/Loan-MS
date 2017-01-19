@@ -1,0 +1,94 @@
+
+        <div class="modal-body">
+		<div id="printDiv" class="promisory">
+			
+
+				<div class="text-center reportHeader">
+					<img src="core/images/logo.png" class="logo">
+					<h2>PAG – INUPDANAY INCORPORATED</h2>
+					<h2>KATUNGDANAN SA PAUTANG</h2>
+				</div>
+				
+				<br>
+				<div class="row">
+					<div class="col-md-4">BRANCH: SILAY </div>
+					<div class="col-md-4">DATE GRANTED: {{Transaction.DateReleased}} </div>
+					<div class="col-md-4">PN NO: 001</div>
+				</div>	
+				
+				<br>
+				<br>
+				Ako si <strong><u>{{formData.Firstname}} {{formData.Middlename}} {{formData.Lastname}}</u></strong> may hamtong nga edad, kasado kay ___________________ nga nagapuyo sa  <strong></u>{{formData.Address}}</u></strong>
+				nagapasugot nga ang ini nga kasulatan nagapamatuod nga ako/kami ay may utang sa Pag-Inupdanay Inc.(PI) 
+				basi sa mga masunod:
+				
+				<table class="table table-bordered table-condensed">
+					<tbody>
+						<tr>
+							<td style="10%" class="text-center">1.</td>
+							<td colspan="3">Kantidad sang Utang</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td rowspan="3" style="10%" class="text-center">2.</td>
+							<td rowspan="3">Interest 15% </td>
+							<td>1 ka tuig</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>6 ka bulan</td>
+							<td>__0.5___% kada bulan</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td colspan="2">Kabilogan</td>
+							<td></td>
+						</tr>
+
+						<tr>
+							<td style="10%" class="text-center">3.</td>
+							<td  colspan="3">Termino sa Pagbayad</td>
+							<td>(23 WEEKS)</td>
+						</tr>
+						<tr>
+							<td rowspan="5" style="10%" class="text-center">4.</td>
+							<td rowspan="5"  colspan="3">Kantidad nga Pagabayaran kada - Semana</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>(KAB) {{Transaction.KAB}}  </td>
+						</tr>
+						<tr>
+							<td> (CBU)  {{Transaction.CBU}} </td>
+						</tr>
+						<tr>
+							<td> (MBA)  {{Transaction.MBA}} </td>
+						</tr>
+						<tr>
+							<td> TOTAL :  {{Total}} </td>
+						</tr> 
+					</tbody>
+				</table>
+				<br>
+
+					<p>
+					
+					Ako nagasumpa nga magabayad sang wala sang lang-at o palta sugod sa <strong>{{Transaction.DateReleased | date:'MM/dd/yyyy'}}</strong> tubtob sa  <strong>{{GetDueDate(Transaction.DateReleased)}}</strong>.
+
+					</p>
+					
+					<br>
+					<p class="text-right">
+						<label style="border-top:1px solid #ddd;">Pangalan kag Perma sang Manughulam</label>
+					</p>
+					<br>
+					<p>
+					Angot sini,ako nagasumpa nga ang akon utang gamiton ko lang sa proyekto nga gin aprobahan sang P.I., kun gamiton ko sa iban magluwas sa ginkasugtan ang akon utan, Ini mangin rason para pabaydan dayon sang P.I. ukon igabalik gilayon ang bilog nga kantidad nga akon ginhulam ukon ano man katumbas nga maga serbi bilang garantiya sa akon pang pang-utang. Ako man nagapasugot nga mapaidalum sa pang-usisa sang Empleyada sang P.I.. ako nagapati nga ini daku nga bulig parasa akon obligasyon sa pagbayad kag pag-implementar sang akon proyekto akon maproteksyonan nga may bug-os nga sinseridad pra magapabilin ang disiplina sa tanan nga miembrosang sentro.
+					</p>
+        </div>
+        </div>
+        <div class="modal-footer text-center">
+			<button class="btn btn-warning" type="button" ng-click="printDiv('printDiv')"><i class="fa fa-print"></i> Print</button>	
+            <button class="btn btn-default" type="button" ng-click="close()"><i class="fa fa-times"></i> Close</button>
+        </div>

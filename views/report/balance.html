@@ -66,7 +66,7 @@
 					<tr ng-repeat="row in list">
 						<td>{{row.Firstname}} {{row.Middlename}} {{row.Lastname}}</td>
 						<td>{{row.DateReleased | date:'MM/dd/yyyy'}}</td>
-						<td></td>
+						<td>{{GetDueDate(row.DateReleased)}}</td>
 						<td class="text-right">{{row.Amount | currency:''}}</td>
 						<td class="text-right">{{row.RemainingBalance | currency:''}}</td>
 						<td class="text-center">{{row.Cycle}}</td>
