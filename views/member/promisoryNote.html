@@ -18,7 +18,17 @@
 				
 				<br>
 				<br>
-				Ako si <strong><u>{{formData.Firstname}} {{formData.Middlename}} {{formData.Lastname}}</u></strong> may hamtong nga edad, kasado kay ___________________ nga nagapuyo sa  <strong></u>{{formData.Address}}</u></strong>
+				Ako si <strong><u>{{formData.Firstname}} {{formData.Middlename}} {{formData.Lastname}}</u></strong> may hamtong nga edad, kasado kay
+				
+				<span ng-if="formData.Status=='Married'">
+					<u><strong>{{formData.MarriedTo}}</strong></u>
+				</span>
+				<span ng-if="formData.Status!='Married'">
+						___________________ 
+				</span>
+				
+				
+				nga nagapuyo sa  <strong></u>{{formData.Address}}</u></strong>
 				nagapasugot nga ang ini nga kasulatan nagapamatuod nga ako/kami ay may utang sa Pag-Inupdanay Inc.(PI) 
 				basi sa mga masunod:
 				
@@ -80,11 +90,57 @@
 					
 					<br>
 					<p class="text-right">
-						<label style="border-top:1px solid #ddd;">Pangalan kag Perma sang Manughulam</label>
+						<span style="border-top:1px solid #ddd;">Pangalan kag Perma sang Manughulam</label>
 					</p>
 					<br>
 					<p>
 					Angot sini,ako nagasumpa nga ang akon utang gamiton ko lang sa proyekto nga gin aprobahan sang P.I., kun gamiton ko sa iban magluwas sa ginkasugtan ang akon utan, Ini mangin rason para pabaydan dayon sang P.I. ukon igabalik gilayon ang bilog nga kantidad nga akon ginhulam ukon ano man katumbas nga maga serbi bilang garantiya sa akon pang pang-utang. Ako man nagapasugot nga mapaidalum sa pang-usisa sang Empleyada sang P.I.. ako nagapati nga ini daku nga bulig parasa akon obligasyon sa pagbayad kag pag-implementar sang akon proyekto akon maproteksyonan nga may bug-os nga sinseridad pra magapabilin ang disiplina sa tanan nga miembrosang sentro.
+					</p>
+					<br>
+					<br>
+					<p>
+						Ako naga sumpa nga mangin sinsero sa tanan nga nasulat sa sini nga kasugtanan. 
+					</p>
+					<br>
+					<br>
+					<p class="text-right">
+						<span style="border-top:1px solid #ddd">Ngalan kag Pirma sang Naghulam</span>
+					</p>
+					<br>
+					<br>
+					<p>
+						<span style="border-top:1px solid #ddd" class="pull-left">Ngalan kag Pirma sang Guarantor</span>
+						<span style="border-top:1px solid #ddd" class="pull-right">Ngalan kag Pirma Co – Maker</span>
+					</p>
+						<br>
+					<br>
+					<p class="text-center">
+						<span style="border-top:1px solid #ddd">Ngalan kag Pirma sng Center Officer</span>
+						<hr>
+					</p>
+					<br>
+					<p>
+					Angot sini,ako nagasumpa nga ang akon utang gamiton ko lang sa proyekto nga gin aprobahan sang P.I., kun gamiton ko sa iban magluwas sa ginkasugtan ang akon utan, Ini mangin rason para pabaydan dayon sang P.I. ukon igabalik gilayon ang bilog nga kantidad nga akon ginhulam ukon ano man katumbas nga maga serbi bilang garantiya sa akon pang pang-utang. Ako man nagapasugot nga mapaidalum sa pang-usisa sang Empleyada sang P.I.. ako nagapati nga ini daku nga bulig parasa akon obligasyon sa pagbayad kag pag-implementar sang akon proyekto akon maproteksyonan nga may bug-os nga sinseridad pra magapabilin ang disiplina sa tanan nga miembrosang sentro.
+					</p>
+					<br>
+					<p>
+						Ako naga sumpa nga mangin sinsero sa tanan nga nasulat sa sini nga kasugtanan. 
+					</p>
+					<br>
+					<p class="text-right">
+						<span style="border-top:1px solid #ddd">Ngalan kag Pirma sang Naghulam</span>
+					</p>
+										<br>
+					<br>
+					<p>
+						<span style="border-top:1px solid #ddd" class="pull-left">Ngalan kag Pirma sang Guarantor</span>
+						<span style="border-top:1px solid #ddd" class="pull-right">Ngalan kag Pirma Co – Maker</span>
+					</p>
+						<br>
+					<br>
+					<p class="text-center">
+						<span style="border-top:1px solid #ddd">Ngalan kag Pirma sng Center Officer</span>
+						<hr>
 					</p>
         </div>
         </div>
