@@ -45,7 +45,7 @@
 				<table class="table table-bordered table-condensed">
 				<thead>
 					<tr>
-						<th>Status</th>
+						<th>Loan Status</th>
 						<th>Member Name</th>
 						<th>Date Released</th>
 						<th>Due Date</th>
@@ -56,7 +56,7 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="row in list">
-						<td></td>
+						<td>{{row.LoanStatus}}</td>
 						<td>{{row.Firstname}} {{row.Middlename}} {{row.Lastname}}</td>
 						<td>{{row.DateReleased | date:'MM/dd/yyyy'}}</td>
 						<td>{{GetDueDate(row.DateReleased)}}</td>
