@@ -1,7 +1,7 @@
 
         <div class="modal-body">
 			<form ng-submit="Save()">
-				<div class="form-group">
+				<div class="form-group" ng-show="Status == 'Application'">
 					<label for="email">Status:</label>
 <!-- 					{{formData.TransactionStatus}} -->
 					<select type="text" class="form-control" ng-model="formData.TransactionStatus">
@@ -11,6 +11,16 @@
 
 					</select>
 				</div>
+				
+				
+				<div class="form-group" ng-show="Status == 'Loan'">
+					<label for="email">Status:</label>
+					<select type="text" class="form-control" ng-model="formData.LoanStatus" ng-options="row.Status as  row.Status for row in StatusList">
+					</select>
+				</div>
+				
+				
+				
 				<button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
 			</form>
         </div>

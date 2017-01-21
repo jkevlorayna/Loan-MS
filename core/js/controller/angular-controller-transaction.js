@@ -22,7 +22,7 @@
 	
 	
 	
-	$scope.ChangeStatusModal = function(size,Id){
+	$scope.ChangeStatusModal = function(size,Id,Status){
 	
 		var modal = $uibModal.open({
 		templateUrl: 'views/transaction/changeStatus.html',
@@ -31,6 +31,9 @@
 		resolve: {
 			dataId: function () {
 				return Id;
+			},
+			Status: function(){
+				return Status;
 			}
 		}
 		});
@@ -70,11 +73,21 @@ app.controller('AppTransactionModalController', function ($rootScope,$scope, $ht
         });
     }
 });	
-app.controller('AppTransactionChangeStatusModalController', function (svcTransaction,svcStatus,$rootScope,$scope, $http, $q,  $filter, svcMember,growl,$uibModal,dataId,$uibModalInstance) {
+app.controller('AppTransactionChangeStatusModalController', function (svcTransaction,svcStatus,$rootScope,$scope, $http, $q,  $filter, svcMember,growl,$uibModal,dataId,$uibModalInstance,Status) {
 	$scope.Id = dataId;
 	$scope.close = function(){
 		$uibModalInstance.dismiss();
 	}
+	$scope.Status = Status;
+	
+	$scope.loadStatus = function(){
+		svcStatus.list('',0,0).then(function(r){
+			$scope.StatusList = r.Results;
+		})
+	}
+	$scope.loadStatus();
+	
+	
 	$scope.getById = function(){
 			svcTransaction.GetById($scope.Id).then(function(r){
 				$scope.formData = r;
@@ -116,6 +129,7 @@ app.controller('AppTransactionFormController', function ($rootScope,$scope, $htt
 					MBA:$scope.MBA,
 					WeekPayable:32,
 					TransactionStatus:'Pending',
+					LoanStatus:'Active',
 					Date:new Date()
 					}
 			}else{

@@ -48,6 +48,7 @@
 						<th>CBU</th>
 						<th>MBA</th>
 						<th>Application Status</th>
+						<th>Loan Status</th>
 						<th></th>
 					</tr>
 				</thead>
@@ -61,8 +62,12 @@
 						<td class="text-right">{{row.CBU}}</td>
 						<td class="text-right">{{row.MBA}}</td>
 						<td>
-						{{row.TransactionStatus}}
-						<a ng-if="row.TransactionStatus!='Release'" href="javascript:void(0)" ng-click="ChangeStatusModal('md',row.Id)" class="pull-right"><i class="fa fa-edit"></i></a>
+							{{row.TransactionStatus}}
+							<a ng-if="row.TransactionStatus!='Release'" href="javascript:void(0)" ng-click="ChangeStatusModal('md',row.Id,'Application')" class="pull-right"><i class="fa fa-edit"></i></a>
+						</td>
+						<td>
+							{{row.LoanStatus}}
+							<a href="javascript:void(0)" ng-click="ChangeStatusModal('md',row.Id,'Loan')" class="pull-right"><i class="fa fa-edit"></i></a>
 						</td>
 						<td>
 							<a ng-show="checkRole('Loan Application','AllowEdit')" class="btn btn-success btn-sm" href="#/transaction/form/{{row.Id}}">  <i class="fa fa-edit"></i> </a>
