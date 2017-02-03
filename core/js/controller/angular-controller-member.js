@@ -205,6 +205,9 @@ app.controller('AppMemberFormController', function ($scope, $http, $q,$uibModal,
 					// $location.path('/member/list/'+$scope.type);
 				})
 			$scope.spinner.active = false;
+			if($scope.Id == 0 ){
+				$scope.formData = {Beneficiary:[]};
+			}
         },function(){
 			growl.error('Ops Something Went Wrong');
 		});

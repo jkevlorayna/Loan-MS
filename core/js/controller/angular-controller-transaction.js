@@ -160,12 +160,14 @@ app.controller('AppTransactionFormController', function ($rootScope,$scope, $htt
 		})
 	}
 	$scope.loadMember();
-	
+	$scope.selected = '';
 	$scope.Save = function(){
 			$scope.spinner.active = true;
 		svcTransaction.Save($scope.formData).then(function(r){
 			growl.success("Data Successfully Saved");
 			$scope.spinner.active = false;
+			$scope.formData = {};
+			$scope.selected = '';
 		})
 	}
 });

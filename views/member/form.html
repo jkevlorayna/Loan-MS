@@ -54,13 +54,13 @@
 				<div class="form-group">
 					<label class="control-label col-md-4">Address</label>
 					<div class="col-md-8">
-						<input type="text" ng-model="formData.Address"  class="form-control" >
+						<input type="text" ng-model="formData.Address"  class="form-control" required>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label col-md-4">Mobile NO</label>
 					<div class="col-md-8">
-						<input type="text" ng-model="formData.MobileNo"  class="form-control" >
+						<input type="text" ng-model="formData.MobileNo"  class="form-control" required>
 					</div>
 				</div>
 <!-- 				<div class="form-group">
@@ -72,7 +72,7 @@
 				<div class="form-group">
 					<label class="control-label col-md-4">Civil Status</label>
 					<div class="col-md-8">
-						<select type="text" ng-model="formData.Status"  class="form-control" >
+						<select type="text" ng-model="formData.Status"  class="form-control" required>
 								<option>Single</option>
 								<option>Married</option>
 								<option>Widow</option>
@@ -87,7 +87,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label col-md-4">Date</label>
+					<label class="control-label col-md-4">BirthDate</label>
 					<div class="col-md-8">
 						<div class="input-group">
 							<input ng-change="calculateAge()" type="text" class="form-control" uib-datepicker-popup="MM/dd/yyyy" ng-model="formData.BirthDate" is-open="popup1" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
@@ -100,19 +100,19 @@
 				<div class="form-group">
 					<label class="control-label col-md-4">Age</label>
 					<div class="col-md-3">
-						<input type="text" ng-model="formData.Age"  class="form-control" >
+						<input type="text" ng-model="formData.Age"  class="form-control" required>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label col-md-4">Business</label>
 					<div class="col-md-8">
-						<input type="text" ng-model="formData.Business"  class="form-control" >
+						<input type="text" ng-model="formData.Business"  class="form-control" required>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label col-md-4">Center</label>
 					<div class="col-md-8">
-						<select  ng-model="formData.CenterId" ng-options="row.Id as row.Name  for row in centerList"  class="form-control"></select>
+						<select required  ng-model="formData.CenterId" ng-options="row.Id as row.Name  for row in centerList"  class="form-control"></select>
 					</div>
 				</div>
 				<div class="form-group">
@@ -131,7 +131,10 @@
 				</div>
 				<div class="form-group">
 				<div class="col-md-8 col-md-offset-4">
-					<button type="submit"  class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+					<div ng-show="formData.Beneficiary.length == 0" class="alert alert-danger">
+						Please Add Beneficiary to Save Data
+					</div>
+					<button ng-show="formData.Beneficiary.length > 0" type="submit"  class="btn btn-success"><i class="fa fa-save"></i> Save</button>
 				</div>
 				</div>
 		</form>
@@ -189,12 +192,12 @@
 											<td class="text-right">{{row.CBU}}</td>
 											<td class="text-right">{{row.MBA}}</td>
 											<td>{{row.TransactionStatus}}</td>
-											<td>{{row.DateApproved | date:'MM/dd/yyyy'}}</td>
-											<td>{{row.DateReleased | date:'MM/dd/yyyy'}}</td>
+											<td><span ng-show="row.TransactionStatus == 'Release'">{{row.DateApproved | date:'MM/dd/yyyy'}}</span></td>
+											<td><span ng-show="row.TransactionStatus == 'Release'">{{row.DateReleased | date:'MM/dd/yyyy'}}</span></td>
 											<td class="text-center">{{row.Cycle}}</td>
 											<td class="text-center">
-											<a href="javascript:void(0)" ng-click="OpenPaymentDetails('lg',row.Cycle,Id,row.Id)">View Details <i class="fa fa-arrow-right"></i> </a> <br>
-											<a href="javascript:void(0)" ng-click="OpenPromisoryNote('lg',Id,row.Id)">View Promisory Note <i class="fa fa-arrow-right"></i></a>
+												<a ng-show="row.TransactionStatus == 'Release'" href="javascript:void(0)" ng-click="OpenPaymentDetails('lg',row.Cycle,Id,row.Id)">View Details <i class="fa fa-arrow-right"></i> </a> <br>
+												<a  ng-show="row.TransactionStatus == 'Release'" href="javascript:void(0)" ng-click="OpenPromisoryNote('lg',Id,row.Id)">View Promisory Note <i class="fa fa-arrow-right"></i></a>
 											</td>
 										</tr>
 									</tbody>
