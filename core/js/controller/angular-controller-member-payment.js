@@ -67,6 +67,7 @@ app.controller('AppPaymentModalController', function ($rootScope,$scope, $http, 
 });	
 app.controller('AppPaymentFormController', function ($rootScope,$scope, $http, $q, $location, svcMember,growl,$uibModal,svcPayment,svcSetting,$stateParams ) {
 	$scope.Id = $stateParams.Id;
+	$scope.member = { selected:''}
 			$q.all([svcSetting.getByKey('MBA')]).then(function(){
 				
 							if($scope.Id == 0){
@@ -105,6 +106,7 @@ app.controller('AppPaymentFormController', function ($rootScope,$scope, $http, $
 	$scope.selectCustomer = function(item){
 		$scope.formData.MemberId = item.Id;
 		$scope.formData.Cycle = item.Cycle;
+		$scope.member.selected = item;
 	}
 	$scope.loadMember = function(){
 		svcMember.listWithTransaction('',0,0,'Release').then(function(r){

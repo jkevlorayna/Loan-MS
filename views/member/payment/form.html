@@ -16,7 +16,7 @@
 				<div class="form-group">
 					<label class="control-label col-md-4">Member</label>
 					<div class="col-md-8">
-					<ui-select ng-model="selected" theme="select2" ng-disabled="disabled" on-select="selectCustomer($item)">
+					<ui-select ng-required="true" ui-select-required   ng-model="member.selected"  name="member" theme="select2" on-select="selectCustomer($item)">
                              <ui-select-match placeholder="Select Member...">{{$select.selected.Firstname + ' ' +  $select.selected.Lastname}}</ui-select-match>
                              <ui-select-choices refresh="searchCustomer($select.search)" refresh-delay="100" repeat="row in memberList| filter: $select.search">
                                  <div ng-bind="row.Firstname + ' ' + row.Lastname"></div>
@@ -45,7 +45,7 @@
 				<div class="form-group">
 					<label class="control-label col-md-4">CBU</label>
 					<div class="col-md-8">
-						<input type="text" ng-model="formData.CBU" name="CBU"  ng-change="calculate()" class="form-control" required autocomplete="off">
+						<input type="text" numeric-only ng-model="formData.CBU" name="CBU"  ng-change="calculate()" class="form-control" required autocomplete="off">
 					</div>
 				</div>
 				<div class="form-group">
@@ -80,10 +80,19 @@
 				</div>
 				<div class="form-group">
 				<div class="col-md-8 col-md-offset-4">
-					<button type="submit"  class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+					<div class="alert alert-danger" ng-show="member.selected==''" > 
+						Please Select Member First 
+					</div>
+					<div class="alert alert-danger" ng-show="formData.CBU < 50" > 
+						CBU Must Be equal or greater than 50	
+					</div>
+					
+					<button ng-disabled="member.selected=='' || formData.CBU < 50" type="submit"  class="btn btn-success"><i class="fa fa-save"></i> Save</button>
 				</div>
 				</div>
+
 		</form>
+		      
 	</div>
 	<div class="col-md-5">
 		<div ng-include="'views/legend.html'"></div>

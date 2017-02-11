@@ -192,7 +192,10 @@
 											<td class="text-right">{{row.CBU}}</td>
 											<td class="text-right">{{row.MBA}}</td>
 											<td>{{row.TransactionStatus}}</td>
-											<td><span ng-show="row.TransactionStatus == 'Release'">{{row.DateApproved | date:'MM/dd/yyyy'}}</span></td>
+											<td>
+											<span ng-show="row.TransactionStatus == 'Release'">{{row.DateApproved | date:'MM/dd/yyyy'}}</span>
+											<span ng-show="row.TransactionStatus == 'Approved'">{{row.DateApproved | date:'MM/dd/yyyy'}}</span>
+											</td>
 											<td><span ng-show="row.TransactionStatus == 'Release'">{{row.DateReleased | date:'MM/dd/yyyy'}}</span></td>
 											<td class="text-center">{{row.Cycle}}</td>
 											<td class="text-center">

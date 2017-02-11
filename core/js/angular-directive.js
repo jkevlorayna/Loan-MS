@@ -64,3 +64,32 @@ app.directive('checkImage', function($http) {
         }
     };
 });
+app.directive('uiSelectRequired', function () {
+  return {
+    require: 'ngModel',
+    link: function(scope, elm, attrs, ctrl) {
+      console.log(ctrl);
+      ctrl.$validators.uiSelectRequired = function(modelValue, viewValue) {
+        return modelValue && modelValue.length;
+      };
+    }
+  };
+});
+app.directive('numericOnly', function(){
+    return {
+        require: 'ngModel',
+        link: function(scope, element, attrs, modelCtrl) {
+
+            modelCtrl.$parsers.push(function (inputValue) {
+                var transformedInput = inputValue ? inputValue.replace(/[^\d.-]/g,'') : null;
+
+                if (transformedInput!=inputValue) {
+                    modelCtrl.$setViewValue(transformedInput);
+                    modelCtrl.$render();
+                }
+
+                return transformedInput;
+            });
+        }
+    };
+});

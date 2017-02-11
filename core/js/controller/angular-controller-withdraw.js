@@ -70,7 +70,7 @@ app.controller('AppWithdrawFormController', function ($rootScope,$scope, $http, 
 		
 				
 			if($scope.Id == 0){
-				$scope.formData = { Date:new Date() , Amount:1 }
+				$scope.formData = { Date:new Date() , Amount:'' }
 
 			}else{
 				$scope.getById = function(){

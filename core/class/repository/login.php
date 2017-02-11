@@ -68,7 +68,7 @@ class LoginRepository{
 		
 			$query = $conn->prepare("SELECT * FROM tbl_user
 			LEFT JOIN tbl_user_type ON tbl_user_type.Id = tbl_user.UserTypeId
-			WHERE username =  :username  AND password = :password ");
+			WHERE username =  BINARY :username  AND password = BINARY :password ");
 			$query->bindParam(':username', $POST->username);
 			$query->bindParam(':password', $POST->password);
 			$query->execute();
