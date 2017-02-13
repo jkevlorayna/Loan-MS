@@ -122,6 +122,7 @@ app.controller('AppTransactionFormController', function ($rootScope,$scope, $htt
 			}
 	
 
+			$scope.member = { selected:''}
 			
 			if($scope.Id == 0){
 				$scope.formData = {
@@ -139,7 +140,7 @@ app.controller('AppTransactionFormController', function ($rootScope,$scope, $htt
 					svcTransaction.GetById($scope.Id).then(function(r){
 						$scope.formData = r;
 						$scope.formData.Date = new Date(r.Date);
-						$scope.selected = r;
+						$scope.member.selected = r;
 						$scope.calculate();	
 					})
 				}

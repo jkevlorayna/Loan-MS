@@ -44,7 +44,7 @@
 						<th>Name</th>
 						<th>Date</th>
 						<th>Amount</th>
-						<th></th>
+						<th style="width:10%"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -52,9 +52,9 @@
 						<td>{{row.Firstname}} {{row.Middlename}} {{row.Lastname}}</td>
 						<td>{{row.Date | date:'MM/dd//yyyy'}}</td>
 						<td class="text-right">{{row.Amount}}</td>
-						<td>
+						<td class="text-center">
 							<a ng-show="checkRole('WithDraw','AllowEdit')" class="btn btn-success btn-sm" href="#/withdraw/form/{{row.Id}}">  <i class="fa fa-edit"></i> </a>
-							<button ng-show="checkRole('WithDraw','AllowDelete')" class="btn btn-danger btn-sm" ng-click="openDeleteModal('md',row.Id)">  <i class="fa fa-trash-o"></i> </button>
+							<!-- <button ng-show="checkRole('WithDraw','AllowDelete')" class="btn btn-danger btn-sm" ng-click="openDeleteModal('md',row.Id)">  <i class="fa fa-trash-o"></i> </button> -->
 						</td>
 					</tr>
 				</tbody>

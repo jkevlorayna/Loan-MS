@@ -389,4 +389,7 @@ th {
   max-height: 90px;
   margin-bottom: 20px !important; }
 
+.capitalize {
+  text-transform: uppercase; }
+
 /*# sourceMappingURL=style.css.map */

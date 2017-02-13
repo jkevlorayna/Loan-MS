@@ -67,7 +67,7 @@ app.controller('AppWithdrawModalController', function ($rootScope,$scope, $http,
 });	
 app.controller('AppWithdrawFormController', function ($rootScope,$scope, $http, $q, $location, svcMember,growl,$uibModal,svcWithdraw,svcSetting,$stateParams ) {
 	$scope.Id = $stateParams.Id;
-		
+	$scope.member = { selected:''}	
 				
 			if($scope.Id == 0){
 				$scope.formData = { Date:new Date() , Amount:'' }
@@ -78,7 +78,7 @@ app.controller('AppWithdrawFormController', function ($rootScope,$scope, $http, 
 						
 						$scope.formData = r;
 						$scope.formData.Date = new Date(r.Date);
-						$scope.selected = r;
+						$scope.member.selected = r;
 					})
 				}
 				$scope.getById();

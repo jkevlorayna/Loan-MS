@@ -78,7 +78,7 @@ app.controller('AppPaymentFormController', function ($rootScope,$scope, $http, $
 					svcPayment.GetById($scope.Id).then(function(r){
 						$scope.formData = r;
 						$scope.formData.Date = new Date(r.Date);
-						$scope.selected = r;
+						$scope.member.selected = r;
 						$scope.calculate();	
 					})
 				}
