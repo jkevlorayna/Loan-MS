@@ -16,7 +16,7 @@
 				<div class="form-group">
 					<label class="control-label col-md-4">Member</label>
 					<div class="col-md-8">
-					<ui-select ng-model="selected" theme="member.selected" ng-disabled="disabled" on-select="selectCustomer($item)">
+					<ui-select ng-model="member.selected" theme="select2" ng-disabled="disabled" on-select="selectCustomer($item)">
                              <ui-select-match placeholder="Select Member...">{{$select.selected.Firstname + ' ' +  $select.selected.Lastname}}</ui-select-match>
                              <ui-select-choices refresh="searchCustomer($select.search)" refresh-delay="100" repeat="row in memberList| filter: $select.search">
                                  <div ng-bind="row.Firstname + ' ' + row.Lastname"></div>

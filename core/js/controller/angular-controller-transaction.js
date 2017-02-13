@@ -122,7 +122,7 @@ app.controller('AppTransactionFormController', function ($rootScope,$scope, $htt
 			}
 	
 
-			$scope.member = { selected:''}
+		
 			
 			if($scope.Id == 0){
 				$scope.formData = {
@@ -133,6 +133,7 @@ app.controller('AppTransactionFormController', function ($rootScope,$scope, $htt
 					LoanStatus:'Active',
 					Date:new Date()
 					}
+						$scope.member = { selected:''}	
 			}else{
 				 
 			
