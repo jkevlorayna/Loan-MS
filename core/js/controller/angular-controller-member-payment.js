@@ -118,6 +118,8 @@ app.controller('AppPaymentFormController', function ($rootScope,$scope, $http, $
 	$scope.Save = function(){
 		svcPayment.Save($scope.formData).then(function(r){
 			growl.success("Data Successfully Saved");
+			$scope.formData = {};
+			$scope.member = { selected:''}
 		})
 	}
 });
