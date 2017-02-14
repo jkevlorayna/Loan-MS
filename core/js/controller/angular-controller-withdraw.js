@@ -112,7 +112,9 @@ app.controller('AppWithdrawFormController', function ($rootScope,$scope, $http, 
 		svcWithdraw.Save($scope.formData).then(function(r){
 			growl.success("Data Successfully Saved");
 			$scope.spinner.active = false;
-			$location.path('/withdraw/list')
+			$scope.formData = {};
+			$scope.member = { selected:''}	
+			// $location.path('/withdraw/list')
 		})
 	}
 });
