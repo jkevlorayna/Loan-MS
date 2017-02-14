@@ -169,7 +169,7 @@ app.controller('AppTransactionFormController', function ($rootScope,$scope, $htt
 			growl.success("Data Successfully Saved");
 			$scope.spinner.active = false;
 			$scope.formData = {};
-			$scope.selected = '';
+			$scope.member = { selected:''}	
 		})
 	}
 });
